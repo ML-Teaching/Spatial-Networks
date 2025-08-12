@@ -1,10 +1,10 @@
 ---
-title: "Comparison of Bioregionalisation Methods"
-author: "Pierre Denelle, Maxime Lenormand & Boris Leroy"
+title: "Test"
+author: "Maxime Lenormand"
 date: "`r Sys.Date()`"
 github-repo: "bioRgeo/book"
-url: 'https://github.com/bioRgeo/book'
-description: "Comparison of Bioregionalisation Methods"
+url: 'https://github.com/ML-Teaching/Spatial-Networks'
+description: "test"
 apple-touch-icon: "assets/pimp/apple-touch-icon.png"
 apple-touch-icon-size: 120
 favicon: "assets/pimp/favicon.ico"
