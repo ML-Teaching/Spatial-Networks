@@ -1,9 +1,6 @@
-Comparison of Bioregionalisation Methods
-================================================================================
+# __Test__ <img src="assets/pimp/logo.png" align="right" alt="" width="138" />
 
-bookdown::render_book("index.Rmd")
 
-browseURL("docs/index.html")
 
 
 
