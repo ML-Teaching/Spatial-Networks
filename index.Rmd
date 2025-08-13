@@ -2,7 +2,7 @@
 title: "Test"
 author: "Maxime Lenormand"
 date: "`r Sys.Date()`"
-github-repo: "bioRgeo/book"
+github-repo: "ML-Teaching/Spatial-Networks"
 url: 'https://github.com/ML-Teaching/Spatial-Networks'
 description: "test"
 apple-touch-icon: "assets/pimp/apple-touch-icon.png"
