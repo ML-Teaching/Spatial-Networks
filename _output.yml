@@ -1,18 +1,33 @@
 bookdown::gitbook:
   css: assets/style.css
-  includes:
-    before_body: assets/pimp/banner.html
-    after_body: assets/pimp/footer.html
+  #includes:
+  #  before_body: assets/banner.html
+  #  after_body: assets/footer.html
   highlight: tango
   config:
     toc:
       collapse: section
       before: |
-        <li class="toc-logo"><a href="./"><img src="assets/pimp/logo.png" width="100"></a></li>
+        <li class="toc-logo">
+          <a href="./" class="logo-link">
+            <img src="assets/logo.png" width="100" alt="Logo">
+            <span class="logo-text">Réseaux spatiaux</span>
+          </a>
+        </li>
       after: |
-        <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
-    download: no
+        <li><a href="https://bookdown.org/" target="blank">Publié avec bookdown</a></li>
+    download: ["pdf"]
     info: no  
     sharing: no
-    fontsettings: no
+    fontsettings: yes
+    search: yes
+
+bookdown::pdf_book:
+  #includes:
+  #  in_header: preamble.tex
+  latex_engine: pdflatex
+  citation_package: natbib
+  keep_tex: yes
+
+
   

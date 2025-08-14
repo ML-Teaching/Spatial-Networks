@@ -1,13 +1,13 @@
 ---
-title: "Test"
-author: "Maxime Lenormand"
+title: "Introduction aux réseaux spatiaux avec R"
+author: "[Maxime Lenormand](https://www.maximelenormand.com/)"
 date: "`r Sys.Date()`"
-github-repo: "ML-Teaching/Spatial-Networks"
+#github-repo: "ML-Teaching/Spatial-Networks"
 url: 'https://github.com/ML-Teaching/Spatial-Networks'
-description: "test"
-apple-touch-icon: "assets/pimp/apple-touch-icon.png"
-apple-touch-icon-size: 120
-favicon: "assets/pimp/favicon.ico"
+description: "Réseaux spatiaux"
+#apple-touch-icon: "img/apple-touch-icon.png"
+#apple-touch-icon-size: 120
+favicon: "assets/favicon.ico"
 ---
 
 ```{r setup, include=FALSE}
@@ -18,6 +18,10 @@ library(ggplot2)
 library(dplyr)
 ```
 
-# Context {.unnumbered}
+# Préambule {.unnumbered #preambule}
 
-
+<!--
+<iframe src="assets/Cours1.pdf" width="100%" height="600px">
+    Ce navigateur ne supporte pas les PDF. <a href="assets/Cours1.pdf">Télécharger le PDF</a>.
+</iframe>
+-->

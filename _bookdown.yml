@@ -1,8 +1,11 @@
-book_filename: "book"
+book_filename: "Spatial-Networks"
 output_dir: docs
 delete_merged_file: true
-edit: https://github.com/ML-Teaching/Spatial-Networks/edit/main/%s
-view: https://github.com/ML-Teaching/Spatial-Networks/blob/main/%s
+rmd_files:
+  - index.Rmd
+  - 01-TP1.Rmd
+  - 02-TP2.Rmd
+  - 03-TP3.Rmd
 language:
   ui:
-    chapter_name: "Chapter "
+    chapter_name: "TP "

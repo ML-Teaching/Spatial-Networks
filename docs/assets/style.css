@@ -1,0 +1,46 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+h1.title {
+  font-size: 38px !important;
+  font-weight: bold;
+  #text-align: center;
+  margin-bottom: 1px;
+}
+
+p.author {
+  font-size: 20px !important;
+  #font-weight: bold;
+  #text-align: center;
+  margin-bottom: 1px;
+}
+
+.logo-link {
+  display: flex !important;       /* force le flex même si le thème a un block */
+  align-items: center !important; /* centre verticalement */
+  text-decoration: none;
+  gap: 8px;
+}
+
+.logo-link img {
+  width: 100px;
+  height: auto;
+  display: inline-block !important;
+}
+
+.logo-text {
+  font-size: 1.2em;
+  font-weight: bold;
+}
