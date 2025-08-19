@@ -1,0 +1,143 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage[]{natbib}
+\bibliographystyle{plainnat}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Introduction aux réseaux spatiaux avec R},
+  pdfauthor={Maxime Lenormand},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Introduction aux réseaux spatiaux avec R}
+\author{\href{https://www.maximelenormand.com/}{Maxime Lenormand}}
+\date{2025-08-19}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\section*{Préambule}\label{preambule}
+\addcontentsline{toc}{section}{Préambule}
+
+Bienvenue dans ce module sur les \textbf{réseaux spatiaux} avec \textbf{R}. Ce module vous
+propose une exploration approfondie des réseaux spatiaux et interactions
+spatiales en utilisant les packages R \textbf{TDLM} et \textbf{bioregion}. Vous apprendrez
+à manipuler :
+
+\begin{itemize}
+\item
+  \textbf{R, RStudio et Shiny} en abordant des
+  notions de base pour manipuler des données et pour créer des applications
+  interactives simples avec \href{https://shiny.posit.co/}{Shiny} pour visualiser et explorer vos réseaux
+  spatiaux de manière dynamique.
+\item
+  \textbf{TDLM} en comparant rigoureusement différentes lois de distribution des
+  déplacements (telles que la loi de gravité ou les opportunités intervenantes)
+  et en modélisant les flux de déplacements entre zones géographiques.
+\item
+  \textbf{bioregion} en appliquant des méthodes de biogéorégionalisation pour
+  identifier des unités spatiales homogènes en termes de composition d'espèces,
+  en utilisant des algorithmes de clustering hiérarchique, non hiérarchique et
+  des méthodes issues de la théorie des réseaux.
+\end{itemize}
+
+Ce GitBook est conçu pour être à la fois un \textbf{support théorique} et un
+\textbf{guide pratique} : chaque concept sera accompagné d'exemples directement
+applicables dans \textbf{R} grâce aux packages
+\href{https://rtdlm.github.io/TDLM/}{TDLM} et
+\href{https://biorgeo.github.io/bioregion/}{bioregion}.
+
+Avant d'entrer dans le détail des TPs, voici une
+introduction générale aux réseaux spatiaux. Elle présente les concepts clés,
+le vocabulaire essentiel ainsi que le programme du module.
+
+~
+
+Ce navigateur ne supporte pas les PDF. Télécharger le PDF.
+
+\section{Premiers pas avec R}\label{tp1}
+
+En cours de rédaction
+
+\section{Estimation des flux domicile-travail}\label{tp2}
+
+En cours de rédaction
+
+\section{Bioregionalisation}\label{tp3}
+
+En cours de rédaction
+
+\end{document}

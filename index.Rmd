@@ -15,13 +15,13 @@ spatiales en utilisant les packages R **TDLM** et **bioregion**. Vous apprendrez
 à manipuler :
 
 - **R, RStudio et Shiny** en abordant des
-notions de base pour manipuler des données et création d’applications 
-interactives simples avec **Shiny** pour visualiser et explorer vos réseaux 
+notions de base pour manipuler des données et pour créer des applications 
+interactives simples avec [Shiny](https://shiny.posit.co/) pour visualiser et explorer vos réseaux 
 spatiaux de manière dynamique.
 
 - **TDLM** en comparant rigoureusement différentes lois de distribution des 
 déplacements (telles que la loi de gravité ou les opportunités intervenantes) 
-et à modéliser les flux de déplacements entre zones géographiques.
+et en modélisant les flux de déplacements entre zones géographiques.
 
 - **bioregion** en appliquant des méthodes de biogéorégionalisation pour 
 identifier des unités spatiales homogènes en termes de composition d'espèces, 
