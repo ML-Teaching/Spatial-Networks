@@ -24,7 +24,7 @@ explorer vos réseaux spatiaux de manière dynamique.
 déplacements (telles que la loi de gravité ou les opportunités intervenantes) 
 et en modélisant les flux de déplacements entre zones géographiques.
 
-- **bioregion** en appliquant des méthodes de biogéorégionalisation pour 
+- **bioregion** en appliquant des méthodes de biorégionalisation pour 
 identifier des unités spatiales homogènes en termes de composition d'espèces, 
 en utilisant des algorithmes de clustering hiérarchique, non hiérarchique et 
 des méthodes issues de la théorie des réseaux.
