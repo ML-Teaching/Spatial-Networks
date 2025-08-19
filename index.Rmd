@@ -7,18 +7,41 @@ description: "Réseaux spatiaux"
 favicon: "assets/favicon.ico"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-# Here you load all your project's packages
-library(ggplot2)
-library(dplyr)
-```
-
 # Préambule {.unnumbered #preambule}
 
+Bienvenue dans ce module sur les **réseaux spatiaux** avec **R**. Ce module vous 
+propose une exploration approfondie des réseaux spatiaux et interactions 
+spatiales en utilisant les packages R **TDLM** et **bioregion**. Vous apprendrez 
+à manipuler :
+
+- **R, RStudio et Shiny** en abordant des
+notions de base pour manipuler des données et création d’applications 
+interactives simples avec **Shiny** pour visualiser et explorer vos réseaux 
+spatiaux de manière dynamique.
+
+- **TDLM** en comparant rigoureusement différentes lois de distribution des 
+déplacements (telles que la loi de gravité ou les opportunités intervenantes) 
+et à modéliser les flux de déplacements entre zones géographiques.
+
+- **bioregion** en appliquant des méthodes de biogéorégionalisation pour 
+identifier des unités spatiales homogènes en termes de composition d'espèces, 
+en utilisant des algorithmes de clustering hiérarchique, non hiérarchique et 
+des méthodes issues de la théorie des réseaux.
+
+Ce GitBook est conçu pour être à la fois un **support théorique** et un 
+**guide pratique** : chaque concept sera accompagné d’exemples directement 
+applicables dans **R** grâce aux packages 
+[TDLM](https://rtdlm.github.io/TDLM/) et 
+[bioregion](https://biorgeo.github.io/bioregion/).
+
+Avant d’entrer dans le détail des TPs, voici une 
+introduction générale aux réseaux spatiaux. Elle présente les concepts clés, 
+le vocabulaire essentiel ainsi que le programme du module.
+
+<div style="height:10px;">&nbsp;</div>
+
 <iframe src="slides/intro/Cours_Introduction.pdf" width="100%" height="450px">
-    Ce navigateur ne supporte pas les PDF. <a href="assets/Cours1.pdf">Télécharger le PDF</a>.
+    Ce navigateur ne supporte pas les PDF. <a href="slides/intro/Cours_Introduction.pdf">Télécharger le PDF</a>.
 </iframe>
 
 

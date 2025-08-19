@@ -1,18 +1,3 @@
-/* couleur des liens normaux */
-a {
-  color: #00A3A6;   
-}
-
-/* couleur des liens visités */
-a:visited {
-  color: #00A3A6;   
-}
-
-/* couleur des liens au survol */
-a:hover {
-  color: #00A3A6;   
-}
-
 p.caption {
   color: #777;
   margin-top: 10px;

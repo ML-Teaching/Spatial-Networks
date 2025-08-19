@@ -1,3 +1,12 @@
 # Premiers pas avec R {#tp1}
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Here you load all your project's packages
+library(ggplot2)
+library(dplyr)
+```
+
 En cours de rédaction
+
