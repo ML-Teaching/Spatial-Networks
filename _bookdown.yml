@@ -8,4 +8,4 @@ rmd_files:
   - 03-TP3.Rmd
 language:
   ui:
-    chapter_name: "TP "
+    chapter_name: "TP"
