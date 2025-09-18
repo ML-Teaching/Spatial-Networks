@@ -16,18 +16,19 @@ bookdown::gitbook:
         </li>
       after: |
         <li><a href="https://bookdown.org/" target="blank">Publié avec bookdown</a></li>
-    download: ["pdf"]
+    #download: ["pdf"]
     info: no  
     sharing: no
     fontsettings: yes
     search: yes
+    view: https://github.com/ML-Teaching/Spatial-Networks/blob/master/%s  
 
-bookdown::pdf_book:
+#bookdown::pdf_book:
   #includes:
   #  in_header: preamble.tex
-  latex_engine: pdflatex
-  citation_package: natbib
-  keep_tex: yes
+  #latex_engine: pdflatex
+  #citation_package: natbib
+  #keep_tex: yes
 
 
   
