@@ -42,8 +42,7 @@ le vocabulaire essentiel ainsi que le programme du module.
 <div style="height:10px;">&nbsp;</div>
 
 <iframe src="slides/intro/Cours_Introduction.pdf" width="100%" height="450px">
-    Ce navigateur ne supporte pas les PDF. <a href="slides/intro/Cours_Introduction.pdf">Télécharger le PDF</a>.
-</iframe>
+
 
 
 
