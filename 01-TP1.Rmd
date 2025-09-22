@@ -4,18 +4,526 @@
 knitr::opts_chunk$set(echo = TRUE)
 
 # Here you load all your project's packages
+library(ggplot2)
 
 ```
 
-Avant d’entrer dans le vif du sujet, nous allons commencer par un petit cours sur 
-la prise en main de RStudio et les concepts de base en R.
+Avant de commencer le TP, nous allons parcourir ensemble quelques diapositives 
+afin de nous assurer que tout le monde dispose des mêmes bases. Ce sera 
+l’occasion de prendre en main RStudio et de découvrir rapidement les notions 
+essentielles du langage R.
 
 <div style="height:10px;">&nbsp;</div>
 
 <iframe src="slides/tp1/Cours_TP1.pdf" width="100%" height="450px"></iframe>
 
+## Scripts et environnement de travail
 
+### Les scripts  
 
+Il est conseillé de travailler dans un **script** (`.R`) afin de garder une
+trace de vos commandes et de pouvoir les réutiliser plus tard.  
 
+Pour créer un nouveau script : *File > New File > R Script*.  
 
+Créez un script **TP1.R** et enregistrez-le dans votre répertoire de travail,
+que vous pouvez également nommer **TP1**.  
+
+### Commande, script et exécution  
+
+- Une **commande** est une instruction unique que vous tapez directement dans
+  la console (par exemple `2 + 2`). Elle est exécutée immédiatement en appuyant 
+  sur Entrée et son résultat s’affiche dans la **console**.  
+- Un **script** est un fichier texte qui regroupe plusieurs commandes
+  organisées. Il permet de structurer votre travail et d’automatiser vos
+  analyses.  
+- L’**exécution** d’un script correspond au fait de lancer l’ensemble ou une
+  partie du code qu’il contient. Dans RStudio, vous pouvez :  
+  - exécuter la ligne où se trouve le curseur avec `Ctrl + Enter`  
+    (ou `Cmd + Enter` sur Mac),  
+  - exécuter un bloc de code sélectionné,  
+  - ou lancer l’intégralité du script avec le bouton **Source**  
+    (en haut à droite de l’éditeur).  
+
+> *Bonne pratique : pensez à vider régulièrement la console (`Ctrl + L`) pour
+> garder un espace de travail lisible et éviter toute confusion.*  
+
+## Le répertoire de travail
+
+Le **répertoire de travail** (*working directory*) est le dossier dans lequel R
+va chercher ou enregistrer vos fichiers par défaut. Il est donc essentiel de
+bien le définir pour éviter les erreurs lors des imports et exports.
+
+Vérifiez votre répertoire de travail actuel.
+
+```{r, eval=FALSE}
+getwd()
+```
+
+et définissez un nouveau répertoire de travail
+
+```{r, eval=FALSE}
+# Working directory
+setwd("~/Desktop/TP1") # À adapter à votre chemin sur votre ordinateur !
+```
+
+Un **chemin absolu** indique l’emplacement exact d’un fichier à partir de la
+racine de l’ordinateur. Il est indépendant du répertoire de travail. Ci-dessous
+un exemple d'import d'un fichier `.csv` à partir d'un chemin absolu.
+
+```{r, eval=FALSE}
+data <- read.csv("C:/Users/Nom/Desktop/TP1/exemple.csv")
+```
+
+> *Inconvénient : le code n’est pas facilement réutilisable sur un autre
+> ordinateur, car le chemin dépend de la configuration locale.* 
+
+Un **chemin relatif** part du répertoire de travail défini. C’est la méthode
+recommandée car elle rend vos scripts portables et plus faciles à partager. Le 
+même exemple avec un chemin relatif. 
+
+```{r, eval=FALSE}
+data <- read.csv("exemple.csv")
+```
+
+> *Avantage : si vos fichiers sont organisés dans le même dossier que votre 
+> script, il suffit de partager ce dossier complet, et tout fonctionnera sans 
+> modifier les chemins.*
+
+Dans vos TPs et projets, vous serez amenés à importer et exporter différents
+types de fichiers et objets :
+
+- **Fichiers de données** : CSV, TXT, Excel… avec `read.csv()`, `read.table()`.
+- **Fichiers résultats** : exporter vos données transformées avec `write.csv()`.
+- **Figures et graphiques** : sauvegarder vos graphiques avec `pdf()`, `png()`,
+  ou `ggsave()` pour les partager ou les inclure dans vos rapports.
+  
+Ci-dessous un exemple d'export de graphique.
+
+```{r, eval=FALSE}
+pdf("figure1.pdf")
+  plot(1:10, 1:10)
+dev.off()
+```
+
+## Les librairies
+
+R propose de nombreuses fonctionnalités de base, mais souvent vous aurez 
+besoin de fonctionnalités supplémentaires pour vos analyses, graphiques, 
+ou manipulations de données. Ces fonctionnalités sont fournies par des 
+**packages** (ou librairies) que vous pouvez installer et utiliser.
+
+L’**installation** d’un package se fait une seule fois sur votre ordinateur dans un 
+dossier dédié. Elle rend le package disponible "définitivement" pour toutes 
+vos futures sessions R. Ci-dessous un exemple d'installation du package 
+`ggplot2`.
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
+```
+
+> *Remarque : vous n’avez pas besoin de réinstaller un package à chaque fois 
+> que vous ouvrez R.*
+
+Le **chargement** d’un package se fait à chaque fois que vous voulez utiliser 
+ses fonctions. Le chargement rend le package temporairement
+disponible dans la session R en cours. Ci-dessous un exemple de chargement à
+mettre en début de script.
+
+```{r, eval=FALSE}
+# Packages
+library(ggplot2)
+```
+
+> *Astuce : vous devez charger un package après chaque ouverture de R ou 
+> chaque nouveau script où vous souhaitez l’utiliser.*
+
+Pour résumer :
+
+- **Installation** : une seule fois, définit le package sur l’ordinateur.  
+- **Chargement** : à chaque session ou script, rend le package actif.
+
+R dispose d’une aide en ligne très complète pour toutes ses fonctions et packages :
+
+- `help()` ou `?` : affiche la documentation d’une fonction  
+
+```{r, eval=FALSE}
+?mean
+help(plot)
+```
+
+## Types et objets de base
+
+R propose différents types de données et objets pour stocker et manipuler
+vos informations. Comprendre ces types et objets est essentiel pour travailler 
+efficacement et éviter les erreurs dans vos analyses.
+
+Ci-dessous les principaux types de données, stockés dans différentes variables. 
+
+```{r, eval=FALSE}
+# Numérique
+x <- 42
+y <- 3.14
+
+# Caractère
+nom <- "Alice"
+
+# Logique
+test <- TRUE
+```
+
+On assigne une valeur avec `<-` ou `=`.
+
+> *`<-` est l’opérateur standard d’assignation en R,
+>  tandis que `=` fonctionne aussi mais est souvent utilisé dans les arguments
+>  de fonctions. Il est recommandé d’utiliser `<-` pour créer ou modifier des
+>  objets dans vos scripts.*
+
+Ci-dessous les principaux objets.
+
+```{r, eval=FALSE}
+# Vecteurs
+num <- c(1, 2, 3, 4)
+char <- c("A", "B", "C")
+log <- c(TRUE, FALSE, TRUE)
+
+# Matrices
+m <- matrix(1:9, nrow=3, ncol=3)
+
+# Liste
+liste <- list(numerique=num, caractere=char, matrice=m)
+
+# Data frame
+df <- data.frame(Nom=c("Alice","Bob"), Age=c(25,30))
+```
+
+Il est important de bien vérifier le type et la structure des objets 
+(`class(obj)` et `str(obj)`) et de nommer clairement vos objets pour savoir 
+ce qu’ils contiennent.
+
+## Manipulation des objets
+
+Une fois vos objets créés, vous allez souvent vouloir **les modifier**, les
+**filtrer**, ou **résumer**. R propose différentes méthodes pour y parvenir.
+
+On peut remplacer des éléments dans un vecteur, une matrice ou un data frame.
+
+```{r, eval=FALSE}
+v <- c(1,2,3,4,5)
+v[2] <- 10        # Remplace le 2ème élément
+v[v > 3] <- 99    # Remplace tous les éléments supérieurs à 3
+v
+```
+
+Pour les matrices, on accède aux lignes et colonnes avec `[ligne, colonne]`.
+On peut aussi utiliser des **conditions logiques** pour sélectionner des
+éléments.
+
+```{r, eval=FALSE}
+m <- matrix(1:9, nrow=3, ncol=3)
+
+m[1, ]         # 1ère ligne
+m[, 2]         # 2ème colonne
+m[m > 5]       # éléments supérieurs à 5
+
+m[m %% 2 == 0] <- 0  # remplace les nombres pairs par 0
+m
+```
+
+Les data frames peuvent être manipulés comme les matrices, mais avec des noms
+de colonnes et des types différents.
+
+```{r, eval=FALSE}
+df <- data.frame(Nom=c("Alice","Bob","Charlie"),
+                 Age=c(25,30,35),
+                 Sexe=c("F","M","M"))
+
+df$Age               # colonne Age
+df[df$Sexe=="M", ]   # lignes où Sexe est "M"
+df[df$Age > 28, "Nom"] # noms des personnes de plus de 28 ans
+```
+
+Je vous recommande d'utilisez toujours `dim()` pour vérifier la taille d’une 
+matrice ou data frame. Vous pouvez également utiliser `summary()` pour 
+résumer vos données rapidement. 
+
+R permet également de **résumer ou agréger 
+les données** par groupes ou conditions.
+
+```{r, eval=FALSE}
+aggregate(Age ~ Sexe, data=df, FUN=mean) # Moyenne d'âge par sexe
+
+aggregate(Age ~ Sexe, data=df, FUN=sum) # Somme ou autres fonctions
+```
+
+## Fonctions en R
+
+Les fonctions sont des blocs de code que vous pouvez **réutiliser** avec des
+arguments différents. Elles permettent d’automatiser et d’organiser vos
+calculs.
+
+On peut créer une fonction simple avec `function()`. Voici un exemple pour
+calculer le carré d’un nombre.
+
+```{r, eval=FALSE}
+carre <- function(x) {
+  x^2    # retourne le carré de x
+}
+
+carre(4)  # 16
+carre(10) # 100
+```
+
+Les fonctions peuvent avoir **plusieurs arguments** avec des valeurs par défaut.
+
+```{r, eval=FALSE}
+addition <- function(a, b=5) {
+  a + b
+}
+
+addition(3, 4)  # 7
+addition(3)     # 8, car b=5 par défaut
+```
+
+On peut aussi créer des fonctions qui retournent **plusieurs valeurs** via une
+liste.
+
+```{r, eval=FALSE}
+statistiques <- function(x) {
+  moy <- mean(x)
+  med <- median(x)
+  list(moyenne=moy, mediane=med)
+}
+
+statistiques(c(1,2,3,4,5))
+```
+
+Il est souvent utile de combiner les fonctions avec des **conditions** et des
+**boucles** pour automatiser des tâches plus complexes.
+
+```{r, eval=FALSE}
+analyse_vecteur <- function(v) {
+  if (length(v) == 0) {
+    return(NULL)
+  }
+  v[v > mean(v)]  # retourne les éléments supérieurs à la moyenne
+}
+
+analyse_vecteur(c(1,2,3,4,5))
+```
+
+Enfin, vous pouvez **enchaîner plusieurs fonctions** pour créer des analyses
+complètes et modulaires.
+
+```{r, eval=FALSE}
+ma_fonction <- function(x) {
+  x2 <- carre(x)
+  x2 + 10
+}
+
+ma_fonction(3)  # (3^2)+10 = 19
+```
+
+Pour organiser votre travail, il est souvent 
+pratique de **mettre vos fonctions dans un script séparé**. Vous pouvez ensuite 
+les **charger dans votre session** avec `source()`.
+
+```{r, eval=FALSE}
+source("mes_fonctions.R")  # charge toutes les fonctions du script
+
+carre(5)          # utilise la fonction carre définie dans le script
+addition(2, 3)   # utilise la fonction addition définie dans le script
+```
+
+## Visualisation avec R
+
+R permet de créer rapidement des graphiques pour explorer vos données.
+Voici quelques fonctions de base pour visualiser vos données.
+
+Avec des graphiques de dispersion
+
+```{r, eval=FALSE}
+x <- 1:10
+y <- x^2
+
+plot(x, y, main="Graphique de dispersion",
+     xlab="X", ylab="Y", col="steelblue3", pch=19)
+```
+
+Vous pouvez personnaliser les couleurs, les types de points (`pch`) et ajouter
+un titre (`main`) ainsi que des labels pour les axes (`xlab`, `ylab`). Vous 
+pouvez également utiliser le package `ggplot2`, de nombreux exemples et tutos 
+son disponible en ligne.
+
+Pour visualiser la **répartition d’une variable**, on utilise `hist()`.
+
+```{r, eval=FALSE}
+v <- c(2,3,3,5,7,8,8,8,9,10)
+
+hist(v, breaks=5, col="orange", border="black",
+     main="Histogramme de v", xlab="Valeurs", ylab="Fréquence")
+```
+
+Pour visualiser **la médiane et la dispersion**, on utilise `boxplot()`.
+
+```{r, eval=FALSE}
+df <- data.frame(Groupe=c("A","A","B","B","B","C","C","C","C"),
+                 Valeur=c(5,6,7,5,6,8,9,7,6))
+
+boxplot(Valeur ~ Groupe, data=df, col="lightblue",
+        main="Boxplot par groupe", xlab="Groupe", ylab="Valeur")
+```
+
+Comment mentionné plus haut R permet d’exporter vos graphiques pour les partager 
+ou les intégrer dans des rapports. Voici comment créer un fichier PDF contenant 
+un graphique.
+
+```{r, eval=FALSE}
+pdf("mon_graphique.pdf", width=7, height=5)
+
+  plot(x, y, main="Graphique exporté en PDF",
+       xlab="X", ylab="Y", col="#CC6666", pch=19)
+
+dev.off()
+```
+
+Le fichier `mon_graphique.pdf` sera créé dans le répertoire de travail actuel.
+
+## Exercice
+
+Dans cet exercice, vous allez créer vos propres fonctions dans un script 
+séparé, puis les utiliser pour analyser et visualiser des données.
+
+1. Créez un fichier `mes_fonctions.R` dans votre répertoire de travail.
+2. Dans ce fichier, écrivez deux fonctions :  
+   - `resumer_vecteur(x)` : retourne la moyenne, médiane, min, max, variance  
+   - `remplacer_grand(x)` : remplace les valeurs supérieures à la moyenne par 100
+3. Dans TP1.R :  
+   - Chargez le package `ggplot2` 
+   - Définissez votre répertoire de travail 
+   - Importez vos fonctions depuis `mes_fonctions.R` avec `source()`  
+   - Créez un vecteur de 20 nombres aléatoires entre 1 et 100 
+   - Appliquez les fonctions au vecteur  
+   - Créez un histogramme et un boxplot du vecteur modifié  
+   - Exportez les graphiques dans un PDF `resultats.pdf`  
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# --------------------------
+# Contenu de mes_fonctions.R
+# --------------------------
+
+resumer_vecteur <- function(x) {
+  list(
+    moyenne = mean(x),
+    mediane = median(x),
+    minimum = min(x),
+    maximum = max(x),
+    variance = var(x)
+  )
+}
+
+remplacer_grand <- function(x) {
+  x[x > mean(x)] <- 100
+  return(x)
+}
+
+# --------------------------
+# Contenu de TP1.R
+# --------------------------
+
+# 1. Charger un package simple
+library(ggplot2)
+
+# 2. Définir le répertoire de travail
+setwd("~/Desktop/TP1")  # Adapter selon votre ordinateur
+
+# 3. Importer les fonctions depuis le script
+source("mes_fonctions.R")
+
+# 4. Créer un vecteur de 20 nombres aléatoires
+set.seed(123) # Pour la reproductibilité
+v <- sample(1:100, 20, replace=TRUE)
+
+# 5. Appliquer les fonctions
+resumer_vecteur(v)
+v_modifie <- remplacer_grand(v)
+v_modifie
+
+# 6. Graphiques et export PDF
+pdf("resultats.pdf", width=8, height=5)
+
+  par(mfrow=c(1,2))  # deux graphiques côte à côte
+
+  hist(v_modifie, main="Histogramme du vecteur modifié", col="lightgreen",
+     xlab="Valeurs", ylab="Fréquence")
+  boxplot(v_modifie, main="Boxplot du vecteur modifié", col="lightblue")
+
+dev.off()
+```
+
+</details>
+
+---
+
+## Introduction à R Shiny
+
+R Shiny permet de créer des **applications web interactives** directement depuis R. 
+Avec Shiny, vous pouvez rendre vos analyses et graphiques interactifs, sans 
+avoir besoin de connaissances en HTML, CSS ou JavaScript.
+
+### Structure d’une application Shiny
+
+Une application Shiny se compose généralement de deux parties principales :
+
+1. **UI (User Interface)** : définit l’apparence de l’application (boutons, 
+   graphiques, champs de saisie…).  
+2. **Server** : contient la logique et les calculs qui génèrent les résultats 
+   affichés dans l’UI.
+
+### Exemple minimal
+
+Créez un fichier `app.R` dans votre dossier TP1 et copiez-collez le code suivant :
+
+```{r, eval=FALSE}
+# Charger le package Shiny
+library(shiny)
+
+# Définir l'interface utilisateur
+ui <- fluidPage(
+  titlePanel("Mon premier Shiny"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("nombre", "Choisir un nombre :", min=1, max=100, value=50)
+    ),
+    mainPanel(
+      textOutput("affichage")
+    )
+  )
+)
+
+# Définir le serveur
+server <- function(input, output) {
+  output$affichage <- renderText({
+    paste("Le nombre choisi est :", input$nombre)
+  })
+}
+
+# Lancer l'application
+shinyApp(ui, server)
+```
+
+### Déployer l’application
+
+1. Ouvrez le fichier `app.R` dans RStudio.  
+2. Cliquez sur **Run App** en haut à droite de l’éditeur.  
+3. L’application s’ouvre dans le Viewer de RStudio ou dans votre navigateur.  
+
+> *Astuce : Pour déployer votre application en ligne, vous pouvez utiliser 
+> [shinyapps.io](https://www.shinyapps.io/) ou un serveur Shiny propre. L’exemple 
+> ci-dessus fonctionne localement sur votre machine.*
 

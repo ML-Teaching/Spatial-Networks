@@ -26,10 +26,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4707821"
-     inkscape:cx="194.79432"
+     inkscape:cx="205.67289"
      inkscape:cy="149.24033"
      inkscape:document-units="px"
-     inkscape:current-layer="g64188"
+     inkscape:current-layer="layer2"
      showgrid="false"
      borderlayer="true"
      inkscape:showpageshadow="false"
@@ -77029,7 +77029,7 @@
   </metadata>
   <g
      transform="translate(0,-865.23308)"
-     style="display:none"
+     style="display:inline"
      inkscape:label="title"
      id="layer2"
      inkscape:groupmode="layer">
@@ -77333,12 +77333,12 @@
            style="fill:#00a3a6;stroke:none">
           <polygon
              class="cls-19"
-             points="180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 "
+             points="180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 "
              id="polygon1"
              style="fill:#00a3a6;stroke:none" />
           <polygon
              class="cls-6"
-             points="405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 "
+             points="293.14,331.9 180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 "
              id="polygon2"
              style="fill:#00a3a6;stroke:none;stroke-miterlimit:10" />
         </g>
@@ -77592,36 +77592,43 @@
              style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:24.5813px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Ultra-Bold';text-align:center;text-anchor:middle;fill:#103a55">Spatial Networks</flowPara></flowRoot>
       </g>
     </g>
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot25407"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.99;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.55095461,0,0,0.55095461,-30.727574,539.24818)"><flowRegion
-         id="flowRegion25409"
-         style="fill:#4d4d4d"><rect
-           id="rect25411"
-           width="683.0697"
-           height="97.789894"
-           x="77.913788"
-           y="1167.3392"
-           style="fill:#4d4d4d" /></flowRegion><flowPara
-         id="flowPara25413"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.793px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Bold';fill:#4d4d4d">www.maximelenormand.com</flowPara></flowRoot>
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot25407-2"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.99;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       transform="matrix(0.55095461,0,0,0.55095461,43.808491,259.49249)"><flowRegion
-         id="flowRegion25409-0"
-         style="fill:#4d4d4d"><rect
-           id="rect25411-6"
-           width="683.0697"
-           height="97.789894"
-           x="77.913788"
-           y="1167.3392"
-           style="fill:#4d4d4d;stroke-width:1px" /></flowRegion><flowPara
-         id="flowPara25413-1"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.793px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Bold';fill:#4d4d4d">https://ml-teaching.github.io/Spatial-Networks/</flowPara></flowRoot>
+    <a
+       id="a2"
+       xlink:href="www.maximelenormand.com">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot25407"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.99;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.55095461,0,0,0.55095461,-30.727574,539.24818)"><flowRegion
+           id="flowRegion25409"
+           style="fill:#4d4d4d"><rect
+             id="rect25411"
+             width="683.0697"
+             height="97.789894"
+             x="77.913788"
+             y="1167.3392"
+             style="fill:#4d4d4d" /></flowRegion><flowPara
+           id="flowPara25413"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.793px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Bold';fill:#4d4d4d">www.maximelenormand.com</flowPara></flowRoot>
+    </a>
+    <a
+       id="a1">
+      <flowRoot
+         xml:space="preserve"
+         id="flowRoot25407-2"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;opacity:0.99;fill:#4d4d4d;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         transform="matrix(0.55095461,0,0,0.55095461,43.808491,259.49249)"><flowRegion
+           id="flowRegion25409-0"
+           style="fill:#4d4d4d"><rect
+             id="rect25411-6"
+             width="683.0697"
+             height="97.789894"
+             x="77.913788"
+             y="1167.3392"
+             style="fill:#4d4d4d;stroke-width:1px" /></flowRegion><flowPara
+           id="flowPara25413-1"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.793px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Bold';fill:#4d4d4d">https://ml-teaching.github.io/Spatial-Networks/</flowPara></flowRoot>
+    </a>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -81026,7 +81033,7 @@
      id="g64188"
      inkscape:label="Slide8"
      transform="translate(0,-865.23308)"
-     style="display:inline">
+     style="display:none">
     <flowRoot
        transform="translate(17.95896,10.363652)"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -81117,7 +81124,7 @@
          transform="matrix(150.86096,0,0,-150.86096,42598.802,26839.001)" />
       <polygon
          class="cls-4"
-         points="0.5,196.11 0.5,65.76 112.91,0.58 225.34,65.76 225.34,196.11 113.41,261.8 "
+         points="0.5,65.76 112.91,0.58 225.34,65.76 225.34,196.11 113.41,261.8 0.5,196.11 "
          id="polygon62"
          style="fill:#f9f9f9;stroke:#808080;stroke-width:1.5;stroke-miterlimit:10"
          transform="matrix(150.86096,0,0,-150.86096,42598.802,26839.001)" />
@@ -81373,12 +81380,12 @@
            id="g2-7">
           <polygon
              class="cls-19"
-             points="180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 "
+             points="292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 "
              id="polygon1-5"
              style="fill:#189995" />
           <polygon
              class="cls-6"
-             points="293.14,331.9 180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 "
+             points="180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 "
              id="polygon2-9"
              style="fill:none;stroke:#1d1d1b;stroke-miterlimit:10" />
         </g>
@@ -81792,7 +81799,7 @@
              style="fill:#0078be" />
           <polygon
              class="st3"
-             points="2384.3,732.4 2287.7,676.6 1431.2,182 "
+             points="2287.7,676.6 1431.2,182 2384.3,732.4 "
              id="polygon7"
              style="fill:none" />
         </g>
@@ -81886,12 +81893,12 @@
            style="fill:#00a3a6;stroke:none">
           <polygon
              class="cls-19"
-             points="292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 "
+             points="405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 292.64,70.68 "
              id="polygon1-59"
              style="fill:#00a3a6;stroke:none" />
           <polygon
              class="cls-6"
-             points="180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 "
+             points="180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 "
              id="polygon2-8"
              style="fill:#00a3a6;stroke:none;stroke-miterlimit:10" />
         </g>

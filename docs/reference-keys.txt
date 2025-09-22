@@ -1,3 +1,17 @@
 tp1
+scripts-et-environnement-de-travail
+les-scripts
+commande-script-et-exécution
+le-répertoire-de-travail
+les-librairies
+types-et-objets-de-base
+manipulation-des-objets
+fonctions-en-r
+visualisation-avec-r
+exercice
+introduction-à-r-shiny
+structure-dune-application-shiny
+exemple-minimal
+déployer-lapplication
 tp2
 tp3

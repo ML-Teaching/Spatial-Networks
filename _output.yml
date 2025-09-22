@@ -3,7 +3,7 @@ bookdown::gitbook:
   #includes:
   #  before_body: assets/banner.html
   #  after_body: assets/footer.html
-  highlight: tango
+  highlight: kate
   config:
     toc:
       collapse: section
@@ -15,13 +15,14 @@ bookdown::gitbook:
           </a>
         </li>
       after: |
+        <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
         <li><a href="https://bookdown.org/" target="blank">Publié avec bookdown</a></li>
     #download: ["pdf"]
     info: no  
     sharing: no
     fontsettings: yes
     search: yes
-    view: https://github.com/ML-Teaching/Spatial-Networks/blob/master/%s  
+    #view: https://github.com/ML-Teaching/Spatial-Networks/blob/master/%s  
 
 #bookdown::pdf_book:
   #includes:

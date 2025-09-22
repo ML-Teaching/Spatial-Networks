@@ -1,7 +1,7 @@
 ---
 title: "Introduction aux réseaux spatiaux avec R"
 author: "[Maxime Lenormand](https://www.maximelenormand.com/)"
-date: "`r Sys.Date()`"
+#date: "`r Sys.Date()`"
 url: 'https://github.com/ML-Teaching/Spatial-Networks'
 description: "Réseaux spatiaux"
 favicon: "assets/favicon.ico"
