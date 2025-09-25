@@ -7,77 +7,98 @@ import sys
 import argparse
 from PyPDF2 import PdfMerger
 
-# Argument
+# --- Arguments ---
 parser = argparse.ArgumentParser()
-parser.add_argument("--input", type=str, help="Path input")
-parser.add_argument("--output", type=str, help="Path output")
+parser.add_argument("--input", type=str, help="Path to input SVG file")
+parser.add_argument("--output", type=str, help="Path to output PDF file")
 args = parser.parse_args()
 
-input = 'presentation.svg'
-if args.input:
-    input = args.input
-output = 'presentation.pdf'
+# --- Input file ---
+input_file = args.input if args.input else 'presentation.svg'
+
+# --- Output file ---
 if args.output:
-    output = args.output
+    output_file = args.output
+    if not output_file.lower().endswith('.pdf'):
+        print(f"Error: output file '{output_file}' must have a .pdf extension.")
+        sys.exit(1)
+else:
+    output_file = os.path.splitext(input_file)[0] + '.pdf'
 
-# Temporary folder
-temp = 'temp'
-if os.path.exists(temp):
-    shutil.rmtree(temp)
-os.makedirs(temp)
+# --- Input validation ---
+if not os.path.isfile(input_file):
+    print(f"Error: input file '{input_file}' does not exist.")
+    sys.exit(1)
 
-# Convert layer to svg (based on https://github.com/james-bird/layer-to-svg)
-tree = ET.parse(input)
+if not input_file.lower().endswith('.svg'):
+    print(f"Error: input file '{input_file}' is not an SVG file.")
+    sys.exit(1)
+
+# --- Output folder check ---
+output_dir = os.path.dirname(os.path.abspath(output_file))
+if not os.path.exists(output_dir):
+    try:
+        os.makedirs(output_dir)
+    except Exception as e:
+        print(f"Error: cannot create output directory '{output_dir}': {e}")
+        sys.exit(1)
+
+# --- Temporary folder ---
+temp_dir = 'temp'
+if os.path.exists(temp_dir):
+    shutil.rmtree(temp_dir)
+os.makedirs(temp_dir)
+
+# --- Convert layers to SVG ---
+tree = ET.parse(input_file)
 root = tree.getroot()
-listoflayers=[]
+list_of_layers = []
+
 for g in root.findall('{http://www.w3.org/2000/svg}g'):
     name = g.get('{http://www.inkscape.org/namespaces/inkscape}label')
-    listoflayers.append(name)
-#print(listoflayers)
-#print(' ')
+    list_of_layers.append(name)
 
-for counter in range(len(listoflayers)):
-    lname = listoflayers[counter]
+for counter, lname in enumerate(list_of_layers):
     if len(lname) == 1:
-        lname = 'char_' + str(ord( lname ))
-    james=listoflayers[:]
+        lname = 'char_' + str(ord(lname))
+    layers_copy = list_of_layers[:]
     temp_tree = copy.deepcopy(tree)
-    del james[counter]
+    del layers_copy[counter]
     temp_root = temp_tree.getroot()
     for g in temp_root.findall('{http://www.w3.org/2000/svg}g'):
         name = g.get('{http://www.inkscape.org/namespaces/inkscape}label')
-        if name in james:
+        if name in layers_copy:
             temp_root.remove(g)
         else:
             style = g.get('style')
-            if type(style) is str:
-                style = style.replace( 'display:none', 'display:inline' )
+            if isinstance(style, str):
+                style = style.replace('display:none', 'display:inline')
                 g.set('style', style)
-    temp_tree.write( os.path.join(temp, lname +'.svg' ))
-    print('Layer ' + str(lname) + ' successfully converted in svg!')
+    temp_tree.write(os.path.join(temp_dir, lname + '.svg'))
+    print(f"Layer '{lname}' successfully converted to SVG!")
+
 print(' ')
-	
-# Convert svg to pdf
-for counter in range(len(listoflayers)):
-    lname = listoflayers[counter]
-    svg = str(temp) + '/' + str(lname) + '.svg'
-    pdf = str(temp) + '/' + str(lname) + '.pdf'
-    command = 'inkscape --export-type=pdf ' + svg + ' -o ' + pdf 
+
+# --- Convert SVG to PDF ---
+for lname in list_of_layers:
+    svg_path = os.path.join(temp_dir, lname + '.svg')
+    pdf_path = os.path.join(temp_dir, lname + '.pdf')
+    command = f'inkscape --export-type=pdf "{svg_path}" -o "{pdf_path}"'
     os.system(command + ' > /dev/null 2>&1')
-    print(str(lname) + '.svg successfully converted in pdf!')
-print(' ')    
+    print(f"'{lname}.svg' successfully converted to PDF!")
 
-# Merge pdf
-pdfs = [sub + '.pdf' for sub in listoflayers]
+print(' ')
+
+# --- Merge PDFs ---
+pdf_paths = [os.path.join(temp_dir, lname + '.pdf') for lname in list_of_layers]
 merger = PdfMerger()
-for pdf in pdfs:
-    merger.append(temp + '/' + pdf)
-merger.write(output)
+for pdf in pdf_paths:
+    merger.append(pdf)
+merger.write(output_file)
 merger.close()
-print('pdfs successfully merged')
+print(f"PDFs successfully merged into '{output_file}'")
 
-# Remove temp
-if os.path.exists(temp):
-    shutil.rmtree(temp)	
-
+# --- Cleanup ---
+if os.path.exists(temp_dir):
+    shutil.rmtree(temp_dir)
 

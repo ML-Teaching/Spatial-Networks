@@ -1,3 +1,9 @@
 # Estimation des flux domicile-travail {#tp2}
 
-En cours de rédaction
+Avant de commencer le TP, je vais vous présenter une introduction à la 
+modélisation des flux domicile-travail à l’aide des modèles d’interactions 
+spatiales, ainsi que le contenu du TP.
+
+<div style="height:10px;">&nbsp;</div>
+
+<iframe src="slides/tp2/Cours_TP2.pdf" width="100%" height="450px"></iframe>

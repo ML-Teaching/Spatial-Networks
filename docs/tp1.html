@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>TP1 Premiers pas avec R | Introduction aux réseaux spatiaux avec R</title>
   <meta name="description" content="Réseaux spatiaux" />
-  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
 
   <meta property="og:title" content="TP1 Premiers pas avec R | Introduction aux réseaux spatiaux avec R" />
   <meta property="og:type" content="book" />
@@ -170,7 +170,7 @@ code span.wa { color: #bf0303; } /* Warning */
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a></li>
-<li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Bioregionalisation</a></li>
+<li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
 <li><a href="https://bookdown.org/" target="blank">Publié avec bookdown</a></li>
@@ -291,18 +291,18 @@ ou manipulations de données. Ces fonctionnalités sont fournies par des
 <p>L’<strong>installation</strong> d’un package se fait une seule fois sur votre ordinateur dans un
 dossier dédié. Elle rend le package disponible “définitivement” pour toutes
 vos futures sessions R. Ci-dessous un exemple d’installation du package
-<code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="tp1.html#cb6-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span></code></pre></div>
+<code>TDLM</code> que nous utiliserons dans le TP2.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="tp1.html#cb6-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;TDLM&quot;</span>)</span></code></pre></div>
 <blockquote>
 <p><em>Remarque : vous n’avez pas besoin de réinstaller un package à chaque fois
 que vous ouvrez R.</em></p>
 </blockquote>
 <p>Le <strong>chargement</strong> d’un package se fait à chaque fois que vous voulez utiliser
-ses fonctions. Le chargement rend le package temporairement
-disponible dans la session R en cours. Ci-dessous un exemple de chargement à
-mettre en début de script.</p>
+ses fonctions. Le chargement rend le package temporairement disponible dans la
+session R en cours. Ci-dessous un exemple de chargement à mettre en début de
+script.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="tp1.html#cb7-1" tabindex="-1"></a><span class="co"># Packages</span></span>
-<span id="cb7-2"><a href="tp1.html#cb7-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<span id="cb7-2"><a href="tp1.html#cb7-2" tabindex="-1"></a><span class="fu">library</span>(TDLM)</span></code></pre></div>
 <blockquote>
 <p><em>Astuce : vous devez charger un package après chaque ouverture de R ou
 chaque nouveau script où vous souhaitez l’utiliser.</em></p>
@@ -503,7 +503,7 @@ séparé, puis les utiliser pour analyser et visualiser des données.</p>
 </ul></li>
 <li>Dans TP1.R :
 <ul>
-<li>Chargez le package <code>ggplot2</code></li>
+<li>Chargez le package <code>TDLM</code></li>
 <li>Définissez votre répertoire de travail</li>
 <li>Importez vos fonctions depuis <code>mes_fonctions.R</code> avec <code>source()</code><br />
 </li>
@@ -544,7 +544,7 @@ Solution (cliquer pour afficher)
 <span id="cb25-22"><a href="tp1.html#cb25-22" tabindex="-1"></a><span class="co"># --------------------------</span></span>
 <span id="cb25-23"><a href="tp1.html#cb25-23" tabindex="-1"></a></span>
 <span id="cb25-24"><a href="tp1.html#cb25-24" tabindex="-1"></a><span class="co"># 1. Charger un package simple</span></span>
-<span id="cb25-25"><a href="tp1.html#cb25-25" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb25-25"><a href="tp1.html#cb25-25" tabindex="-1"></a><span class="fu">library</span>(TDLM)</span>
 <span id="cb25-26"><a href="tp1.html#cb25-26" tabindex="-1"></a></span>
 <span id="cb25-27"><a href="tp1.html#cb25-27" tabindex="-1"></a><span class="co"># 2. Définir le répertoire de travail</span></span>
 <span id="cb25-28"><a href="tp1.html#cb25-28" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/TP1&quot;</span>)  <span class="co"># Adapter selon votre ordinateur</span></span>
@@ -567,7 +567,7 @@ Solution (cliquer pour afficher)
 <span id="cb25-45"><a href="tp1.html#cb25-45" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))  <span class="co"># deux graphiques côte à côte</span></span>
 <span id="cb25-46"><a href="tp1.html#cb25-46" tabindex="-1"></a></span>
 <span id="cb25-47"><a href="tp1.html#cb25-47" tabindex="-1"></a>  <span class="fu">hist</span>(v_modifie, <span class="at">main=</span><span class="st">&quot;Histogramme du vecteur modifié&quot;</span>, <span class="at">col=</span><span class="st">&quot;lightgreen&quot;</span>,</span>
-<span id="cb25-48"><a href="tp1.html#cb25-48" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Valeurs&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Fréquence&quot;</span>)</span>
+<span id="cb25-48"><a href="tp1.html#cb25-48" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Valeurs&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Fréquence&quot;</span>)</span>
 <span id="cb25-49"><a href="tp1.html#cb25-49" tabindex="-1"></a>  <span class="fu">boxplot</span>(v_modifie, <span class="at">main=</span><span class="st">&quot;Boxplot du vecteur modifié&quot;</span>, <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>)</span>
 <span id="cb25-50"><a href="tp1.html#cb25-50" tabindex="-1"></a></span>
 <span id="cb25-51"><a href="tp1.html#cb25-51" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>

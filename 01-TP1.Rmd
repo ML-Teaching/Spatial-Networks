@@ -1,13 +1,5 @@
 # Premiers pas avec R {#tp1}
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-# Here you load all your project's packages
-library(ggplot2)
-
-```
-
 Avant de commencer le TP, nous allons parcourir ensemble quelques diapositives 
 afin de nous assurer que tout le monde dispose des mêmes bases. Ce sera 
 l’occasion de prendre en main RStudio et de découvrir rapidement les notions 
@@ -116,23 +108,23 @@ ou manipulations de données. Ces fonctionnalités sont fournies par des
 L’**installation** d’un package se fait une seule fois sur votre ordinateur dans un 
 dossier dédié. Elle rend le package disponible "définitivement" pour toutes 
 vos futures sessions R. Ci-dessous un exemple d'installation du package 
-`ggplot2`.
+`TDLM` que nous utiliserons dans le TP2.
 
 ```{r, eval=FALSE}
-install.packages("ggplot2")
+install.packages("TDLM")
 ```
 
 > *Remarque : vous n’avez pas besoin de réinstaller un package à chaque fois 
 > que vous ouvrez R.*
 
 Le **chargement** d’un package se fait à chaque fois que vous voulez utiliser 
-ses fonctions. Le chargement rend le package temporairement
-disponible dans la session R en cours. Ci-dessous un exemple de chargement à
-mettre en début de script.
+ses fonctions. Le chargement rend le package temporairement disponible dans la 
+session R en cours. Ci-dessous un exemple de chargement à mettre en début de 
+script.
 
 ```{r, eval=FALSE}
 # Packages
-library(ggplot2)
+library(TDLM)
 ```
 
 > *Astuce : vous devez charger un package après chaque ouverture de R ou 
@@ -399,7 +391,7 @@ séparé, puis les utiliser pour analyser et visualiser des données.
    - `resumer_vecteur(x)` : retourne la moyenne, médiane, min, max, variance  
    - `remplacer_grand(x)` : remplace les valeurs supérieures à la moyenne par 100
 3. Dans TP1.R :  
-   - Chargez le package `ggplot2` 
+   - Chargez le package `TDLM` 
    - Définissez votre répertoire de travail 
    - Importez vos fonctions depuis `mes_fonctions.R` avec `source()`  
    - Créez un vecteur de 20 nombres aléatoires entre 1 et 100 
@@ -437,7 +429,7 @@ remplacer_grand <- function(x) {
 # --------------------------
 
 # 1. Charger un package simple
-library(ggplot2)
+library(TDLM)
 
 # 2. Définir le répertoire de travail
 setwd("~/Desktop/TP1")  # Adapter selon votre ordinateur
@@ -460,7 +452,7 @@ pdf("resultats.pdf", width=8, height=5)
   par(mfrow=c(1,2))  # deux graphiques côte à côte
 
   hist(v_modifie, main="Histogramme du vecteur modifié", col="lightgreen",
-     xlab="Valeurs", ylab="Fréquence")
+       xlab="Valeurs", ylab="Fréquence")
   boxplot(v_modifie, main="Boxplot du vecteur modifié", col="lightblue")
 
 dev.off()
@@ -526,4 +518,3 @@ shinyApp(ui, server)
 > *Astuce : Pour déployer votre application en ligne, vous pouvez utiliser 
 > [shinyapps.io](https://www.shinyapps.io/) ou un serveur Shiny propre. L’exemple 
 > ci-dessus fonctionne localement sur votre machine.*
-
