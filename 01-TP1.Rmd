@@ -37,8 +37,11 @@ que vous pouvez également nommer **TP1**.
   - ou lancer l’intégralité du script avec le bouton **Source**  
     (en haut à droite de l’éditeur).  
 
-> *Bonne pratique : pensez à vider régulièrement la console (`Ctrl + L`) pour
-> garder un espace de travail lisible et éviter toute confusion.*  
+> *Bonne pratique : redémarrez régulièrement votre session R 
+> (`Session > Restart R` ou `Ctrl + Shift + F10` sous RStudio) afin de 
+> supprimer les objets en mémoire et éviter les conflits. Cela permet de 
+> vérifier que votre script contient bien toutes les étapes nécessaires pour 
+> reproduire vos résultats.*
 
 ## Le répertoire de travail
 
@@ -55,16 +58,19 @@ getwd()
 et définissez un nouveau répertoire de travail
 
 ```{r, eval=FALSE}
-# Working directory
-setwd("~/Desktop/TP1") # À adapter à votre chemin sur votre ordinateur !
+# Définir le répertoire de travail
+setwd("~/Desktop/TP1") # A adapter à votre chemin sur votre ordinateur !
 ```
+
+> *Remarque : utilisez le symbole `#` pour commenter une ligne de votre script.  
+> Tout ce qui suit ce symbole n’est pas exécuté par R.*
 
 Un **chemin absolu** indique l’emplacement exact d’un fichier à partir de la
 racine de l’ordinateur. Il est indépendant du répertoire de travail. Ci-dessous
 un exemple d'import d'un fichier `.csv` à partir d'un chemin absolu.
 
 ```{r, eval=FALSE}
-data <- read.csv("C:/Users/Nom/Desktop/TP1/exemple.csv")
+data <- read.csv("C:/Users/Nom/Desktop/TP1/Exemple.csv")
 ```
 
 > *Inconvénient : le code n’est pas facilement réutilisable sur un autre
@@ -75,7 +81,7 @@ recommandée car elle rend vos scripts portables et plus faciles à partager. Le
 même exemple avec un chemin relatif. 
 
 ```{r, eval=FALSE}
-data <- read.csv("exemple.csv")
+data <- read.csv("Exemple.csv")
 ```
 
 > *Avantage : si vos fichiers sont organisés dans le même dossier que votre 
@@ -89,13 +95,33 @@ types de fichiers et objets :
 - **Fichiers résultats** : exporter vos données transformées avec `write.csv()`.
 - **Figures et graphiques** : sauvegarder vos graphiques avec `pdf()`, `png()`,
   ou `ggsave()` pour les partager ou les inclure dans vos rapports.
-  
-Ci-dessous un exemple d'export de graphique.
+- **Objets R complets** : sauvegarder vos objets avec `save()` dans un fichier 
+  `.RData` (ou `.rda`) et les recharger avec `load()`.
+
+Ci-dessous un exemple combinant l’export d’un fichier CSV, d’un objet `.rda`, 
+d’un graphique en PDF, puis leur réimportation.
 
 ```{r, eval=FALSE}
-pdf("figure1.pdf")
-  plot(1:10, 1:10)
+# Exemple de données
+df <- data.frame(x=1:10, y=(1:10)^2)
+
+# Export CSV
+write.csv2(df, "Data.csv", row.names=FALSE)
+
+# Sauvegarde de l'objet R
+save(df, file="Data.rda")
+
+# Export graphique en PDF
+pdf("Figure1.pdf")
+  plot(df$x, df$y, main="Exemple d'export",
+       xlab="x", ylab="y", col="steelblue3", pch=19)
 dev.off()
+
+# Import du CSV
+df_csv <- read.csv2("Data.csv")
+
+# Import de l'objet R sauvegardé
+load("Data.rda")  # recharge l'objet df
 ```
 
 ## Les librairies
@@ -107,28 +133,29 @@ ou manipulations de données. Ces fonctionnalités sont fournies par des
 
 L’**installation** d’un package se fait une seule fois sur votre ordinateur dans un 
 dossier dédié. Elle rend le package disponible "définitivement" pour toutes 
-vos futures sessions R. Ci-dessous un exemple d'installation du package 
-`TDLM` que nous utiliserons dans le TP2.
+vos futures sessions R. Ci-dessous un exemple d'installation des packages 
+`sf`, `TDLM` et `bioregion` que nous utiliserons dans les TP2 et TP3.
 
 ```{r, eval=FALSE}
+install.packages("sf")
 install.packages("TDLM")
+install.packages("bioregion")
 ```
 
 > *Remarque : vous n’avez pas besoin de réinstaller un package à chaque fois 
-> que vous ouvrez R.*
+> que vous en avez besoin.*
 
 Le **chargement** d’un package se fait à chaque fois que vous voulez utiliser 
 ses fonctions. Le chargement rend le package temporairement disponible dans la 
-session R en cours. Ci-dessous un exemple de chargement à mettre en début de 
-script.
+session R en cours. Ci-dessous un exemple de chargement des packages dont vous
+avez besoin à mettre en début de script.
 
 ```{r, eval=FALSE}
-# Packages
+# Charger les packages
+library(sf)
 library(TDLM)
+library(bioregion)
 ```
-
-> *Astuce : vous devez charger un package après chaque ouverture de R ou 
-> chaque nouveau script où vous souhaitez l’utiliser.*
 
 Pour résumer :
 
@@ -195,8 +222,9 @@ ce qu’ils contiennent.
 
 ## Manipulation des objets
 
-Une fois vos objets créés, vous allez souvent vouloir **les modifier**, les
-**filtrer**, ou **résumer**. R propose différentes méthodes pour y parvenir.
+Une fois vos objets créés, vous allez souvent vouloir les **modifier**, les 
+**enrichir**, les **filtrer** ou bien les **résumer**. R propose différentes 
+méthodes pour y parvenir.
 
 On peut remplacer des éléments dans un vecteur, une matrice ou un data frame.
 
@@ -213,13 +241,21 @@ On peut aussi utiliser des **conditions logiques** pour sélectionner des
 
 ```{r, eval=FALSE}
 m <- matrix(1:9, nrow=3, ncol=3)
-
 m[1, ]         # 1ère ligne
 m[, 2]         # 2ème colonne
-m[m > 5]       # éléments supérieurs à 5
-
-m[m %% 2 == 0] <- 0  # remplace les nombres pairs par 0
+m[m > 5]       # Eléments supérieurs à 5
+m[m %% 2 == 0] <- 0  # Remplace les nombres pairs par 0
 m
+```
+
+On peut également combiner des matrices ou ajouter des lignes/colonnes
+supplémentaires avec `cbind()` et `rbind()`.
+
+```{r, eval=FALSE}
+# Ajouter une colonne ou ligne
+m2 <- cbind(m, nouvelle_colonne = 1:3)
+m3 <- rbind(m2, nouvelle_ligne = c(10,11,12,13))
+m3
 ```
 
 Les data frames peuvent être manipulés comme les matrices, mais avec des noms
@@ -228,24 +264,31 @@ de colonnes et des types différents.
 ```{r, eval=FALSE}
 df <- data.frame(Nom=c("Alice","Bob","Charlie"),
                  Age=c(25,30,35),
-                 Sexe=c("F","M","M"))
+                 Genre=c("F","M","M"))
+df$Age                  # Colonne Age
+df[df$Genre=="M", ]     # Lignes où Genre est "M"
+df[df$Age > 28, "Nom"]  # Noms des personnes de plus de 28 ans
+```
 
-df$Age               # colonne Age
-df[df$Sexe=="M", ]   # lignes où Sexe est "M"
-df[df$Age > 28, "Nom"] # noms des personnes de plus de 28 ans
+On peut également utiliser `cbind()` et `rbind()` pour ajouter des colonnes
+ou lignes dans un data frame.
+
+```{r, eval=FALSE}
+# Ajouter une colonne ou ligne
+df2 <- cbind(df, Ville=c("Paris","Lyon","Marseille"))
+df3 <- rbind(df2, data.frame(Nom="Diane", Age=40, Genre="F", Ville="Toulouse"))
+df3
 ```
 
 Je vous recommande d'utilisez toujours `dim()` pour vérifier la taille d’une 
 matrice ou data frame. Vous pouvez également utiliser `summary()` pour 
 résumer vos données rapidement. 
 
-R permet également de **résumer ou agréger 
-les données** par groupes ou conditions.
+R permet également de **résumer ou agréger** les données par groupes ou conditions.
 
 ```{r, eval=FALSE}
 aggregate(Age ~ Sexe, data=df, FUN=mean) # Moyenne d'âge par sexe
-
-aggregate(Age ~ Sexe, data=df, FUN=sum) # Somme ou autres fonctions
+aggregate(Age ~ Sexe, data=df, FUN=sum)  # Somme ou autres fonctions
 ```
 
 ## Fonctions en R
@@ -259,7 +302,7 @@ calculer le carré d’un nombre.
 
 ```{r, eval=FALSE}
 carre <- function(x) {
-  x^2    # retourne le carré de x
+  x^2    # Retourne le carré de x
 }
 
 carre(4)  # 16
@@ -298,7 +341,7 @@ analyse_vecteur <- function(v) {
   if (length(v) == 0) {
     return(NULL)
   }
-  v[v > mean(v)]  # retourne les éléments supérieurs à la moyenne
+  v[v > mean(v)]  # Retourne les éléments supérieurs à la moyenne
 }
 
 analyse_vecteur(c(1,2,3,4,5))
@@ -321,10 +364,10 @@ pratique de **mettre vos fonctions dans un script séparé**. Vous pouvez ensuit
 les **charger dans votre session** avec `source()`.
 
 ```{r, eval=FALSE}
-source("mes_fonctions.R")  # charge toutes les fonctions du script
+source("Mes_fonctions.R")  # Charge toutes les fonctions du script
 
-carre(5)          # utilise la fonction carre définie dans le script
-addition(2, 3)   # utilise la fonction addition définie dans le script
+carre(5)          # Utilise la fonction carre définie dans le script
+addition(2, 3)    # Utilise la fonction addition définie dans le script
 ```
 
 ## Visualisation avec R
@@ -371,30 +414,30 @@ ou les intégrer dans des rapports. Voici comment créer un fichier PDF contenan
 un graphique.
 
 ```{r, eval=FALSE}
-pdf("mon_graphique.pdf", width=7, height=5)
+pdf("Figure2.pdf", width=7, height=5)
 
   plot(x, y, main="Graphique exporté en PDF",
        xlab="X", ylab="Y", col="#CC6666", pch=19)
-
+  
 dev.off()
 ```
 
-Le fichier `mon_graphique.pdf` sera créé dans le répertoire de travail actuel.
+Le fichier `Figure2.pdf` sera créé dans le répertoire de travail actuel.
 
 ## Exercice
 
 Dans cet exercice, vous allez créer vos propres fonctions dans un script 
 séparé, puis les utiliser pour analyser et visualiser des données.
 
-1. Créez un fichier `mes_fonctions.R` dans votre répertoire de travail.
+1. Créez un fichier `Mes_fonctions.R` dans votre répertoire de travail.
 2. Dans ce fichier, écrivez deux fonctions :  
    - `resumer_vecteur(x)` : retourne la moyenne, médiane, min, max, variance  
    - `remplacer_grand(x)` : remplace les valeurs supérieures à la moyenne par 100
 3. Dans TP1.R :  
-   - Chargez le package `TDLM` 
+   - Chargez les packages `sf`, `TDLM` et `bioregion` 
    - Définissez votre répertoire de travail 
-   - Importez vos fonctions depuis `mes_fonctions.R` avec `source()`  
-   - Créez un vecteur de 20 nombres aléatoires entre 1 et 100 
+   - Importez vos fonctions depuis `Mes_fonctions.R` avec `source()`  
+   - Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction `sample()`)
    - Appliquez les fonctions au vecteur  
    - Créez un histogramme et un boxplot du vecteur modifié  
    - Exportez les graphiques dans un PDF `resultats.pdf`  
@@ -406,7 +449,7 @@ séparé, puis les utiliser pour analyser et visualiser des données.
 
 ```{r, eval=FALSE}
 # --------------------------
-# Contenu de mes_fonctions.R
+# Contenu de Mes_fonctions.R
 # --------------------------
 
 resumer_vecteur <- function(x) {
@@ -428,28 +471,30 @@ remplacer_grand <- function(x) {
 # Contenu de TP1.R
 # --------------------------
 
-# 1. Charger un package simple
+# Charger les packages
+library(sf)
 library(TDLM)
+library(bioregion)
 
-# 2. Définir le répertoire de travail
+# Définir le répertoire de travail
 setwd("~/Desktop/TP1")  # Adapter selon votre ordinateur
 
-# 3. Importer les fonctions depuis le script
-source("mes_fonctions.R")
+# Importer les fonctions depuis le script
+source("Mes_fonctions.R")
 
-# 4. Créer un vecteur de 20 nombres aléatoires
-set.seed(123) # Pour la reproductibilité
+# Créer un vecteur de 20 nombres aléatoires
+set.seed(123) # Pour la reproductibilité (?set.seed)
 v <- sample(1:100, 20, replace=TRUE)
 
-# 5. Appliquer les fonctions
+# Appliquer les fonctions
 resumer_vecteur(v)
 v_modifie <- remplacer_grand(v)
 v_modifie
 
-# 6. Graphiques et export PDF
-pdf("resultats.pdf", width=8, height=5)
+# Graphiques et export PDF
+pdf("Figure3.pdf", width=8, height=5)
 
-  par(mfrow=c(1,2))  # deux graphiques côte à côte
+  par(mfrow=c(1,2))  # Deux graphiques côte à côte
 
   hist(v_modifie, main="Histogramme du vecteur modifié", col="lightgreen",
        xlab="Valeurs", ylab="Fréquence")
@@ -473,13 +518,14 @@ avoir besoin de connaissances en HTML, CSS ou JavaScript.
 Une application Shiny se compose généralement de deux parties principales :
 
 1. **UI (User Interface)** : définit l’apparence de l’application (boutons, 
-   graphiques, champs de saisie…).  
+   graphiques, champs de saisie...).  
 2. **Server** : contient la logique et les calculs qui génèrent les résultats 
    affichés dans l’UI.
 
 ### Exemple minimal
 
-Créez un fichier `app.R` dans votre dossier TP1 et copiez-collez le code suivant :
+Installez le package `shiny`, créez un fichier `app.R` dans votre dossier TP1 
+et copiez-collez le code suivant :
 
 ```{r, eval=FALSE}
 # Charger le package Shiny
