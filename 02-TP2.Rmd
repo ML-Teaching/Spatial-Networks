@@ -7,3 +7,144 @@ spatiales, ainsi que le contenu du TP.
 <div style="height:10px;">&nbsp;</div>
 
 <iframe src="slides/tp2/Cours_TP2.pdf" width="100%" height="450px"></iframe>
+
+## Prise en main des données 
+
+Le package TDLM met à disposition des données d'exemple de flux domicile-travail entre
+les 342 communes du département de l'Hérault en 2020.
+
+- `od_mtp` : matrice des flux observés.  
+- `distance_mtp` : matrice des distances.  
+- `mass_mtp` : masses et marges (population, flux sortants, flux entrants).  
+- `mtp` : données spatiales associées.  
+
+Nous allons calculer quelques statistiques de base pour explorer ces données.
+
+Créez un script **TP2.R** et enregistrez-le dans votre répertoire de travail,
+que vous pouvez également nommer **TP2**.  
+
+### Charger les données
+
+```{r, eval=FALSE}
+# Packages
+library(TDLM)
+library(sf)
+
+# Définir le répertoire de travail
+setwd("~/Desktop/TP2") # A adapter à votre chemin sur votre ordinateur !
+
+# Charger les données
+data(od_mtp)
+data(distance_mtp)
+data(mass_mtp)
+data(mtp)
+```
+
+### Taille des objets et aperçu
+
+```{r, eval=FALSE}
+dim(od_mtp)         # Dimensions de la matrice OD
+dim(distance_mtp)   # Dimensions de la matrice de distance
+mass_mtp[1:10,]     # Aperçu des masses
+plot(mtp)           # Représentation spatiale de mtp
+plot(mtp[,2])       # Représentation spatiale de l'attribut Longitude
+```
+
+### Statistiques de base
+
+```{r, eval=FALSE}
+# Population moyenne
+mean(mass_mtp$Population)
+
+# Entité avec le plus d'habitants
+mass_mtp[which.max(pop), ]
+
+# Flux totaux sortants et entrants
+sum(mass_mtp$Out_Commuters)
+sum(mass_mtp$In_Commuters)
+
+# Comparaison
+plot(pop, Oi,
+     xlab="Population", ylab="Flux sortants",
+     main="Population vs Flux sortants")
+
+# Comparaison log-log
+plot(pop, Oi, log="xy",
+     xlab="Population", ylab="Flux sortants",
+     main="Population vs Flux sortants")
+
+# Vérifier que les flux sont cohérents
+sum(mass_mtp$Out_Commuters==apply(od_mtp, 1, sum))
+sum(mass_mtp$In_Commuters==apply(od_mtp, 2, sum))
+```
+
+### Exercices
+
+1. Calculer la distance moyenne de navettage à partir des matrices `od_mtp` et 
+`distance_mtp`. Calculer également la distance moyenne de navettage par commune 
+(à l'aide de la fonction `apply()`). 
+   
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Moyenne pondérée distance x flux
+d_mean <- sum(od_mtp * distance_mtp) / sum(od_mtp)
+d_mean
+
+# Moyenne pondérée distance x flux par commune
+d_com <- apply(od_mtp * distance_mtp, 1, sum) / apply(od_mtp, 1, sum)
+d_com
+```
+</details>
+
+---
+
+2. Visualiser les **flux sortants** par commune sur une carte. Pour cela, ajoutez les valeurs de `Oi` (flux sortants) à l’objet spatial `mtp` et affichez-les avec une carte choroplèthe.  
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Ajouter les flux sortants à l'objet spatial
+mtp$Oi <- Oi
+
+# Visualiser avec une carte simple
+plot(mtp["Oi"], main="Flux sortants par commune")
+
+# Visualisation par quantile
+library(viridis)
+
+classes <- cut(mtp$Oi,
+               breaks = quantile(mtp$Oi, probs = seq(0,1,length=11),
+                                 na.rm=TRUE),
+               include.lowest = TRUE,
+               labels = FALSE)
+colors <- viridis(10)
+
+plot(mtp["Oi"], main="Flux sortants par commune", col=colors[classes])
+legend("right",
+       legend = paste0("Q", 1:10),
+       bty = "n",
+       xpd = NA,
+       fill = colors)
+```
+</details>
+
+---
+
+
+
+
+
+
+
+
+
+
+
+

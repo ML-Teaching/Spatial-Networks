@@ -258,6 +258,16 @@ m3 <- rbind(m2, nouvelle_ligne = c(10,11,12,13))
 m3
 ```
 
+
+Avec `apply()`, on applique une fonction sur chaque ligne ou colonne d’une  
+matrice. L’argument `1` signifie ligne et `2` signifie colonne.
+
+```{r, eval=FALSE}
+m <- matrix(1:9, nrow=3, ncol=3)
+apply(m, 1, sum)   # Somme par ligne
+apply(m, 2, mean)  # Moyenne par colonne
+```
+
 Les data frames peuvent être manipulés comme les matrices, mais avec des noms
 de colonnes et des types différents.
 
@@ -287,8 +297,8 @@ résumer vos données rapidement.
 R permet également de **résumer ou agréger** les données par groupes ou conditions.
 
 ```{r, eval=FALSE}
-aggregate(Age ~ Sexe, data=df, FUN=mean) # Moyenne d'âge par sexe
-aggregate(Age ~ Sexe, data=df, FUN=sum)  # Somme ou autres fonctions
+aggregate(Age ~ Genre, data=df, FUN=mean) # Moyenne d'âge par sexe
+aggregate(Age ~ Genre, data=df, FUN=sum)  # Somme ou autres fonctions
 ```
 
 ## Fonctions en R

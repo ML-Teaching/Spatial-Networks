@@ -14,4 +14,9 @@ structure-dune-application-shiny
 exemple-minimal
 déployer-lapplication
 tp2
+prise-en-main-des-données
+charger-les-données
+taille-des-objets-et-aperçu
+statistiques-de-base
+exercices
 tp3

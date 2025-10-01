@@ -169,7 +169,16 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="1.9.3" data-path="02-TP2.html"><a href="#d%C3%A9ployer-lapplication"><i class="fa fa-check"></i><b>1.9.3</b> Déployer l’application</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a></li>
+<li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="02-TP2.html"><a href="#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="02-TP2.html"><a href="#charger-les-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1.1</b> Charger les données</a></li>
+<li class="chapter" data-level="2.1.2" data-path="02-TP2.html"><a href="#taille-des-objets-et-aper%C3%A7u"><i class="fa fa-check"></i><b>2.1.2</b> Taille des objets et aperçu</a></li>
+<li class="chapter" data-level="2.1.3" data-path="tp2.html"><a href="tp2.html#statistiques-de-base"><i class="fa fa-check"></i><b>2.1.3</b> Statistiques de base</a></li>
+<li class="chapter" data-level="2.1.4" data-path="tp2.html"><a href="tp2.html#exercices"><i class="fa fa-check"></i><b>2.1.4</b> Exercices</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
@@ -202,7 +211,127 @@ spatiales, ainsi que le contenu du TP.</p>
 </div>
 <iframe src="slides/tp2/Cours_TP2.pdf" width="100%" height="450px">
 </iframe>
+<div id="prise-en-main-des-données" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Prise en main des données<a href="#prise-en-main-des-donn%C3%A9es" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Le package TDLM met à disposition des données d’exemple de flux domicile-travail entre
+les 342 communes du département de l’Hérault en 2020.</p>
+<ul>
+<li><code>od_mtp</code> : matrice des flux observés.<br />
+</li>
+<li><code>distance_mtp</code> : matrice des distances.<br />
+</li>
+<li><code>mass_mtp</code> : masses et marges (population, flux sortants, flux entrants).<br />
+</li>
+<li><code>mtp</code> : données spatiales associées.</li>
+</ul>
+<p>Nous allons calculer quelques statistiques de base pour explorer ces données.</p>
+<p>Créez un script <strong>TP2.R</strong> et enregistrez-le dans votre répertoire de travail,
+que vous pouvez également nommer <strong>TP2</strong>.</p>
+<div id="charger-les-données" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Charger les données<a href="#charger-les-donn%C3%A9es" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="tp2.html#cb30-1" tabindex="-1"></a><span class="co"># Packages</span></span>
+<span id="cb30-2"><a href="tp2.html#cb30-2" tabindex="-1"></a><span class="fu">library</span>(TDLM)</span>
+<span id="cb30-3"><a href="tp2.html#cb30-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb30-4"><a href="tp2.html#cb30-4" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="tp2.html#cb30-5" tabindex="-1"></a><span class="co"># Définir le répertoire de travail</span></span>
+<span id="cb30-6"><a href="tp2.html#cb30-6" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/TP2&quot;</span>) <span class="co"># A adapter à votre chemin sur votre ordinateur !</span></span>
+<span id="cb30-7"><a href="tp2.html#cb30-7" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="tp2.html#cb30-8" tabindex="-1"></a><span class="co"># Charger les données</span></span>
+<span id="cb30-9"><a href="tp2.html#cb30-9" tabindex="-1"></a><span class="fu">data</span>(od_mtp)</span>
+<span id="cb30-10"><a href="tp2.html#cb30-10" tabindex="-1"></a><span class="fu">data</span>(distance_mtp)</span>
+<span id="cb30-11"><a href="tp2.html#cb30-11" tabindex="-1"></a><span class="fu">data</span>(mass_mtp)</span>
+<span id="cb30-12"><a href="tp2.html#cb30-12" tabindex="-1"></a><span class="fu">data</span>(mtp)</span></code></pre></div>
+</div>
+<div id="taille-des-objets-et-aperçu" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Taille des objets et aperçu<a href="#taille-des-objets-et-aper%C3%A7u" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tp2.html#cb31-1" tabindex="-1"></a><span class="fu">dim</span>(od_mtp)         <span class="co"># Dimensions de la matrice OD</span></span>
+<span id="cb31-2"><a href="tp2.html#cb31-2" tabindex="-1"></a><span class="fu">dim</span>(distance_mtp)   <span class="co"># Dimensions de la matrice de distance</span></span>
+<span id="cb31-3"><a href="tp2.html#cb31-3" tabindex="-1"></a>mass_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]     <span class="co"># Aperçu des masses</span></span>
+<span id="cb31-4"><a href="tp2.html#cb31-4" tabindex="-1"></a><span class="fu">plot</span>(mtp)           <span class="co"># Représentation spatiale de mtp</span></span>
+<span id="cb31-5"><a href="tp2.html#cb31-5" tabindex="-1"></a><span class="fu">plot</span>(mtp[,<span class="dv">2</span>])       <span class="co"># Représentation spatiale de l&#39;attribut Longitude</span></span></code></pre></div>
+</div>
+<div id="statistiques-de-base" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Statistiques de base<a href="tp2.html#statistiques-de-base" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tp2.html#cb32-1" tabindex="-1"></a><span class="co"># Population moyenne</span></span>
+<span id="cb32-2"><a href="tp2.html#cb32-2" tabindex="-1"></a><span class="fu">mean</span>(mass_mtp<span class="sc">$</span>Population)</span>
+<span id="cb32-3"><a href="tp2.html#cb32-3" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="tp2.html#cb32-4" tabindex="-1"></a><span class="co"># Entité avec le plus d&#39;habitants</span></span>
+<span id="cb32-5"><a href="tp2.html#cb32-5" tabindex="-1"></a>mass_mtp[<span class="fu">which.max</span>(pop), ]</span>
+<span id="cb32-6"><a href="tp2.html#cb32-6" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="tp2.html#cb32-7" tabindex="-1"></a><span class="co"># Flux totaux sortants et entrants</span></span>
+<span id="cb32-8"><a href="tp2.html#cb32-8" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>Out_Commuters)</span>
+<span id="cb32-9"><a href="tp2.html#cb32-9" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>In_Commuters)</span>
+<span id="cb32-10"><a href="tp2.html#cb32-10" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="tp2.html#cb32-11" tabindex="-1"></a><span class="co"># Comparaison</span></span>
+<span id="cb32-12"><a href="tp2.html#cb32-12" tabindex="-1"></a><span class="fu">plot</span>(pop, Oi,</span>
+<span id="cb32-13"><a href="tp2.html#cb32-13" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Population&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Flux sortants&quot;</span>,</span>
+<span id="cb32-14"><a href="tp2.html#cb32-14" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Population vs Flux sortants&quot;</span>)</span>
+<span id="cb32-15"><a href="tp2.html#cb32-15" tabindex="-1"></a></span>
+<span id="cb32-16"><a href="tp2.html#cb32-16" tabindex="-1"></a><span class="co"># Comparaison log-log</span></span>
+<span id="cb32-17"><a href="tp2.html#cb32-17" tabindex="-1"></a><span class="fu">plot</span>(pop, Oi, <span class="at">log=</span><span class="st">&quot;xy&quot;</span>,</span>
+<span id="cb32-18"><a href="tp2.html#cb32-18" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Population&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Flux sortants&quot;</span>,</span>
+<span id="cb32-19"><a href="tp2.html#cb32-19" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Population vs Flux sortants&quot;</span>)</span>
+<span id="cb32-20"><a href="tp2.html#cb32-20" tabindex="-1"></a></span>
+<span id="cb32-21"><a href="tp2.html#cb32-21" tabindex="-1"></a><span class="co"># Vérifier que les flux sont cohérents</span></span>
+<span id="cb32-22"><a href="tp2.html#cb32-22" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>Out_Commuters<span class="sc">==</span><span class="fu">apply</span>(od_mtp, <span class="dv">1</span>, sum))</span>
+<span id="cb32-23"><a href="tp2.html#cb32-23" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>In_Commuters<span class="sc">==</span><span class="fu">apply</span>(od_mtp, <span class="dv">2</span>, sum))</span></code></pre></div>
+</div>
+<div id="exercices" class="section level3 hasAnchor" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> Exercices<a href="tp2.html#exercices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>Calculer la distance moyenne de navettage à partir des matrices <code>od_mtp</code> et
+<code>distance_mtp</code>. Calculer également la distance moyenne de navettage par commune
+(à l’aide de la fonction <code>apply()</code>).</li>
+</ol>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tp2.html#cb33-1" tabindex="-1"></a><span class="co"># Moyenne pondérée distance x flux</span></span>
+<span id="cb33-2"><a href="tp2.html#cb33-2" tabindex="-1"></a>d_mean <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_mtp <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_mtp)</span>
+<span id="cb33-3"><a href="tp2.html#cb33-3" tabindex="-1"></a>d_mean</span>
+<span id="cb33-4"><a href="tp2.html#cb33-4" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="tp2.html#cb33-5" tabindex="-1"></a><span class="co"># Moyenne pondérée distance x flux par commune</span></span>
+<span id="cb33-6"><a href="tp2.html#cb33-6" tabindex="-1"></a>d_com <span class="ot">&lt;-</span> <span class="fu">apply</span>(od_mtp <span class="sc">*</span> distance_mtp, <span class="dv">1</span>, sum) <span class="sc">/</span> <span class="fu">apply</span>(od_mtp, <span class="dv">1</span>, sum)</span>
+<span id="cb33-7"><a href="tp2.html#cb33-7" tabindex="-1"></a>d_com</span></code></pre></div>
+</details>
+<hr />
+<ol start="2" style="list-style-type: decimal">
+<li>Visualiser les <strong>flux sortants</strong> par commune sur une carte. Pour cela, ajoutez les valeurs de <code>Oi</code> (flux sortants) à l’objet spatial <code>mtp</code> et affichez-les avec une carte choroplèthe.</li>
+</ol>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tp2.html#cb34-1" tabindex="-1"></a><span class="co"># Ajouter les flux sortants à l&#39;objet spatial</span></span>
+<span id="cb34-2"><a href="tp2.html#cb34-2" tabindex="-1"></a>mtp<span class="sc">$</span>Oi <span class="ot">&lt;-</span> Oi</span>
+<span id="cb34-3"><a href="tp2.html#cb34-3" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="tp2.html#cb34-4" tabindex="-1"></a><span class="co"># Visualiser avec une carte simple</span></span>
+<span id="cb34-5"><a href="tp2.html#cb34-5" tabindex="-1"></a><span class="fu">plot</span>(mtp[<span class="st">&quot;Oi&quot;</span>], <span class="at">main=</span><span class="st">&quot;Flux sortants par commune&quot;</span>)</span>
+<span id="cb34-6"><a href="tp2.html#cb34-6" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="tp2.html#cb34-7" tabindex="-1"></a><span class="co"># Visualisation par quantile</span></span>
+<span id="cb34-8"><a href="tp2.html#cb34-8" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb34-9"><a href="tp2.html#cb34-9" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="tp2.html#cb34-10" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">cut</span>(mtp<span class="sc">$</span>Oi,</span>
+<span id="cb34-11"><a href="tp2.html#cb34-11" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">quantile</span>(mtp<span class="sc">$</span>Oi, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">length=</span><span class="dv">11</span>),</span>
+<span id="cb34-12"><a href="tp2.html#cb34-12" tabindex="-1"></a>                                 <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb34-13"><a href="tp2.html#cb34-13" tabindex="-1"></a>               <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb34-14"><a href="tp2.html#cb34-14" tabindex="-1"></a>               <span class="at">labels =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb34-15"><a href="tp2.html#cb34-15" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">viridis</span>(<span class="dv">10</span>)</span>
+<span id="cb34-16"><a href="tp2.html#cb34-16" tabindex="-1"></a></span>
+<span id="cb34-17"><a href="tp2.html#cb34-17" tabindex="-1"></a><span class="fu">plot</span>(mtp[<span class="st">&quot;Oi&quot;</span>], <span class="at">main=</span><span class="st">&quot;Flux sortants par commune&quot;</span>, <span class="at">col=</span>colors[classes])</span>
+<span id="cb34-18"><a href="tp2.html#cb34-18" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>,</span>
+<span id="cb34-19"><a href="tp2.html#cb34-19" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">paste0</span>(<span class="st">&quot;Q&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb34-20"><a href="tp2.html#cb34-20" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb34-21"><a href="tp2.html#cb34-21" tabindex="-1"></a>       <span class="at">xpd =</span> <span class="cn">NA</span>,</span>
+<span id="cb34-22"><a href="tp2.html#cb34-22" tabindex="-1"></a>       <span class="at">fill =</span> colors)</span></code></pre></div>
+</details>
+<hr />
 
+</div>
+</div>
 </div>
             </section>
 
