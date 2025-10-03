@@ -310,7 +310,7 @@ d_mean_obs
 
 ### Exercices
 
-**1** Trouver la valeur optimale du paramètre (selon le CPC), arrondie à trois  
+**1** Trouver la valeur optimale du paramètre (selon le CPC), arrondie à trois 
 chiffres après la virgule.
 
 ---
@@ -345,8 +345,8 @@ gof(od_sim, od_mtp,
 
 ---
 
-**2** Utiliser la fonction `extract_opportunities()` pour calculer le nombre  
-d'opportunités entre les origines et destinations en vous basant sur la  
+**2** Utiliser la fonction `extract_opportunities()` pour calculer le nombre 
+d'opportunités entre les origines et destinations en vous basant sur la 
 population (i.e., $m_i$).
 
 ---
@@ -364,7 +364,7 @@ opportunity_mtp <- extract_opportunities(opportunity = mi,
 
 ---
 
-**3** Chercher le paramètre optimal (selon le CPC) de la loi radiative  
+**3** Chercher le paramètre optimal (selon le CPC) de la loi radiative 
 (`law = "RadExt"`).
 
 ---
@@ -402,4 +402,16 @@ gof(od_sim_rad, od_mtp,
 **4** Quelle est la meilleure loi sur ce cas d'étude : gravitaire ou radiative ?
 
 
+## test
+
+[test.R](./data/tp2/test.R)
+[test.zip](./data/tp2/test.zip)
+
+
+<a href="./data/tp2/test.R" download>
+Télécharger test.R
+</a>
+<a href="./data/tp2/test.zip" download>
+Télécharger test.zip
+</a>
 
