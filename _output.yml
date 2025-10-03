@@ -4,6 +4,7 @@ bookdown::gitbook:
   #  before_body: assets/banner.html
   #  after_body: assets/footer.html
   highlight: kate
+  toc_depth: 2
   config:
     toc:
       collapse: section

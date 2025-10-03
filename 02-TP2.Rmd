@@ -10,8 +10,9 @@ spatiales, ainsi que le contenu du TP.
 
 ## Prise en main des données 
 
-Le package TDLM met à disposition des données d'exemple de flux domicile-travail entre
-les 342 communes du département de l'Hérault en 2020.
+Le package **TDLM** met à disposition des données d'exemple de flux 
+domicile-travail entre les **342 communes du département de l'Hérault en 
+2020**.
 
 - `od_mtp` : matrice des flux observés.  
 - `distance_mtp` : matrice des distances.  
@@ -57,19 +58,20 @@ plot(mtp[,2])       # Représentation spatiale de l'attribut Longitude
 mean(mass_mtp$Population)
 
 # Entité avec le plus d'habitants
-mass_mtp[which.max(pop), ]
+mass_mtp[which.max(mass_mtp$Population), ]
 
 # Flux totaux sortants et entrants
 sum(mass_mtp$Out_Commuters)
 sum(mass_mtp$In_Commuters)
 
 # Comparaison
-plot(pop, Oi,
+plot(mass_mtp$Population, mass_mtp$Out_Commuters,
      xlab="Population", ylab="Flux sortants",
      main="Population vs Flux sortants")
 
 # Comparaison log-log
-plot(pop, Oi, log="xy",
+plot(mass_mtp$Population, mass_mtp$Out_Commuters,
+     log="xy",
      xlab="Population", ylab="Flux sortants",
      main="Population vs Flux sortants")
 
@@ -80,10 +82,12 @@ sum(mass_mtp$In_Commuters==apply(od_mtp, 2, sum))
 
 ### Exercices
 
-1. Calculer la distance moyenne de navettage à partir des matrices `od_mtp` et 
-`distance_mtp`. Calculer également la distance moyenne de navettage par commune 
-(à l'aide de la fonction `apply()`). 
-   
+**1.** Calculer la **distance moyenne de navettage** à partir des matrices 
+`od_mtp` et `distance_mtp`. Calculer également la distance moyenne de 
+navettage par commune (à l'aide de la fonction `apply()`). Ces métriques vont 
+nous resservir. N’hésitez pas à développer des fonctions dédiées dans un script 
+et à les charger ensuite avec `source()`, comme vu lors du premier TP.
+
 ---
 
 <details>
@@ -102,7 +106,9 @@ d_com
 
 ---
 
-2. Visualiser les **flux sortants** par commune sur une carte. Pour cela, ajoutez les valeurs de `Oi` (flux sortants) à l’objet spatial `mtp` et affichez-les avec une carte choroplèthe.  
+**2.** Visualiser les **flux sortants** par commune sur une carte. Pour cela, 
+ajoutez les valeurs de `Oi` (flux sortants) à l’objet spatial `mtp` et 
+affichez-les avec une carte choroplèthe.  
 
 ---
 
@@ -111,7 +117,7 @@ d_com
 
 ```{r, eval=FALSE}
 # Ajouter les flux sortants à l'objet spatial
-mtp$Oi <- Oi
+mtp$Oi <- mass_mtp$Out_Commuters
 
 # Visualiser avec une carte simple
 plot(mtp["Oi"], main="Flux sortants par commune")
@@ -137,14 +143,263 @@ legend("right",
 
 ---
 
+**3.** Visualiser le **ratio flux entrant / flux sortant** par commune sur une 
+carte.  
 
+---
 
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
 
+```{r, eval=FALSE}
+# Ajouter le ratio
+mtp$ratio <- mass_mtp$In_Commuters/mass_mtp$Out_Commuters
 
+# Visualiser avec une carte simple
+plot(mtp["ratio"], main="Ratio")
+```
 
+</details>
 
+---
 
+## Estimation des flux avec TDLM
 
+### Familiarisation avec TDLM
+
+Nous allons commencer par préparer les données en formatant les masses 
+($m_i$ et $m_j$) et les marges ($D_i$ et $D_j$).
+
+```{r, eval=FALSE}
+# Préparons les données d'entrées
+mi <- mass_mtp$Population
+names(mi) <- rownames(mass_mtp)
+
+mj <- mass_mtp$Population
+names(mj) <- rownames(mass_mtp)
+
+Oi <- mass_mtp$Out_Commuters
+names(Oi) <- rownames(mass_mtp)
+
+Dj <- mass_mtp$In_Commuters
+names(Dj) <- rownames(mass_mtp)
+```
+
+Nous allons ensuite estimer les flux à l'aide d'une loi gravitaire 
+exponentielle (`law = "NGravExp"`) avec un modèle doublement contraint 
+(`model = "DCM"`). 
+
+```{r, eval=FALSE}
+# Loi gravitaire exponentielle avec un modèle doublement contraint
+od_sim <- run_law_model(law = "NGravExp", 
+                        mass_origin = mi, 
+                        mass_destination = mj, 
+                        distance = distance_mtp, 
+                        opportunity = NULL,
+                        param = 0.01,
+                        write_proba = TRUE,
+                        
+                        model = "DCM", 
+                        nb_trips = NULL, 
+                        out_trips = Oi, 
+                        in_trips = Dj,
+                        average = FALSE, 
+                        nbrep = 3,
+                        
+                        check_names = TRUE)
+```
+
+Nous pouvons faire une comparaison rapide pour comprendre les résultats.
+
+```{r, eval=FALSE}
+# Comparaison rapide des flux simulés et observés
+od_sim$replication_1[1:10,1:10]
+od_sim$replication_2[1:10,1:10]
+od_sim$replication_3[1:10,1:10]
+od_mtp[1:10,1:10]
+```
+
+Pour aller plus loin, la fonction `gof()` (*goodness-of-fit*) permet de 
+calculer plusieurs indicateurs pour comparer les matrices simulées à la 
+matrice observée.
+
+```{r, eval=FALSE}
+# Goodness-of-fit entre flux simulés et observés
+gof(od_sim, od_mtp,
+    measures = "all",
+    distance = distance_mtp)
+```
+
+Vous pouvez également comparer les distances moyennes simulées à la distance 
+moyenne observée à l'aide de votre fonction ou du code ci-dessous.
+
+```{r, eval=FALSE}
+d_mean_1 <- sum(od_sim$replication_1 * distance_mtp) / sum(od_sim$replication_1)
+d_mean_1
+
+d_mean_2 <- sum(od_sim$replication_2 * distance_mtp) / sum(od_sim$replication_1)
+d_mean_2
+
+d_mean_3 <- sum(od_sim$replication_3 * distance_mtp) / sum(od_sim$replication_1)
+d_mean_3
+
+d_mean_obs <- sum(od_mtp * distance_mtp) / sum(od_mtp)
+d_mean_obs
+```
+
+### Calibration de paramètre
+
+Nous avons observé que notre modèle tendait à **surestimer la distance moyenne
+de navettage**. Cela signifie que la valeur du paramètre $\beta$, qui contrôle
+l’effet de la distance dans la loi gravitaire, est probablement **trop faible**.
+
+Pour améliorer l’ajustement, nous allons tester plusieurs valeurs de $\beta$
+afin d'évaluer la qualité des ajustements via différents indicateurs de
+*goodness-of-fit* et de comparer la distance moyenne simulée avec celle
+observée.
+
+```{r, eval=FALSE}
+# Loi gravitaire exponentielle avec un modèle doublement contraint
+od_sim <- run_law_model(law = "NGravExp", 
+                        mass_origin = mi, 
+                        mass_destination = mj, 
+                        distance = distance_mtp, 
+                        opportunity = NULL,
+                        param = c(0.01, 0.05, 0.1, 0.2),  # Valeurs testées pour β
+                        write_proba = TRUE,
+                        
+                        model = "DCM", 
+                        nb_trips = NULL, 
+                        out_trips = Oi, 
+                        in_trips = Dj,
+                        average = FALSE, 
+                        nbrep = 1,
+                        
+                        check_names = TRUE)
+```
+
+```{r, eval=FALSE}
+# Comparaison entre flux simulés et flux observés
+gof(od_sim, od_mtp,
+    measures = "all",
+    distance = distance_mtp)
+```
+
+```{r, eval=FALSE}
+# Calcul de la distance moyenne pour chaque paramètre β testé
+d_mean_1 <- sum(od_sim$parameter_1$replication_1 * distance_mtp) / 
+            sum(od_sim$parameter_1$replication_1)
+d_mean_1
+
+d_mean_2 <- sum(od_sim$parameter_2$replication_1 * distance_mtp) / 
+            sum(od_sim$parameter_2$replication_1)
+d_mean_2
+
+d_mean_3 <- sum(od_sim$parameter_3$replication_1 * distance_mtp) / 
+            sum(od_sim$parameter_3$replication_1)
+d_mean_3
+
+d_mean_4 <- sum(od_sim$parameter_4$replication_1 * distance_mtp) / 
+            sum(od_sim$parameter_4$replication_1)
+d_mean_4
+
+# Distance observée
+d_mean_obs <- sum(od_mtp * distance_mtp) / sum(od_mtp)
+d_mean_obs
+```
+
+### Exercices
+
+**1** Trouver la valeur optimale du paramètre (selon le CPC), arrondie à trois  
+chiffres après la virgule.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+od_sim <- run_law_model(law = "NGravExp", 
+                        mass_origin = mi, 
+                        mass_destination = mj, 
+                        distance = distance_mtp, 
+                        opportunity = NULL,
+                        param = c(0.126, 0.127, 0.128, 0.129),
+                        write_proba = TRUE,
+                        
+                        model = "DCM", 
+                        nb_trips = NULL, 
+                        out_trips = Oi, 
+                        in_trips = Dj,
+                        average = FALSE, 
+                        nbrep = 1,
+                        
+                        check_names = TRUE)
+
+gof(od_sim, od_mtp,
+    measures = "all",
+    distance = distance_mtp)
+```
+
+</details>
+
+---
+
+**2** Utiliser la fonction `extract_opportunities()` pour calculer le nombre  
+d'opportunités entre les origines et destinations en vous basant sur la  
+population (i.e., $m_i$).
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+opportunity_mtp <- extract_opportunities(opportunity = mi,
+                                         distance = distance_mtp,
+                                         check_names = TRUE)
+```
+
+</details>
+
+---
+
+**3** Chercher le paramètre optimal (selon le CPC) de la loi radiative  
+(`law = "RadExt"`).
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+od_sim_rad <- run_law_model(law = "RadExt", 
+                            mass_origin = mi, 
+                            mass_destination = mj, 
+                            distance = NULL, 
+                            opportunity = opportunity_mtp,
+                            param = c(0.126, 0.127, 0.128, 0.129),  
+                            write_proba = TRUE,
+                            
+                            model = "DCM", 
+                            nb_trips = NULL, 
+                            out_trips = Oi, 
+                            in_trips = Dj,
+                            average = FALSE, 
+                            nbrep = 1,
+                            
+                            check_names = TRUE)
+
+gof(od_sim_rad, od_mtp,
+    measures = "all",
+    distance = distance_mtp)
+```
+
+</details>
+
+---
+
+**4** Quelle est la meilleure loi sur ce cas d'étude : gravitaire ou radiative ?
 
 
 

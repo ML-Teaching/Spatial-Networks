@@ -150,11 +150,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Préambule</a></li>
 <li class="chapter" data-level="1" data-path="tp1.html"><a href="tp1.html"><i class="fa fa-check"></i><b>1</b> Premiers pas avec R</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="tp1.html"><a href="tp1.html#scripts-et-environnement-de-travail"><i class="fa fa-check"></i><b>1.1</b> Scripts et environnement de travail</a>
-<ul>
-<li class="chapter" data-level="1.1.1" data-path="tp1.html"><a href="tp1.html#les-scripts"><i class="fa fa-check"></i><b>1.1.1</b> Les scripts</a></li>
-<li class="chapter" data-level="1.1.2" data-path="01-TP1.html"><a href="#commande-script-et-ex%C3%A9cution"><i class="fa fa-check"></i><b>1.1.2</b> Commande, script et exécution</a></li>
-</ul></li>
+<li class="chapter" data-level="1.1" data-path="tp1.html"><a href="tp1.html#scripts-et-environnement-de-travail"><i class="fa fa-check"></i><b>1.1</b> Scripts et environnement de travail</a></li>
 <li class="chapter" data-level="1.2" data-path="01-TP1.html"><a href="#le-r%C3%A9pertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
 <li class="chapter" data-level="1.3" data-path="tp1.html"><a href="tp1.html#les-librairies"><i class="fa fa-check"></i><b>1.3</b> Les librairies</a></li>
 <li class="chapter" data-level="1.4" data-path="tp1.html"><a href="tp1.html#types-et-objets-de-base"><i class="fa fa-check"></i><b>1.4</b> Types et objets de base</a></li>
@@ -162,22 +158,12 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="1.6" data-path="tp1.html"><a href="tp1.html#fonctions-en-r"><i class="fa fa-check"></i><b>1.6</b> Fonctions en R</a></li>
 <li class="chapter" data-level="1.7" data-path="tp1.html"><a href="tp1.html#visualisation-avec-r"><i class="fa fa-check"></i><b>1.7</b> Visualisation avec R</a></li>
 <li class="chapter" data-level="1.8" data-path="tp1.html"><a href="tp1.html#exercice"><i class="fa fa-check"></i><b>1.8</b> Exercice</a></li>
-<li class="chapter" data-level="1.9" data-path="01-TP1.html"><a href="#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a>
-<ul>
-<li class="chapter" data-level="1.9.1" data-path="tp1.html"><a href="tp1.html#structure-dune-application-shiny"><i class="fa fa-check"></i><b>1.9.1</b> Structure d’une application Shiny</a></li>
-<li class="chapter" data-level="1.9.2" data-path="tp1.html"><a href="tp1.html#exemple-minimal"><i class="fa fa-check"></i><b>1.9.2</b> Exemple minimal</a></li>
-<li class="chapter" data-level="1.9.3" data-path="01-TP1.html"><a href="#d%C3%A9ployer-lapplication"><i class="fa fa-check"></i><b>1.9.3</b> Déployer l’application</a></li>
-</ul></li>
+<li class="chapter" data-level="1.9" data-path="01-TP1.html"><a href="#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="01-TP1.html"><a href="#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a>
-<ul>
-<li class="chapter" data-level="2.1.1" data-path="01-TP1.html"><a href="#charger-les-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1.1</b> Charger les données</a></li>
-<li class="chapter" data-level="2.1.2" data-path="01-TP1.html"><a href="#taille-des-objets-et-aper%C3%A7u"><i class="fa fa-check"></i><b>2.1.2</b> Taille des objets et aperçu</a></li>
-<li class="chapter" data-level="2.1.3" data-path="tp2.html"><a href="tp2.html#statistiques-de-base"><i class="fa fa-check"></i><b>2.1.3</b> Statistiques de base</a></li>
-<li class="chapter" data-level="2.1.4" data-path="tp2.html"><a href="tp2.html#exercices"><i class="fa fa-check"></i><b>2.1.4</b> Exercices</a></li>
-</ul></li>
+<li class="chapter" data-level="2.1" data-path="01-TP1.html"><a href="#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="2.2" data-path="tp2.html"><a href="tp2.html#estimation-des-flux-avec-tdlm"><i class="fa fa-check"></i><b>2.2</b> Estimation des flux avec TDLM</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a></li>
 <li class="divider"></li>
@@ -736,6 +722,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

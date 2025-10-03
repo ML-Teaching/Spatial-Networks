@@ -19,4 +19,8 @@ charger-les-données
 taille-des-objets-et-aperçu
 statistiques-de-base
 exercices
+estimation-des-flux-avec-tdlm
+familiarisation-avec-tdlm
+calibration-de-paramètre
+exercices-1
 tp3
