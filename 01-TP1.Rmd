@@ -33,9 +33,9 @@ que vous pouvez également nommer **TP1**.
   partie du code qu’il contient. Dans RStudio, vous pouvez :  
   - exécuter la ligne où se trouve le curseur avec `Ctrl + Enter`  
     (ou `Cmd + Enter` sur Mac),  
-  - exécuter un bloc de code sélectionné,  
-  - ou lancer l’intégralité du script avec le bouton **Source**  
-    (en haut à droite de l’éditeur).  
+  - exécuter un bloc de code sélectionné, 
+  - ou lancer l’intégralité du script avec le bouton **Source** (en haut à 
+  droite de l’éditeur).  
 
 > *Bonne pratique : redémarrez régulièrement votre session R 
 > (`Session > Restart R` ou `Ctrl + Shift + F10` sous RStudio) afin de 
@@ -91,7 +91,7 @@ data <- read.csv("Exemple.csv")
 Dans vos TPs et projets, vous serez amenés à importer et exporter différents
 types de fichiers et objets :
 
-- **Fichiers de données** : CSV, TXT, Excel… avec `read.csv()`, `read.table()`.
+- **Fichiers de données** : csv, txt, Excel... avec `read.csv()`, `read.table()`.
 - **Fichiers résultats** : exporter vos données transformées avec `write.csv()`.
 - **Figures et graphiques** : sauvegarder vos graphiques avec `pdf()`, `png()`,
   ou `ggsave()` pour les partager ou les inclure dans vos rapports.
@@ -439,18 +439,18 @@ Le fichier `Figure2.pdf` sera créé dans le répertoire de travail actuel.
 Dans cet exercice, vous allez créer vos propres fonctions dans un script 
 séparé, puis les utiliser pour analyser et visualiser des données.
 
-1. Créez un fichier `Mes_fonctions.R` dans votre répertoire de travail.
+1. Créez un fichier **Mes_fonctions.R** dans votre répertoire de travail.
 2. Dans ce fichier, écrivez deux fonctions :  
    - `resumer_vecteur(x)` : retourne la moyenne, médiane, min, max, variance  
    - `remplacer_grand(x)` : remplace les valeurs supérieures à la moyenne par 100
 3. Dans TP1.R :  
    - Chargez les packages `sf`, `TDLM` et `bioregion` 
    - Définissez votre répertoire de travail 
-   - Importez vos fonctions depuis `Mes_fonctions.R` avec `source()`  
+   - Importez vos fonctions depuis **Mes_fonctions.R** avec `source()`  
    - Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction `sample()`)
    - Appliquez les fonctions au vecteur  
    - Créez un histogramme et un boxplot du vecteur modifié  
-   - Exportez les graphiques dans un PDF `resultats.pdf`  
+   - Exportez les graphiques dans un fichier **Figure3.pdf**  
 
 ---
 
@@ -534,8 +534,8 @@ Une application Shiny se compose généralement de deux parties principales :
 
 ### Exemple minimal
 
-Installez le package `shiny`, créez un fichier `app.R` dans votre dossier TP1 
-et copiez-collez le code suivant :
+Installez le package `shiny`, créez un fichier **app.R** dans votre dossier 
+**TP1** et copiez-collez le code suivant :
 
 ```{r, eval=FALSE}
 # Charger le package Shiny
@@ -567,7 +567,7 @@ shinyApp(ui, server)
 
 ### Déployer l’application
 
-1. Ouvrez le fichier `app.R` dans RStudio.  
+1. Ouvrez le fichier **app.R** dans RStudio.  
 2. Cliquez sur **Run App** en haut à droite de l’éditeur.  
 3. L’application s’ouvre dans le Viewer de RStudio ou dans votre navigateur.  
 

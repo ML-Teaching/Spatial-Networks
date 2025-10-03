@@ -164,7 +164,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <ul>
 <li class="chapter" data-level="2.1" data-path="02-TP2.html"><a href="#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
 <li class="chapter" data-level="2.2" data-path="tp2.html"><a href="tp2.html#estimation-des-flux-avec-tdlm"><i class="fa fa-check"></i><b>2.2</b> Estimation des flux avec TDLM</a></li>
-<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#test"><i class="fa fa-check"></i><b>2.3</b> test</a></li>
+<li class="chapter" data-level="2.3" data-path="02-TP2.html"><a href="#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a></li>
 <li class="divider"></li>
@@ -452,7 +452,7 @@ observée.</p>
 </div>
 <div id="exercices-1" class="section level3 hasAnchor" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Exercices<a href="tp2.html#exercices-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>1</strong> Trouver la valeur optimale du paramètre (selon le CPC), arrondie à trois
+<p><strong>1.</strong> Trouver la valeur optimale du paramètre (selon le CPC), arrondie à trois
 chiffres après la virgule.</p>
 <hr />
 <details>
@@ -481,7 +481,7 @@ Solution (cliquer pour afficher)
 <span id="cb44-20"><a href="tp2.html#cb44-20" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
 </details>
 <hr />
-<p><strong>2</strong> Utiliser la fonction <code>extract_opportunities()</code> pour calculer le nombre
+<p><strong>2.</strong> Utiliser la fonction <code>extract_opportunities()</code> pour calculer le nombre
 d’opportunités entre les origines et destinations en vous basant sur la
 population (i.e., <span class="math inline">\(m_i\)</span>).</p>
 <hr />
@@ -494,7 +494,7 @@ Solution (cliquer pour afficher)
 <span id="cb45-3"><a href="tp2.html#cb45-3" tabindex="-1"></a>                                         <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </details>
 <hr />
-<p><strong>3</strong> Chercher le paramètre optimal (selon le CPC) de la loi radiative
+<p><strong>3.</strong> Chercher le paramètre optimal (selon le CPC) de la loi radiative
 (<code>law = "RadExt"</code>).</p>
 <hr />
 <details>
@@ -523,20 +523,82 @@ Solution (cliquer pour afficher)
 <span id="cb46-20"><a href="tp2.html#cb46-20" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
 </details>
 <hr />
-<p><strong>4</strong> Quelle est la meilleure loi sur ce cas d’étude : gravitaire ou radiative ?</p>
+<p><strong>4.</strong> Quelle est la meilleure loi sur ce cas d’étude : gravitaire ou radiative ?</p>
 </div>
 </div>
-<div id="test" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> test<a href="tp2.html#test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><a href="./data/tp2/test.R">test.R</a>
-<a href="./data/tp2/test.zip">test.zip</a></p>
-<p><a href="./data/tp2/test.R" download>
-Télécharger test.R
-</a>
-<a href="./data/tp2/test.zip" download>
-Télécharger test.zip
-</a></p>
+<div id="flux-et-itinéraires" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Flux et itinéraires<a href="#flux-et-itin%C3%A9raires" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nous allons maintenant rentrer un peu plus dans le détails de l’analyse des flux
+et je vais vous proposer une façon simple de calculer rapidement des itinéraires.</p>
+<div id="identifier-les-flux" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Identifier les flux<a href="tp2.html#identifier-les-flux" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Commençons par mettre nos matrices origine-destination observées et simulées
+sous un format “réseaux” (i.e. trois colonnes) à l’aide de la fonction
+<code>mat_to_net()</code> du package <code>bioregion</code>.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tp2.html#cb47-1" tabindex="-1"></a><span class="fu">library</span>(bioregion)</span>
+<span id="cb47-2"><a href="tp2.html#cb47-2" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="tp2.html#cb47-3" tabindex="-1"></a><span class="co"># Conversion des matrices en format &quot;réseau&quot;</span></span>
+<span id="cb47-4"><a href="tp2.html#cb47-4" tabindex="-1"></a>net_obs <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_mtp, <span class="at">weight=</span><span class="cn">TRUE</span>)</span>
+<span id="cb47-5"><a href="tp2.html#cb47-5" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1, <span class="at">weight=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Nous pouvons ensuite les trier par ordre décroissant de taille de flux et
+comparer le top 10 des plus gros flux dans les deux matrices.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="tp2.html#cb48-1" tabindex="-1"></a><span class="co"># Tri des flux par ordre décroissant</span></span>
+<span id="cb48-2"><a href="tp2.html#cb48-2" tabindex="-1"></a>net_obs <span class="ot">&lt;-</span> net_obs[<span class="fu">order</span>(net_obs<span class="sc">$</span>Weight, <span class="at">decreasing=</span><span class="cn">TRUE</span>),]</span>
+<span id="cb48-3"><a href="tp2.html#cb48-3" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> net_sim[<span class="fu">order</span>(net_sim<span class="sc">$</span>Weight, <span class="at">decreasing=</span><span class="cn">TRUE</span>),]</span>
+<span id="cb48-4"><a href="tp2.html#cb48-4" tabindex="-1"></a></span>
+<span id="cb48-5"><a href="tp2.html#cb48-5" tabindex="-1"></a><span class="co"># Top 10 des flux observés et simulés</span></span>
+<span id="cb48-6"><a href="tp2.html#cb48-6" tabindex="-1"></a>net_obs[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
+<span id="cb48-7"><a href="tp2.html#cb48-7" tabindex="-1"></a>net_sim[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
+</div>
+<div id="calcul-ditinéraires" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Calcul d’itinéraires<a href="#calcul-ditin%C3%A9raires" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<!-- [test.R](./data/tp2/test.R) -->
+<!-- [test.zip](./data/tp2/test.zip) -->
+<!-- <a href="./data/tp2/test.R" download> -->
+<!-- Télécharger test.R -->
+<!-- </a> -->
+<!-- <a href="./data/tp2/test.zip" download> -->
+<!-- Télécharger test.zip -->
+<!-- </a> -->
+<!-- library(dodgr) -->
+<!-- library(osmdata) -->
+<!-- # Charger, filtrer, pondérer et simplifier le réseau routier -->
+<!-- road_dl <- dodgr_streetnet(getbb("Montpellier, France"), quiet = TRUE) -->
+<!-- road <- road_dl[road_dl$highway %in% c("motorway","trunk","primary", -->
+<!--                                  "secondary","tertiary","residential"), ] -->
+<!-- road <- weight_streetnet(road, wt_profile = "motorcar") -->
+<!-- road <- dodgr_contract_graph(road) -->
+<!-- # Exporter road -->
+<!-- save(road, file="road.rda") -->
+<!-- #  -->
+<!-- library(dodgr) -->
+<!-- #library(osmdata) -->
+<!-- library(sf) -->
+<!-- library(ggplot2) -->
+<!-- load("TP2/road.rda") -->
+<!-- # 6. Définir origine / destination -->
+<!-- library(TDLM) -->
+<!-- data(mtp) -->
+<!-- from <- as.numeric(mtp[mtp$ID == 34057, 2:3])[-3]   # INSEE 34057 Castelnau-le-Lez -->
+<!-- to   <- as.numeric(mtp[mtp$ID == 34172, 2:3])[-3]   # INSEE 34172 Montpellier -->
+<!-- # 7. Trouver les sommets les plus proches -->
+<!-- vertices <- dodgr_vertices(road) -->
+<!-- from_id <- vertices$id[which.min((vertices$x - from[1])^2 + (vertices$y - from[2])^2)] -->
+<!-- to_id   <- vertices$id[which.min((vertices$x - to[1])^2 + (vertices$y - to[2])^2)] -->
+<!-- # 8. Calculer le chemin -->
+<!-- path_nodes <- dodgr_paths(road, from = from_id, to = to_id, vertices = TRUE) -->
+<!-- # 9. Convertir en sf LINESTRING -->
+<!-- coords <- do.call(rbind, lapply(path_nodes[[1]][[1]], function(id) { -->
+<!--   c(vertices$x[vertices$id == id], vertices$y[vertices$id == id]) -->
+<!-- })) -->
+<!-- path_line <- st_sfc(st_linestring(coords), crs = 4326) -->
+<!-- # 10. Tracer le chemin -->
+<!-- ggplot() + -->
+<!--   geom_sf(data = mtp[mtp$ID==34057 | mtp$ID==34172,], color = "grey80") + -->
+<!--   geom_sf(data = path_line, color = "red", size = 1.2) + -->
+<!--   ggtitle("Castelnau-le-Lez → Montpellier") -->
 
+</div>
 </div>
 </div>
             </section>

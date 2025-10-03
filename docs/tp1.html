@@ -164,7 +164,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <ul>
 <li class="chapter" data-level="2.1" data-path="01-TP1.html"><a href="#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
 <li class="chapter" data-level="2.2" data-path="tp2.html"><a href="tp2.html#estimation-des-flux-avec-tdlm"><i class="fa fa-check"></i><b>2.2</b> Estimation des flux avec TDLM</a></li>
-<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#test"><i class="fa fa-check"></i><b>2.3</b> test</a></li>
+<li class="chapter" data-level="2.3" data-path="01-TP1.html"><a href="#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a></li>
 <li class="divider"></li>
@@ -226,10 +226,9 @@ partie du code qu’il contient. Dans RStudio, vous pouvez :
 <li>exécuter la ligne où se trouve le curseur avec <code>Ctrl + Enter</code><br />
 (ou <code>Cmd + Enter</code> sur Mac),<br />
 </li>
-<li>exécuter un bloc de code sélectionné,<br />
-</li>
-<li>ou lancer l’intégralité du script avec le bouton <strong>Source</strong><br />
-(en haut à droite de l’éditeur).</li>
+<li>exécuter un bloc de code sélectionné,</li>
+<li>ou lancer l’intégralité du script avec le bouton <strong>Source</strong> (en haut à
+droite de l’éditeur).</li>
 </ul></li>
 </ul>
 <blockquote>
@@ -275,7 +274,7 @@ modifier les chemins.</em></p>
 <p>Dans vos TPs et projets, vous serez amenés à importer et exporter différents
 types de fichiers et objets :</p>
 <ul>
-<li><strong>Fichiers de données</strong> : CSV, TXT, Excel… avec <code>read.csv()</code>, <code>read.table()</code>.</li>
+<li><strong>Fichiers de données</strong> : csv, txt, Excel… avec <code>read.csv()</code>, <code>read.table()</code>.</li>
 <li><strong>Fichiers résultats</strong> : exporter vos données transformées avec <code>write.csv()</code>.</li>
 <li><strong>Figures et graphiques</strong> : sauvegarder vos graphiques avec <code>pdf()</code>, <code>png()</code>,
 ou <code>ggsave()</code> pour les partager ou les inclure dans vos rapports.</li>
@@ -530,7 +529,7 @@ un graphique.</p>
 <p>Dans cet exercice, vous allez créer vos propres fonctions dans un script
 séparé, puis les utiliser pour analyser et visualiser des données.</p>
 <ol style="list-style-type: decimal">
-<li>Créez un fichier <code>Mes_fonctions.R</code> dans votre répertoire de travail.</li>
+<li>Créez un fichier <strong>Mes_fonctions.R</strong> dans votre répertoire de travail.</li>
 <li>Dans ce fichier, écrivez deux fonctions :
 <ul>
 <li><code>resumer_vecteur(x)</code> : retourne la moyenne, médiane, min, max, variance<br />
@@ -541,14 +540,14 @@ séparé, puis les utiliser pour analyser et visualiser des données.</p>
 <ul>
 <li>Chargez les packages <code>sf</code>, <code>TDLM</code> et <code>bioregion</code></li>
 <li>Définissez votre répertoire de travail</li>
-<li>Importez vos fonctions depuis <code>Mes_fonctions.R</code> avec <code>source()</code><br />
+<li>Importez vos fonctions depuis <strong>Mes_fonctions.R</strong> avec <code>source()</code><br />
 </li>
 <li>Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction <code>sample()</code>)</li>
 <li>Appliquez les fonctions au vecteur<br />
 </li>
 <li>Créez un histogramme et un boxplot du vecteur modifié<br />
 </li>
-<li>Exportez les graphiques dans un PDF <code>resultats.pdf</code></li>
+<li>Exportez les graphiques dans un fichier <strong>Figure3.pdf</strong></li>
 </ul></li>
 </ol>
 <hr />
@@ -630,8 +629,8 @@ affichés dans l’UI.</li>
 </div>
 <div id="exemple-minimal" class="section level3 hasAnchor" number="1.9.2">
 <h3><span class="header-section-number">1.9.2</span> Exemple minimal<a href="tp1.html#exemple-minimal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Installez le package <code>shiny</code>, créez un fichier <code>app.R</code> dans votre dossier TP1
-et copiez-collez le code suivant :</p>
+<p>Installez le package <code>shiny</code>, créez un fichier <strong>app.R</strong> dans votre dossier
+<strong>TP1</strong> et copiez-collez le code suivant :</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tp1.html#cb29-1" tabindex="-1"></a><span class="co"># Charger le package Shiny</span></span>
 <span id="cb29-2"><a href="tp1.html#cb29-2" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
 <span id="cb29-3"><a href="tp1.html#cb29-3" tabindex="-1"></a></span>
@@ -661,7 +660,7 @@ et copiez-collez le code suivant :</p>
 <div id="déployer-lapplication" class="section level3 hasAnchor" number="1.9.3">
 <h3><span class="header-section-number">1.9.3</span> Déployer l’application<a href="#d%C3%A9ployer-lapplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
-<li>Ouvrez le fichier <code>app.R</code> dans RStudio.<br />
+<li>Ouvrez le fichier <strong>app.R</strong> dans RStudio.<br />
 </li>
 <li>Cliquez sur <strong>Run App</strong> en haut à droite de l’éditeur.<br />
 </li>

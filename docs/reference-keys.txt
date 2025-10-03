@@ -23,5 +23,7 @@ estimation-des-flux-avec-tdlm
 familiarisation-avec-tdlm
 calibration-de-paramètre
 exercices-1
-test
+flux-et-itinéraires
+identifier-les-flux
+calcul-ditinéraires
 tp3
