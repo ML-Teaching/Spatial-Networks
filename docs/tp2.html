@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>TP2 Estimation des flux domicile-travail | Introduction aux réseaux spatiaux avec R</title>
   <meta name="description" content="Réseaux spatiaux" />
-  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
 
   <meta property="og:title" content="TP2 Estimation des flux domicile-travail | Introduction aux réseaux spatiaux avec R" />
   <meta property="og:type" content="book" />
@@ -151,20 +151,21 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="1" data-path="tp1.html"><a href="tp1.html"><i class="fa fa-check"></i><b>1</b> Premiers pas avec R</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="tp1.html"><a href="tp1.html#scripts-et-environnement-de-travail"><i class="fa fa-check"></i><b>1.1</b> Scripts et environnement de travail</a></li>
-<li class="chapter" data-level="1.2" data-path="02-TP2.html"><a href="#le-r%C3%A9pertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
+<li class="chapter" data-level="1.2" data-path="tp1.html"><a href="tp1.html#le-r%C3%A9pertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
 <li class="chapter" data-level="1.3" data-path="tp1.html"><a href="tp1.html#les-librairies"><i class="fa fa-check"></i><b>1.3</b> Les librairies</a></li>
 <li class="chapter" data-level="1.4" data-path="tp1.html"><a href="tp1.html#types-et-objets-de-base"><i class="fa fa-check"></i><b>1.4</b> Types et objets de base</a></li>
 <li class="chapter" data-level="1.5" data-path="tp1.html"><a href="tp1.html#manipulation-des-objets"><i class="fa fa-check"></i><b>1.5</b> Manipulation des objets</a></li>
 <li class="chapter" data-level="1.6" data-path="tp1.html"><a href="tp1.html#fonctions-en-r"><i class="fa fa-check"></i><b>1.6</b> Fonctions en R</a></li>
 <li class="chapter" data-level="1.7" data-path="tp1.html"><a href="tp1.html#visualisation-avec-r"><i class="fa fa-check"></i><b>1.7</b> Visualisation avec R</a></li>
 <li class="chapter" data-level="1.8" data-path="tp1.html"><a href="tp1.html#exercice"><i class="fa fa-check"></i><b>1.8</b> Exercice</a></li>
-<li class="chapter" data-level="1.9" data-path="02-TP2.html"><a href="#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
+<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="02-TP2.html"><a href="#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="2.1" data-path="tp2.html"><a href="tp2.html#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
 <li class="chapter" data-level="2.2" data-path="tp2.html"><a href="tp2.html#estimation-des-flux-avec-tdlm"><i class="fa fa-check"></i><b>2.2</b> Estimation des flux avec TDLM</a></li>
-<li class="chapter" data-level="2.3" data-path="02-TP2.html"><a href="#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
+<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
+<li class="chapter" data-level="2.4" data-path="tp2.html"><a href="tp2.html#application-r-shiny"><i class="fa fa-check"></i><b>2.4</b> Application R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a></li>
 <li class="divider"></li>
@@ -199,7 +200,7 @@ spatiales, ainsi que le contenu du TP.</p>
 <iframe src="slides/tp2/Cours_TP2.pdf" width="100%" height="450px">
 </iframe>
 <div id="prise-en-main-des-données" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Prise en main des données<a href="#prise-en-main-des-donn%C3%A9es" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">2.1</span> Prise en main des données<a href="tp2.html#prise-en-main-des-donn%C3%A9es" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Le package <strong>TDLM</strong> met à disposition des données d’exemple de flux
 domicile-travail entre les <strong>342 communes du département de l’Hérault en
 2020</strong>.</p>
@@ -216,27 +217,32 @@ domicile-travail entre les <strong>342 communes du département de l’Hérault 
 <p>Créez un script <strong>TP2.R</strong> et enregistrez-le dans votre répertoire de travail,
 que vous pouvez également nommer <strong>TP2</strong>.</p>
 <div id="charger-les-données" class="section level3 hasAnchor" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Charger les données<a href="#charger-les-donn%C3%A9es" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="tp2.html#cb30-1" tabindex="-1"></a><span class="co"># Packages</span></span>
-<span id="cb30-2"><a href="tp2.html#cb30-2" tabindex="-1"></a><span class="fu">library</span>(TDLM)</span>
-<span id="cb30-3"><a href="tp2.html#cb30-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb30-4"><a href="tp2.html#cb30-4" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="tp2.html#cb30-5" tabindex="-1"></a><span class="co"># Définir le répertoire de travail</span></span>
-<span id="cb30-6"><a href="tp2.html#cb30-6" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/TP2&quot;</span>) <span class="co"># A adapter à votre chemin sur votre ordinateur !</span></span>
-<span id="cb30-7"><a href="tp2.html#cb30-7" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="tp2.html#cb30-8" tabindex="-1"></a><span class="co"># Charger les données</span></span>
-<span id="cb30-9"><a href="tp2.html#cb30-9" tabindex="-1"></a><span class="fu">data</span>(od_mtp)</span>
-<span id="cb30-10"><a href="tp2.html#cb30-10" tabindex="-1"></a><span class="fu">data</span>(distance_mtp)</span>
-<span id="cb30-11"><a href="tp2.html#cb30-11" tabindex="-1"></a><span class="fu">data</span>(mass_mtp)</span>
-<span id="cb30-12"><a href="tp2.html#cb30-12" tabindex="-1"></a><span class="fu">data</span>(mtp)</span></code></pre></div>
+<h3><span class="header-section-number">2.1.1</span> Charger les données<a href="tp2.html#charger-les-donn%C3%A9es" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="tp2.html#cb30-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
+<span id="cb30-2"><a href="tp2.html#cb30-2" tabindex="-1"></a><span class="fu">library</span>(bioregion)</span>
+<span id="cb30-3"><a href="tp2.html#cb30-3" tabindex="-1"></a><span class="fu">library</span>(TDLM)</span>
+<span id="cb30-4"><a href="tp2.html#cb30-4" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb30-5"><a href="tp2.html#cb30-5" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="tp2.html#cb30-6" tabindex="-1"></a><span class="co"># Définir le répertoire de travail</span></span>
+<span id="cb30-7"><a href="tp2.html#cb30-7" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/TP2&quot;</span>) <span class="co"># A adapter à votre chemin sur votre ordinateur !</span></span>
+<span id="cb30-8"><a href="tp2.html#cb30-8" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="tp2.html#cb30-9" tabindex="-1"></a><span class="co"># Charger les données</span></span>
+<span id="cb30-10"><a href="tp2.html#cb30-10" tabindex="-1"></a><span class="fu">data</span>(od_mtp)</span>
+<span id="cb30-11"><a href="tp2.html#cb30-11" tabindex="-1"></a><span class="fu">data</span>(distance_mtp)</span>
+<span id="cb30-12"><a href="tp2.html#cb30-12" tabindex="-1"></a><span class="fu">data</span>(mass_mtp)</span>
+<span id="cb30-13"><a href="tp2.html#cb30-13" tabindex="-1"></a><span class="fu">data</span>(mtp)</span></code></pre></div>
 </div>
 <div id="taille-des-objets-et-aperçu" class="section level3 hasAnchor" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Taille des objets et aperçu<a href="#taille-des-objets-et-aper%C3%A7u" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">2.1.2</span> Taille des objets et aperçu<a href="tp2.html#taille-des-objets-et-aper%C3%A7u" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tp2.html#cb31-1" tabindex="-1"></a><span class="fu">dim</span>(od_mtp)         <span class="co"># Dimensions de la matrice OD</span></span>
 <span id="cb31-2"><a href="tp2.html#cb31-2" tabindex="-1"></a><span class="fu">dim</span>(distance_mtp)   <span class="co"># Dimensions de la matrice de distance</span></span>
-<span id="cb31-3"><a href="tp2.html#cb31-3" tabindex="-1"></a>mass_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]     <span class="co"># Aperçu des masses</span></span>
-<span id="cb31-4"><a href="tp2.html#cb31-4" tabindex="-1"></a><span class="fu">plot</span>(mtp)           <span class="co"># Représentation spatiale de mtp</span></span>
-<span id="cb31-5"><a href="tp2.html#cb31-5" tabindex="-1"></a><span class="fu">plot</span>(mtp[,<span class="dv">2</span>])       <span class="co"># Représentation spatiale de l&#39;attribut Longitude</span></span></code></pre></div>
+<span id="cb31-3"><a href="tp2.html#cb31-3" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="tp2.html#cb31-4" tabindex="-1"></a>mass_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]     <span class="co"># Aperçu des masses</span></span>
+<span id="cb31-5"><a href="tp2.html#cb31-5" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="tp2.html#cb31-6" tabindex="-1"></a>mtp                 <span class="co"># Aperçu des entités spatiales </span></span>
+<span id="cb31-7"><a href="tp2.html#cb31-7" tabindex="-1"></a><span class="fu">class</span>(mtp)          <span class="co"># Objet sf</span></span>
+<span id="cb31-8"><a href="tp2.html#cb31-8" tabindex="-1"></a><span class="fu">plot</span>(mtp)           <span class="co"># Représentation spatiale de mtp</span></span>
+<span id="cb31-9"><a href="tp2.html#cb31-9" tabindex="-1"></a><span class="fu">plot</span>(mtp[,<span class="dv">2</span>])       <span class="co"># Représentation spatiale de l&#39;attribut Longitude</span></span></code></pre></div>
 </div>
 <div id="statistiques-de-base" class="section level3 hasAnchor" number="2.1.3">
 <h3><span class="header-section-number">2.1.3</span> Statistiques de base<a href="tp2.html#statistiques-de-base" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -288,7 +294,7 @@ Solution (cliquer pour afficher)
 <hr />
 <p><strong>2.</strong> Visualiser les <strong>flux sortants</strong> par commune sur une carte. Pour cela,
 ajoutez les valeurs de <code>Oi</code> (flux sortants) à l’objet spatial <code>mtp</code> et
-affichez-les avec une carte choroplèthe.</p>
+affichez-les avec la fonction <code>plot()</code>.</p>
 <hr />
 <details>
 <summary>
@@ -400,7 +406,7 @@ moyenne observée à l’aide de votre fonction ou du code ci-dessous.</p>
 <span id="cb40-11"><a href="tp2.html#cb40-11" tabindex="-1"></a>d_mean_obs</span></code></pre></div>
 </div>
 <div id="calibration-de-paramètre" class="section level3 hasAnchor" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> Calibration de paramètre<a href="#calibration-de-param%C3%A8tre" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">2.2.2</span> Calibration de paramètre<a href="tp2.html#calibration-de-param%C3%A8tre" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Nous avons observé que notre modèle tendait à <strong>surestimer la distance moyenne
 de navettage</strong>. Cela signifie que la valeur du paramètre <span class="math inline">\(\beta\)</span>, qui contrôle
 l’effet de la distance dans la loi gravitaire, est probablement <strong>trop faible</strong>.</p>
@@ -459,39 +465,41 @@ chiffres après la virgule.</p>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tp2.html#cb44-1" tabindex="-1"></a>od_sim <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;NGravExp&quot;</span>, </span>
-<span id="cb44-2"><a href="tp2.html#cb44-2" tabindex="-1"></a>                        <span class="at">mass_origin =</span> mi, </span>
-<span id="cb44-3"><a href="tp2.html#cb44-3" tabindex="-1"></a>                        <span class="at">mass_destination =</span> mj, </span>
-<span id="cb44-4"><a href="tp2.html#cb44-4" tabindex="-1"></a>                        <span class="at">distance =</span> distance_mtp, </span>
-<span id="cb44-5"><a href="tp2.html#cb44-5" tabindex="-1"></a>                        <span class="at">opportunity =</span> <span class="cn">NULL</span>,</span>
-<span id="cb44-6"><a href="tp2.html#cb44-6" tabindex="-1"></a>                        <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.126</span>, <span class="fl">0.127</span>, <span class="fl">0.128</span>, <span class="fl">0.129</span>),</span>
-<span id="cb44-7"><a href="tp2.html#cb44-7" tabindex="-1"></a>                        <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb44-8"><a href="tp2.html#cb44-8" tabindex="-1"></a>                        </span>
-<span id="cb44-9"><a href="tp2.html#cb44-9" tabindex="-1"></a>                        <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
-<span id="cb44-10"><a href="tp2.html#cb44-10" tabindex="-1"></a>                        <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
-<span id="cb44-11"><a href="tp2.html#cb44-11" tabindex="-1"></a>                        <span class="at">out_trips =</span> Oi, </span>
-<span id="cb44-12"><a href="tp2.html#cb44-12" tabindex="-1"></a>                        <span class="at">in_trips =</span> Dj,</span>
-<span id="cb44-13"><a href="tp2.html#cb44-13" tabindex="-1"></a>                        <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb44-14"><a href="tp2.html#cb44-14" tabindex="-1"></a>                        <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
-<span id="cb44-15"><a href="tp2.html#cb44-15" tabindex="-1"></a>                        </span>
-<span id="cb44-16"><a href="tp2.html#cb44-16" tabindex="-1"></a>                        <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb44-17"><a href="tp2.html#cb44-17" tabindex="-1"></a></span>
-<span id="cb44-18"><a href="tp2.html#cb44-18" tabindex="-1"></a><span class="fu">gof</span>(od_sim, od_mtp,</span>
-<span id="cb44-19"><a href="tp2.html#cb44-19" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
-<span id="cb44-20"><a href="tp2.html#cb44-20" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tp2.html#cb44-1" tabindex="-1"></a><span class="co"># Loi gravitaire exponentielle avec un modèle doublement contraint</span></span>
+<span id="cb44-2"><a href="tp2.html#cb44-2" tabindex="-1"></a>od_sim <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;NGravExp&quot;</span>, </span>
+<span id="cb44-3"><a href="tp2.html#cb44-3" tabindex="-1"></a>                        <span class="at">mass_origin =</span> mi, </span>
+<span id="cb44-4"><a href="tp2.html#cb44-4" tabindex="-1"></a>                        <span class="at">mass_destination =</span> mj, </span>
+<span id="cb44-5"><a href="tp2.html#cb44-5" tabindex="-1"></a>                        <span class="at">distance =</span> distance_mtp, </span>
+<span id="cb44-6"><a href="tp2.html#cb44-6" tabindex="-1"></a>                        <span class="at">opportunity =</span> <span class="cn">NULL</span>,</span>
+<span id="cb44-7"><a href="tp2.html#cb44-7" tabindex="-1"></a>                        <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.124</span>, <span class="fl">0.125</span>, <span class="fl">0.126</span>, <span class="fl">0.127</span>, <span class="fl">0.128</span>, <span class="fl">0.129</span>),</span>
+<span id="cb44-8"><a href="tp2.html#cb44-8" tabindex="-1"></a>                        <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb44-9"><a href="tp2.html#cb44-9" tabindex="-1"></a>                        </span>
+<span id="cb44-10"><a href="tp2.html#cb44-10" tabindex="-1"></a>                        <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
+<span id="cb44-11"><a href="tp2.html#cb44-11" tabindex="-1"></a>                        <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
+<span id="cb44-12"><a href="tp2.html#cb44-12" tabindex="-1"></a>                        <span class="at">out_trips =</span> Oi, </span>
+<span id="cb44-13"><a href="tp2.html#cb44-13" tabindex="-1"></a>                        <span class="at">in_trips =</span> Dj,</span>
+<span id="cb44-14"><a href="tp2.html#cb44-14" tabindex="-1"></a>                        <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb44-15"><a href="tp2.html#cb44-15" tabindex="-1"></a>                        <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
+<span id="cb44-16"><a href="tp2.html#cb44-16" tabindex="-1"></a>                        </span>
+<span id="cb44-17"><a href="tp2.html#cb44-17" tabindex="-1"></a>                        <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb44-18"><a href="tp2.html#cb44-18" tabindex="-1"></a></span>
+<span id="cb44-19"><a href="tp2.html#cb44-19" tabindex="-1"></a><span class="fu">gof</span>(od_sim, od_mtp,</span>
+<span id="cb44-20"><a href="tp2.html#cb44-20" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb44-21"><a href="tp2.html#cb44-21" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
 </details>
 <hr />
 <p><strong>2.</strong> Utiliser la fonction <code>extract_opportunities()</code> pour calculer le nombre
 d’opportunités entre les origines et destinations en vous basant sur la
-population (i.e., <span class="math inline">\(m_i\)</span>).</p>
+population (i.e. <span class="math inline">\(m_i\)</span>).</p>
 <hr />
 <details>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="tp2.html#cb45-1" tabindex="-1"></a>opportunity_mtp <span class="ot">&lt;-</span> <span class="fu">extract_opportunities</span>(<span class="at">opportunity =</span> mi,</span>
-<span id="cb45-2"><a href="tp2.html#cb45-2" tabindex="-1"></a>                                         <span class="at">distance =</span> distance_mtp,</span>
-<span id="cb45-3"><a href="tp2.html#cb45-3" tabindex="-1"></a>                                         <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="tp2.html#cb45-1" tabindex="-1"></a><span class="co"># Calcule du nombre d&#39;opportunités</span></span>
+<span id="cb45-2"><a href="tp2.html#cb45-2" tabindex="-1"></a>opportunity_mtp <span class="ot">&lt;-</span> <span class="fu">extract_opportunities</span>(<span class="at">opportunity =</span> mi,</span>
+<span id="cb45-3"><a href="tp2.html#cb45-3" tabindex="-1"></a>                                         <span class="at">distance =</span> distance_mtp,</span>
+<span id="cb45-4"><a href="tp2.html#cb45-4" tabindex="-1"></a>                                         <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </details>
 <hr />
 <p><strong>3.</strong> Chercher le paramètre optimal (selon le CPC) de la loi radiative
@@ -501,45 +509,44 @@ Solution (cliquer pour afficher)
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tp2.html#cb46-1" tabindex="-1"></a>od_sim_rad <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;RadExt&quot;</span>, </span>
-<span id="cb46-2"><a href="tp2.html#cb46-2" tabindex="-1"></a>                            <span class="at">mass_origin =</span> mi, </span>
-<span id="cb46-3"><a href="tp2.html#cb46-3" tabindex="-1"></a>                            <span class="at">mass_destination =</span> mj, </span>
-<span id="cb46-4"><a href="tp2.html#cb46-4" tabindex="-1"></a>                            <span class="at">distance =</span> <span class="cn">NULL</span>, </span>
-<span id="cb46-5"><a href="tp2.html#cb46-5" tabindex="-1"></a>                            <span class="at">opportunity =</span> opportunity_mtp,</span>
-<span id="cb46-6"><a href="tp2.html#cb46-6" tabindex="-1"></a>                            <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.126</span>, <span class="fl">0.127</span>, <span class="fl">0.128</span>, <span class="fl">0.129</span>),  </span>
-<span id="cb46-7"><a href="tp2.html#cb46-7" tabindex="-1"></a>                            <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb46-8"><a href="tp2.html#cb46-8" tabindex="-1"></a>                            </span>
-<span id="cb46-9"><a href="tp2.html#cb46-9" tabindex="-1"></a>                            <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
-<span id="cb46-10"><a href="tp2.html#cb46-10" tabindex="-1"></a>                            <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
-<span id="cb46-11"><a href="tp2.html#cb46-11" tabindex="-1"></a>                            <span class="at">out_trips =</span> Oi, </span>
-<span id="cb46-12"><a href="tp2.html#cb46-12" tabindex="-1"></a>                            <span class="at">in_trips =</span> Dj,</span>
-<span id="cb46-13"><a href="tp2.html#cb46-13" tabindex="-1"></a>                            <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb46-14"><a href="tp2.html#cb46-14" tabindex="-1"></a>                            <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
-<span id="cb46-15"><a href="tp2.html#cb46-15" tabindex="-1"></a>                            </span>
-<span id="cb46-16"><a href="tp2.html#cb46-16" tabindex="-1"></a>                            <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-17"><a href="tp2.html#cb46-17" tabindex="-1"></a></span>
-<span id="cb46-18"><a href="tp2.html#cb46-18" tabindex="-1"></a><span class="fu">gof</span>(od_sim_rad, od_mtp,</span>
-<span id="cb46-19"><a href="tp2.html#cb46-19" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
-<span id="cb46-20"><a href="tp2.html#cb46-20" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tp2.html#cb46-1" tabindex="-1"></a><span class="co"># Loi radiative avec un modèle doublement contraint</span></span>
+<span id="cb46-2"><a href="tp2.html#cb46-2" tabindex="-1"></a>od_sim_rad <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;RadExt&quot;</span>, </span>
+<span id="cb46-3"><a href="tp2.html#cb46-3" tabindex="-1"></a>                            <span class="at">mass_origin =</span> mi, </span>
+<span id="cb46-4"><a href="tp2.html#cb46-4" tabindex="-1"></a>                            <span class="at">mass_destination =</span> mj, </span>
+<span id="cb46-5"><a href="tp2.html#cb46-5" tabindex="-1"></a>                            <span class="at">distance =</span> <span class="cn">NULL</span>, </span>
+<span id="cb46-6"><a href="tp2.html#cb46-6" tabindex="-1"></a>                            <span class="at">opportunity =</span> opportunity_mtp,</span>
+<span id="cb46-7"><a href="tp2.html#cb46-7" tabindex="-1"></a>                            <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.126</span>, <span class="fl">0.127</span>, <span class="fl">0.128</span>, <span class="fl">0.129</span>),  </span>
+<span id="cb46-8"><a href="tp2.html#cb46-8" tabindex="-1"></a>                            <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb46-9"><a href="tp2.html#cb46-9" tabindex="-1"></a>                            </span>
+<span id="cb46-10"><a href="tp2.html#cb46-10" tabindex="-1"></a>                            <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
+<span id="cb46-11"><a href="tp2.html#cb46-11" tabindex="-1"></a>                            <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
+<span id="cb46-12"><a href="tp2.html#cb46-12" tabindex="-1"></a>                            <span class="at">out_trips =</span> Oi, </span>
+<span id="cb46-13"><a href="tp2.html#cb46-13" tabindex="-1"></a>                            <span class="at">in_trips =</span> Dj,</span>
+<span id="cb46-14"><a href="tp2.html#cb46-14" tabindex="-1"></a>                            <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb46-15"><a href="tp2.html#cb46-15" tabindex="-1"></a>                            <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
+<span id="cb46-16"><a href="tp2.html#cb46-16" tabindex="-1"></a>                            </span>
+<span id="cb46-17"><a href="tp2.html#cb46-17" tabindex="-1"></a>                            <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb46-18"><a href="tp2.html#cb46-18" tabindex="-1"></a></span>
+<span id="cb46-19"><a href="tp2.html#cb46-19" tabindex="-1"></a><span class="fu">gof</span>(od_sim_rad, od_mtp,</span>
+<span id="cb46-20"><a href="tp2.html#cb46-20" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb46-21"><a href="tp2.html#cb46-21" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
 </details>
 <hr />
 <p><strong>4.</strong> Quelle est la meilleure loi sur ce cas d’étude : gravitaire ou radiative ?</p>
 </div>
 </div>
 <div id="flux-et-itinéraires" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Flux et itinéraires<a href="#flux-et-itin%C3%A9raires" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Nous allons maintenant rentrer un peu plus dans le détails de l’analyse des flux
+<h2><span class="header-section-number">2.3</span> Flux et itinéraires<a href="tp2.html#flux-et-itin%C3%A9raires" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nous allons maintenant rentrer un peu plus dans le détail de l’analyse des flux
 et je vais vous proposer une façon simple de calculer rapidement des itinéraires.</p>
 <div id="identifier-les-flux" class="section level3 hasAnchor" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Identifier les flux<a href="tp2.html#identifier-les-flux" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Commençons par mettre nos matrices origine-destination observées et simulées
 sous un format “réseaux” (i.e. trois colonnes) à l’aide de la fonction
-<code>mat_to_net()</code> du package <code>bioregion</code>.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tp2.html#cb47-1" tabindex="-1"></a><span class="fu">library</span>(bioregion)</span>
-<span id="cb47-2"><a href="tp2.html#cb47-2" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="tp2.html#cb47-3" tabindex="-1"></a><span class="co"># Conversion des matrices en format &quot;réseau&quot;</span></span>
-<span id="cb47-4"><a href="tp2.html#cb47-4" tabindex="-1"></a>net_obs <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_mtp, <span class="at">weight=</span><span class="cn">TRUE</span>)</span>
-<span id="cb47-5"><a href="tp2.html#cb47-5" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1, <span class="at">weight=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<code>mat_to_net()</code> du package <strong>bioregion</strong>.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tp2.html#cb47-1" tabindex="-1"></a><span class="co"># Conversion des matrices en format &quot;réseau&quot;</span></span>
+<span id="cb47-2"><a href="tp2.html#cb47-2" tabindex="-1"></a>net_obs <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_mtp, <span class="at">weight=</span><span class="cn">TRUE</span>)</span>
+<span id="cb47-3"><a href="tp2.html#cb47-3" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1, <span class="at">weight=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Nous pouvons ensuite les trier par ordre décroissant de taille de flux et
 comparer le top 10 des plus gros flux dans les deux matrices.</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="tp2.html#cb48-1" tabindex="-1"></a><span class="co"># Tri des flux par ordre décroissant</span></span>
@@ -549,56 +556,140 @@ comparer le top 10 des plus gros flux dans les deux matrices.</p>
 <span id="cb48-5"><a href="tp2.html#cb48-5" tabindex="-1"></a><span class="co"># Top 10 des flux observés et simulés</span></span>
 <span id="cb48-6"><a href="tp2.html#cb48-6" tabindex="-1"></a>net_obs[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
 <span id="cb48-7"><a href="tp2.html#cb48-7" tabindex="-1"></a>net_sim[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<p>Nous observons que le plus gros flux d’individus va de la commune ayant pour
+code INSEE <strong>34057</strong> (Castelnau-le-Lez) vers le code INSEE <strong>34172</strong>
+(Montpellier). Nous allons maintenant essayer de déterminer un itinéraire
+permettant d’aller d’une commune à l’autre.</p>
 </div>
 <div id="calcul-ditinéraires" class="section level3 hasAnchor" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Calcul d’itinéraires<a href="#calcul-ditin%C3%A9raires" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<!-- [test.R](./data/tp2/test.R) -->
-<!-- [test.zip](./data/tp2/test.zip) -->
-<!-- <a href="./data/tp2/test.R" download> -->
-<!-- Télécharger test.R -->
-<!-- </a> -->
-<!-- <a href="./data/tp2/test.zip" download> -->
-<!-- Télécharger test.zip -->
-<!-- </a> -->
-<!-- library(dodgr) -->
-<!-- library(osmdata) -->
-<!-- # Charger, filtrer, pondérer et simplifier le réseau routier -->
-<!-- road_dl <- dodgr_streetnet(getbb("Montpellier, France"), quiet = TRUE) -->
-<!-- road <- road_dl[road_dl$highway %in% c("motorway","trunk","primary", -->
-<!--                                  "secondary","tertiary","residential"), ] -->
-<!-- road <- weight_streetnet(road, wt_profile = "motorcar") -->
-<!-- road <- dodgr_contract_graph(road) -->
-<!-- # Exporter road -->
-<!-- save(road, file="road.rda") -->
-<!-- #  -->
-<!-- library(dodgr) -->
-<!-- #library(osmdata) -->
-<!-- library(sf) -->
-<!-- library(ggplot2) -->
-<!-- load("TP2/road.rda") -->
-<!-- # 6. Définir origine / destination -->
-<!-- library(TDLM) -->
-<!-- data(mtp) -->
-<!-- from <- as.numeric(mtp[mtp$ID == 34057, 2:3])[-3]   # INSEE 34057 Castelnau-le-Lez -->
-<!-- to   <- as.numeric(mtp[mtp$ID == 34172, 2:3])[-3]   # INSEE 34172 Montpellier -->
-<!-- # 7. Trouver les sommets les plus proches -->
-<!-- vertices <- dodgr_vertices(road) -->
-<!-- from_id <- vertices$id[which.min((vertices$x - from[1])^2 + (vertices$y - from[2])^2)] -->
-<!-- to_id   <- vertices$id[which.min((vertices$x - to[1])^2 + (vertices$y - to[2])^2)] -->
-<!-- # 8. Calculer le chemin -->
-<!-- path_nodes <- dodgr_paths(road, from = from_id, to = to_id, vertices = TRUE) -->
-<!-- # 9. Convertir en sf LINESTRING -->
-<!-- coords <- do.call(rbind, lapply(path_nodes[[1]][[1]], function(id) { -->
-<!--   c(vertices$x[vertices$id == id], vertices$y[vertices$id == id]) -->
-<!-- })) -->
-<!-- path_line <- st_sfc(st_linestring(coords), crs = 4326) -->
-<!-- # 10. Tracer le chemin -->
-<!-- ggplot() + -->
-<!--   geom_sf(data = mtp[mtp$ID==34057 | mtp$ID==34172,], color = "grey80") + -->
-<!--   geom_sf(data = path_line, color = "red", size = 1.2) + -->
-<!--   ggtitle("Castelnau-le-Lez → Montpellier") -->
-
+<h3><span class="header-section-number">2.3.2</span> Calcul d’itinéraires<a href="tp2.html#calcul-ditin%C3%A9raires" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Pour le calcul d’itinéraire, nous allons avoir besoin d’un réseau routier autour
+de Montpellier. Vous pouvez télécharger ce réseau <a href="./data/tp2/road.rda">ici</a>.</p>
+<p>Il s’agit d’un objet <strong>road</strong> stocké dans un fichier <strong>road.rda</strong> que vous
+pouvez placer dans votre répertoire de travail et importer avec la commande
+<code>load()</code> comme vu lors du premier TP.</p>
+<p>Si cela vous intéresse, voici le bout de code que j’ai utilisé pour obtenir
+<strong>road</strong> à l’aide des packages <strong>dodgr</strong> et <strong>osmdata</strong> :</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="tp2.html#cb49-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
+<span id="cb49-2"><a href="tp2.html#cb49-2" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span>
+<span id="cb49-3"><a href="tp2.html#cb49-3" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span>
+<span id="cb49-4"><a href="tp2.html#cb49-4" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="tp2.html#cb49-5" tabindex="-1"></a><span class="co"># Charger, filtrer, pondérer et simplifier le réseau routier</span></span>
+<span id="cb49-6"><a href="tp2.html#cb49-6" tabindex="-1"></a>road_dl <span class="ot">&lt;-</span> <span class="fu">dodgr_streetnet</span>(<span class="fu">getbb</span>(<span class="st">&quot;Montpellier, France&quot;</span>), <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb49-7"><a href="tp2.html#cb49-7" tabindex="-1"></a>road <span class="ot">&lt;-</span> road_dl[road_dl<span class="sc">$</span>highway <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;motorway&quot;</span>,<span class="st">&quot;trunk&quot;</span>,<span class="st">&quot;primary&quot;</span>,</span>
+<span id="cb49-8"><a href="tp2.html#cb49-8" tabindex="-1"></a>                                       <span class="st">&quot;secondary&quot;</span>,<span class="st">&quot;tertiary&quot;</span>,<span class="st">&quot;residential&quot;</span>), ]</span>
+<span id="cb49-9"><a href="tp2.html#cb49-9" tabindex="-1"></a>road <span class="ot">&lt;-</span> <span class="fu">weight_streetnet</span>(road, <span class="at">wt_profile =</span> <span class="st">&quot;motorcar&quot;</span>)</span>
+<span id="cb49-10"><a href="tp2.html#cb49-10" tabindex="-1"></a>road <span class="ot">&lt;-</span> <span class="fu">dodgr_contract_graph</span>(road)</span>
+<span id="cb49-11"><a href="tp2.html#cb49-11" tabindex="-1"></a></span>
+<span id="cb49-12"><a href="tp2.html#cb49-12" tabindex="-1"></a><span class="co"># Exporter road</span></span>
+<span id="cb49-13"><a href="tp2.html#cb49-13" tabindex="-1"></a><span class="fu">save</span>(road, <span class="at">file=</span><span class="st">&quot;road.rda&quot;</span>)</span></code></pre></div>
+<p>Pour calculer l’itinéraire entre les centroides des deux communes, nous allons
+avoir besoin du package <strong>dodgr</strong> et du package <strong>ggplot2</strong> pour visualiser
+facilement cet itinéraire.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="tp2.html#cb50-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
+<span id="cb50-2"><a href="tp2.html#cb50-2" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span>
+<span id="cb50-3"><a href="tp2.html#cb50-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb50-4"><a href="tp2.html#cb50-4" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="tp2.html#cb50-5" tabindex="-1"></a><span class="co"># Charger le réseau routier</span></span>
+<span id="cb50-6"><a href="tp2.html#cb50-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;road.rda&quot;</span>)</span>
+<span id="cb50-7"><a href="tp2.html#cb50-7" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="tp2.html#cb50-8" tabindex="-1"></a><span class="co"># Définir l&#39;origine et la destination (coordonnées des centroides)</span></span>
+<span id="cb50-9"><a href="tp2.html#cb50-9" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34057</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Castelnau-le-Lez</span></span>
+<span id="cb50-10"><a href="tp2.html#cb50-10" tabindex="-1"></a>to   <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34172</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Montpellier</span></span>
+<span id="cb50-11"><a href="tp2.html#cb50-11" tabindex="-1"></a></span>
+<span id="cb50-12"><a href="tp2.html#cb50-12" tabindex="-1"></a><span class="co"># Trouver les sommets les plus proches</span></span>
+<span id="cb50-13"><a href="tp2.html#cb50-13" tabindex="-1"></a>vertices <span class="ot">&lt;-</span> <span class="fu">dodgr_vertices</span>(road)</span>
+<span id="cb50-14"><a href="tp2.html#cb50-14" tabindex="-1"></a>from_id <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> from[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> from[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb50-15"><a href="tp2.html#cb50-15" tabindex="-1"></a>to_id   <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> to[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> to[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb50-16"><a href="tp2.html#cb50-16" tabindex="-1"></a></span>
+<span id="cb50-17"><a href="tp2.html#cb50-17" tabindex="-1"></a><span class="co"># Calculer le chemin le plus court</span></span>
+<span id="cb50-18"><a href="tp2.html#cb50-18" tabindex="-1"></a>path_nodes <span class="ot">&lt;-</span> <span class="fu">dodgr_paths</span>(road, <span class="at">from =</span> from_id, <span class="at">to =</span> to_id, <span class="at">vertices =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb50-19"><a href="tp2.html#cb50-19" tabindex="-1"></a></span>
+<span id="cb50-20"><a href="tp2.html#cb50-20" tabindex="-1"></a><span class="co"># Convertir en sf LINESTRING</span></span>
+<span id="cb50-21"><a href="tp2.html#cb50-21" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(path_nodes[[<span class="dv">1</span>]][[<span class="dv">1</span>]], <span class="cf">function</span>(id) {</span>
+<span id="cb50-22"><a href="tp2.html#cb50-22" tabindex="-1"></a>  <span class="fu">c</span>(vertices<span class="sc">$</span>x[vertices<span class="sc">$</span>id <span class="sc">==</span> id], vertices<span class="sc">$</span>y[vertices<span class="sc">$</span>id <span class="sc">==</span> id])</span>
+<span id="cb50-23"><a href="tp2.html#cb50-23" tabindex="-1"></a>}))</span>
+<span id="cb50-24"><a href="tp2.html#cb50-24" tabindex="-1"></a>path_line <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(<span class="fu">st_linestring</span>(coords), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb50-25"><a href="tp2.html#cb50-25" tabindex="-1"></a></span>
+<span id="cb50-26"><a href="tp2.html#cb50-26" tabindex="-1"></a><span class="co"># Tracer le chemin</span></span>
+<span id="cb50-27"><a href="tp2.html#cb50-27" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb50-28"><a href="tp2.html#cb50-28" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mtp[mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34057</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34172</span>,], <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span>) <span class="sc">+</span></span>
+<span id="cb50-29"><a href="tp2.html#cb50-29" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line, <span class="at">color =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb50-30"><a href="tp2.html#cb50-30" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Castelnau-le-Lez → Montpellier&quot;</span>)</span></code></pre></div>
 </div>
+<div id="exercice-1" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Exercice<a href="tp2.html#exercice-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Essayez de bien vous approprier le code ci-dessus et calculez un itinéraire
+pour le <strong>second plus gros flux</strong>. Vous pouvez ensuite représenter les
+<strong>deux itinéraires</strong> (le plus gros et le second plus gros flux) sur une même
+carte afin de les comparer visuellement.</p>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="tp2.html#cb51-1" tabindex="-1"></a><span class="co"># Définir l&#39;origine et la destination (coordonnées des centroides)</span></span>
+<span id="cb51-2"><a href="tp2.html#cb51-2" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34129</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Lattes</span></span>
+<span id="cb51-3"><a href="tp2.html#cb51-3" tabindex="-1"></a>to   <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34172</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Montpellier</span></span>
+<span id="cb51-4"><a href="tp2.html#cb51-4" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="tp2.html#cb51-5" tabindex="-1"></a><span class="co"># Trouver les sommets les plus proches</span></span>
+<span id="cb51-6"><a href="tp2.html#cb51-6" tabindex="-1"></a>vertices <span class="ot">&lt;-</span> <span class="fu">dodgr_vertices</span>(road)</span>
+<span id="cb51-7"><a href="tp2.html#cb51-7" tabindex="-1"></a>from_id <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> from[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> from[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb51-8"><a href="tp2.html#cb51-8" tabindex="-1"></a>to_id   <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> to[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> to[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb51-9"><a href="tp2.html#cb51-9" tabindex="-1"></a></span>
+<span id="cb51-10"><a href="tp2.html#cb51-10" tabindex="-1"></a><span class="co"># Calculer le chemin le plus court</span></span>
+<span id="cb51-11"><a href="tp2.html#cb51-11" tabindex="-1"></a>path_nodes <span class="ot">&lt;-</span> <span class="fu">dodgr_paths</span>(road, <span class="at">from =</span> from_id, <span class="at">to =</span> to_id, <span class="at">vertices =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-12"><a href="tp2.html#cb51-12" tabindex="-1"></a></span>
+<span id="cb51-13"><a href="tp2.html#cb51-13" tabindex="-1"></a><span class="co"># Convertir en sf LINESTRING</span></span>
+<span id="cb51-14"><a href="tp2.html#cb51-14" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(path_nodes[[<span class="dv">1</span>]][[<span class="dv">1</span>]], <span class="cf">function</span>(id) {</span>
+<span id="cb51-15"><a href="tp2.html#cb51-15" tabindex="-1"></a>  <span class="fu">c</span>(vertices<span class="sc">$</span>x[vertices<span class="sc">$</span>id <span class="sc">==</span> id], vertices<span class="sc">$</span>y[vertices<span class="sc">$</span>id <span class="sc">==</span> id])</span>
+<span id="cb51-16"><a href="tp2.html#cb51-16" tabindex="-1"></a>}))</span>
+<span id="cb51-17"><a href="tp2.html#cb51-17" tabindex="-1"></a>path_line_2 <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(<span class="fu">st_linestring</span>(coords), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb51-18"><a href="tp2.html#cb51-18" tabindex="-1"></a></span>
+<span id="cb51-19"><a href="tp2.html#cb51-19" tabindex="-1"></a><span class="co"># Tracer les chemins</span></span>
+<span id="cb51-20"><a href="tp2.html#cb51-20" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb51-21"><a href="tp2.html#cb51-21" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mtp[mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34057</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34129</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34172</span>,], <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span>) <span class="sc">+</span></span>
+<span id="cb51-22"><a href="tp2.html#cb51-22" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line, <span class="at">color =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb51-23"><a href="tp2.html#cb51-23" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line_2, <span class="at">color =</span> <span class="st">&quot;steelblue2&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>)</span></code></pre></div>
+</details>
+<hr />
+</div>
+</div>
+<div id="application-r-shiny" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Application R Shiny<a href="tp2.html#application-r-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Pour finir, je vais vous montrer un exemple d’application plus élaborée que
+celle du TP1 que nous pouvons développer à partir de l’objet spatial <strong>mtp</strong>.<br />
+Les fichiers sources de cette application sont disponibles
+<a href="./data/tp2/Shiny_TP2.zip">ici</a>. Vous pouvez dézipper le dossier dans votre
+répertoire de travail.</p>
+<p>Dans le TP1, nous avions construit une application <strong>dans un seul fichier</strong>
+<strong>app.R</strong> contenant à la fois l’interface utilisateur (<strong>ui</strong>) et la logique du
+serveur (<strong>server</strong>). Dans ce TP, l’application est découpée en plusieurs
+fichiers, ce qui rend le code plus <strong>structuré</strong> et plus <strong>facile à maintenir</strong>
+lorsque l’application devient plus complexe.</p>
+<p>L’application est composée de quatre fichiers principaux :</p>
+<ul>
+<li><p><strong>global.R</strong> contient les éléments <strong>communs</strong> à l’application, chargés
+<strong>une seule fois</strong> au lancement. On y met par exemple le chargement des packages,
+des données (<code>mtp</code>, <code>mass_mtp</code>, etc.), ou la définition de fonctions utiles.</p></li>
+<li><p><strong>ui.R</strong> définit l’<strong>interface utilisateur</strong> (<em>User Interface</em>). C’est ici que
+l’on décrit la mise en page, les onglets, les boutons, les cartes ou graphiques
+que l’utilisateur pourra voir et manipuler.</p></li>
+<li><p><strong>server.R</strong> Contient la logique de l’application, c’est-à-dire la manière
+dont les entrées de l’utilisateur sont traitées et reliées aux sorties affichées
+(graphiques, cartes, tableaux…).</p></li>
+<li><p><strong>style.css</strong> est un fichier de <strong>mise en forme</strong> optionnel. Il permet de
+modifier l’apparence de l’application (couleurs, polices, marges, tailles, etc.).</p></li>
+</ul>
+<p>Prenez le temps de parcourir ces fichiers et d’expérimenter :<br />
+- changer le <strong>titre</strong> de l’application,<br />
+- modifier la <strong>palette de couleurs</strong> des cartes,<br />
+- renommer les <strong>onglets</strong> du tableau de bord,<br />
+- ou encore personnaliser les couleurs dans <strong>style.css</strong>.</p>
+<p>Ces ajustements simples vous aideront à mieux comprendre l’articulation des
+différents fichiers et à prendre en main la structure d’une application Shiny
+plus avancée.</p>
+
 </div>
 </div>
             </section>

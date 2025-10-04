@@ -26,4 +26,6 @@ exercices-1
 flux-et-itinéraires
 identifier-les-flux
 calcul-ditinéraires
+exercice-1
+application-r-shiny
 tp3

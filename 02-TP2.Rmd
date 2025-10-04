@@ -27,7 +27,8 @@ que vous pouvez également nommer **TP2**.
 ### Charger les données
 
 ```{r, eval=FALSE}
-# Packages
+# Charger les packages
+library(bioregion)
 library(TDLM)
 library(sf)
 
@@ -46,7 +47,11 @@ data(mtp)
 ```{r, eval=FALSE}
 dim(od_mtp)         # Dimensions de la matrice OD
 dim(distance_mtp)   # Dimensions de la matrice de distance
+
 mass_mtp[1:10,]     # Aperçu des masses
+
+mtp                 # Aperçu des entités spatiales 
+class(mtp)          # Objet sf
 plot(mtp)           # Représentation spatiale de mtp
 plot(mtp[,2])       # Représentation spatiale de l'attribut Longitude
 ```
@@ -108,7 +113,7 @@ d_com
 
 **2.** Visualiser les **flux sortants** par commune sur une carte. Pour cela, 
 ajoutez les valeurs de `Oi` (flux sortants) à l’objet spatial `mtp` et 
-affichez-les avec une carte choroplèthe.  
+affichez-les avec la fonction `plot()`.  
 
 ---
 
@@ -319,12 +324,13 @@ chiffres après la virgule.
 <summary>Solution (cliquer pour afficher)</summary>
 
 ```{r, eval=FALSE}
+# Loi gravitaire exponentielle avec un modèle doublement contraint
 od_sim <- run_law_model(law = "NGravExp", 
                         mass_origin = mi, 
                         mass_destination = mj, 
                         distance = distance_mtp, 
                         opportunity = NULL,
-                        param = c(0.126, 0.127, 0.128, 0.129),
+                        param = c(0.124, 0.125, 0.126, 0.127, 0.128, 0.129),
                         write_proba = TRUE,
                         
                         model = "DCM", 
@@ -347,7 +353,7 @@ gof(od_sim, od_mtp,
 
 **2.** Utiliser la fonction `extract_opportunities()` pour calculer le nombre 
 d'opportunités entre les origines et destinations en vous basant sur la 
-population (i.e., $m_i$).
+population (i.e. $m_i$).
 
 ---
 
@@ -355,6 +361,7 @@ population (i.e., $m_i$).
 <summary>Solution (cliquer pour afficher)</summary>
 
 ```{r, eval=FALSE}
+# Calcule du nombre d'opportunités
 opportunity_mtp <- extract_opportunities(opportunity = mi,
                                          distance = distance_mtp,
                                          check_names = TRUE)
@@ -373,6 +380,7 @@ opportunity_mtp <- extract_opportunities(opportunity = mi,
 <summary>Solution (cliquer pour afficher)</summary>
 
 ```{r, eval=FALSE}
+# Loi radiative avec un modèle doublement contraint
 od_sim_rad <- run_law_model(law = "RadExt", 
                             mass_origin = mi, 
                             mass_destination = mj, 
@@ -403,18 +411,16 @@ gof(od_sim_rad, od_mtp,
 
 ## Flux et itinéraires
 
-Nous allons maintenant rentrer un peu plus dans le détails de l'analyse des flux
+Nous allons maintenant rentrer un peu plus dans le détail de l'analyse des flux
 et je vais vous proposer une façon simple de calculer rapidement des itinéraires.
 
 ### Identifier les flux
 
 Commençons par mettre nos matrices origine-destination observées et simulées
 sous un format "réseaux" (i.e. trois colonnes) à l'aide de la fonction 
-`mat_to_net()` du package `bioregion`.
+`mat_to_net()` du package **bioregion**.
 
 ```{r, eval=FALSE}
-library(bioregion)
-
 # Conversion des matrices en format "réseau"
 net_obs <- mat_to_net(od_mtp, weight=TRUE)
 net_sim <- mat_to_net(od_sim$parameter_2$replication_1, weight=TRUE)
@@ -433,68 +439,155 @@ net_obs[1:10,]
 net_sim[1:10,]
 ```
 
+Nous observons que le plus gros flux d'individus va de la commune ayant pour 
+code INSEE **34057** (Castelnau-le-Lez) vers le code INSEE **34172** 
+(Montpellier). Nous allons maintenant essayer de déterminer un itinéraire 
+permettant d'aller d'une commune à l'autre.
+ 
 ### Calcul d'itinéraires
 
-<!-- [test.R](./data/tp2/test.R) -->
-<!-- [test.zip](./data/tp2/test.zip) -->
+Pour le calcul d'itinéraire, nous allons avoir besoin d'un réseau routier autour
+de Montpellier. Vous pouvez télécharger ce réseau [ici](./data/tp2/road.rda).  
 
+Il s'agit d'un objet **road** stocké dans un fichier **road.rda** que vous 
+pouvez placer dans votre répertoire de travail et importer avec la commande 
+`load()` comme vu lors du premier TP.  
 
-<!-- <a href="./data/tp2/test.R" download> -->
-<!-- Télécharger test.R -->
-<!-- </a> -->
-<!-- <a href="./data/tp2/test.zip" download> -->
-<!-- Télécharger test.zip -->
-<!-- </a> -->
+Si cela vous intéresse, voici le bout de code que j'ai utilisé pour obtenir 
+**road** à l'aide des packages **dodgr** et **osmdata** :
 
+```{r, eval=FALSE}
+# Charger les packages
+library(dodgr)
+library(osmdata)
 
-<!-- library(dodgr) -->
-<!-- library(osmdata) -->
+# Charger, filtrer, pondérer et simplifier le réseau routier
+road_dl <- dodgr_streetnet(getbb("Montpellier, France"), quiet = TRUE)
+road <- road_dl[road_dl$highway %in% c("motorway","trunk","primary",
+                                       "secondary","tertiary","residential"), ]
+road <- weight_streetnet(road, wt_profile = "motorcar")
+road <- dodgr_contract_graph(road)
 
-<!-- # Charger, filtrer, pondérer et simplifier le réseau routier -->
-<!-- road_dl <- dodgr_streetnet(getbb("Montpellier, France"), quiet = TRUE) -->
-<!-- road <- road_dl[road_dl$highway %in% c("motorway","trunk","primary", -->
-<!--                                  "secondary","tertiary","residential"), ] -->
-<!-- road <- weight_streetnet(road, wt_profile = "motorcar") -->
-<!-- road <- dodgr_contract_graph(road) -->
+# Exporter road
+save(road, file="road.rda")
+```
 
-<!-- # Exporter road -->
-<!-- save(road, file="road.rda") -->
+Pour calculer l'itinéraire entre les centroides des deux communes, nous allons 
+avoir besoin du package **dodgr** et du package **ggplot2** pour visualiser 
+facilement cet itinéraire.
 
+```{r, eval=FALSE}
+# Charger les packages
+library(dodgr)
+library(ggplot2)
 
-<!-- #  -->
-<!-- library(dodgr) -->
-<!-- #library(osmdata) -->
-<!-- library(sf) -->
-<!-- library(ggplot2) -->
+# Charger le réseau routier
+load("road.rda")
 
-<!-- load("TP2/road.rda") -->
+# Définir l'origine et la destination (coordonnées des centroides)
+from <- as.numeric(mtp[mtp$ID == 34057, 2:3])[-3]   # Castelnau-le-Lez
+to   <- as.numeric(mtp[mtp$ID == 34172, 2:3])[-3]   # Montpellier
 
-<!-- # 6. Définir origine / destination -->
-<!-- library(TDLM) -->
-<!-- data(mtp) -->
+# Trouver les sommets les plus proches
+vertices <- dodgr_vertices(road)
+from_id <- vertices$id[which.min((vertices$x - from[1])^2 + (vertices$y - from[2])^2)]
+to_id   <- vertices$id[which.min((vertices$x - to[1])^2 + (vertices$y - to[2])^2)]
 
-<!-- from <- as.numeric(mtp[mtp$ID == 34057, 2:3])[-3]   # INSEE 34057 Castelnau-le-Lez -->
-<!-- to   <- as.numeric(mtp[mtp$ID == 34172, 2:3])[-3]   # INSEE 34172 Montpellier -->
+# Calculer le chemin le plus court
+path_nodes <- dodgr_paths(road, from = from_id, to = to_id, vertices = TRUE)
 
-<!-- # 7. Trouver les sommets les plus proches -->
-<!-- vertices <- dodgr_vertices(road) -->
-<!-- from_id <- vertices$id[which.min((vertices$x - from[1])^2 + (vertices$y - from[2])^2)] -->
-<!-- to_id   <- vertices$id[which.min((vertices$x - to[1])^2 + (vertices$y - to[2])^2)] -->
+# Convertir en sf LINESTRING
+coords <- do.call(rbind, lapply(path_nodes[[1]][[1]], function(id) {
+  c(vertices$x[vertices$id == id], vertices$y[vertices$id == id])
+}))
+path_line <- st_sfc(st_linestring(coords), crs = 4326)
 
-<!-- # 8. Calculer le chemin -->
-<!-- path_nodes <- dodgr_paths(road, from = from_id, to = to_id, vertices = TRUE) -->
+# Tracer le chemin
+ggplot() +
+  geom_sf(data = mtp[mtp$ID==34057 | mtp$ID==34172,], color = "grey80") +
+  geom_sf(data = path_line, color = "#CC6666", size = 1.2) +
+  ggtitle("Castelnau-le-Lez → Montpellier")
+```
 
-<!-- # 9. Convertir en sf LINESTRING -->
-<!-- coords <- do.call(rbind, lapply(path_nodes[[1]][[1]], function(id) { -->
-<!--   c(vertices$x[vertices$id == id], vertices$y[vertices$id == id]) -->
-<!-- })) -->
-<!-- path_line <- st_sfc(st_linestring(coords), crs = 4326) -->
+### Exercice 
 
-<!-- # 10. Tracer le chemin -->
-<!-- ggplot() + -->
-<!--   geom_sf(data = mtp[mtp$ID==34057 | mtp$ID==34172,], color = "grey80") + -->
-<!--   geom_sf(data = path_line, color = "red", size = 1.2) + -->
-<!--   ggtitle("Castelnau-le-Lez → Montpellier") -->
+Essayez de bien vous approprier le code ci-dessus et calculez un itinéraire 
+pour le **second plus gros flux**. Vous pouvez ensuite représenter les 
+**deux itinéraires** (le plus gros et le second plus gros flux) sur une même 
+carte afin de les comparer visuellement.  
 
+---
 
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
 
+```{r, eval=FALSE}
+# Définir l'origine et la destination (coordonnées des centroides)
+from <- as.numeric(mtp[mtp$ID == 34129, 2:3])[-3]   # Lattes
+to   <- as.numeric(mtp[mtp$ID == 34172, 2:3])[-3]   # Montpellier
+
+# Trouver les sommets les plus proches
+vertices <- dodgr_vertices(road)
+from_id <- vertices$id[which.min((vertices$x - from[1])^2 + (vertices$y - from[2])^2)]
+to_id   <- vertices$id[which.min((vertices$x - to[1])^2 + (vertices$y - to[2])^2)]
+
+# Calculer le chemin le plus court
+path_nodes <- dodgr_paths(road, from = from_id, to = to_id, vertices = TRUE)
+
+# Convertir en sf LINESTRING
+coords <- do.call(rbind, lapply(path_nodes[[1]][[1]], function(id) {
+  c(vertices$x[vertices$id == id], vertices$y[vertices$id == id])
+}))
+path_line_2 <- st_sfc(st_linestring(coords), crs = 4326)
+
+# Tracer les chemins
+ggplot() +
+  geom_sf(data = mtp[mtp$ID==34057 | mtp$ID==34129 | mtp$ID==34172,], color = "grey80") +
+  geom_sf(data = path_line, color = "#CC6666", size = 1.2) +
+  geom_sf(data = path_line_2, color = "steelblue2", size = 1.2)
+```
+
+</details>
+
+---
+
+## Application R Shiny
+
+Pour finir, je vais vous montrer un exemple d'application plus élaborée que 
+celle du TP1 que nous pouvons développer à partir de l'objet spatial **mtp**.  
+Les fichiers sources de cette application sont disponibles 
+[ici](./data/tp2/Shiny_TP2.zip). Vous pouvez dézipper le dossier dans votre 
+répertoire de travail.
+
+Dans le TP1, nous avions construit une application **dans un seul fichier** 
+**app.R** contenant à la fois l'interface utilisateur (**ui**) et la logique du 
+serveur (**server**). Dans ce TP, l'application est découpée en plusieurs 
+fichiers, ce qui rend le code plus **structuré** et plus **facile à maintenir** 
+lorsque l’application devient plus complexe.
+
+L'application est composée de quatre fichiers principaux :
+
+- **global.R** contient les éléments **communs** à l’application, chargés 
+**une seule fois** au lancement. On y met par exemple le chargement des packages, 
+des données (**mtp** ici) ou la définition de fonctions utiles.  
+
+- **ui.R** définit l’**interface utilisateur** (*User Interface*). C’est ici que 
+l’on décrit la mise en page, les onglets, les boutons, les cartes ou graphiques 
+que l’utilisateur pourra voir et manipuler.
+
+- **server.R** Contient la logique de l’application, c’est-à-dire la manière 
+dont les entrées de l’utilisateur sont traitées et reliées aux sorties affichées 
+(graphiques, cartes, tableaux...).
+
+- **style.css** est un fichier de **mise en forme** optionnel. Il permet de 
+modifier l’apparence de l’application (couleurs, polices, marges, tailles, etc.).  
+
+Prenez le temps de parcourir ces fichiers et d’expérimenter :  
+- changer le **titre** de l’application,  
+- modifier la **palette de couleurs** des cartes,  
+- renommer les **onglets** du tableau de bord,  
+- ou encore personnaliser les couleurs dans **style.css**.  
+
+Ces ajustements simples vous aideront à mieux comprendre l’articulation des 
+différents fichiers et à prendre en main la structure d’une application Shiny 
+plus avancée.

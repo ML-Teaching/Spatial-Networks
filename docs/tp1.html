@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>TP1 Premiers pas avec R | Introduction aux réseaux spatiaux avec R</title>
   <meta name="description" content="Réseaux spatiaux" />
-  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
 
   <meta property="og:title" content="TP1 Premiers pas avec R | Introduction aux réseaux spatiaux avec R" />
   <meta property="og:type" content="book" />
@@ -151,20 +151,21 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="1" data-path="tp1.html"><a href="tp1.html"><i class="fa fa-check"></i><b>1</b> Premiers pas avec R</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="tp1.html"><a href="tp1.html#scripts-et-environnement-de-travail"><i class="fa fa-check"></i><b>1.1</b> Scripts et environnement de travail</a></li>
-<li class="chapter" data-level="1.2" data-path="01-TP1.html"><a href="#le-r%C3%A9pertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
+<li class="chapter" data-level="1.2" data-path="tp1.html"><a href="tp1.html#le-r%C3%A9pertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
 <li class="chapter" data-level="1.3" data-path="tp1.html"><a href="tp1.html#les-librairies"><i class="fa fa-check"></i><b>1.3</b> Les librairies</a></li>
 <li class="chapter" data-level="1.4" data-path="tp1.html"><a href="tp1.html#types-et-objets-de-base"><i class="fa fa-check"></i><b>1.4</b> Types et objets de base</a></li>
 <li class="chapter" data-level="1.5" data-path="tp1.html"><a href="tp1.html#manipulation-des-objets"><i class="fa fa-check"></i><b>1.5</b> Manipulation des objets</a></li>
 <li class="chapter" data-level="1.6" data-path="tp1.html"><a href="tp1.html#fonctions-en-r"><i class="fa fa-check"></i><b>1.6</b> Fonctions en R</a></li>
 <li class="chapter" data-level="1.7" data-path="tp1.html"><a href="tp1.html#visualisation-avec-r"><i class="fa fa-check"></i><b>1.7</b> Visualisation avec R</a></li>
 <li class="chapter" data-level="1.8" data-path="tp1.html"><a href="tp1.html#exercice"><i class="fa fa-check"></i><b>1.8</b> Exercice</a></li>
-<li class="chapter" data-level="1.9" data-path="01-TP1.html"><a href="#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
+<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="01-TP1.html"><a href="#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="2.1" data-path="tp2.html"><a href="tp2.html#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
 <li class="chapter" data-level="2.2" data-path="tp2.html"><a href="tp2.html#estimation-des-flux-avec-tdlm"><i class="fa fa-check"></i><b>2.2</b> Estimation des flux avec TDLM</a></li>
-<li class="chapter" data-level="2.3" data-path="01-TP1.html"><a href="#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
+<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
+<li class="chapter" data-level="2.4" data-path="tp2.html"><a href="tp2.html#application-r-shiny"><i class="fa fa-check"></i><b>2.4</b> Application R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a></li>
 <li class="divider"></li>
@@ -203,14 +204,14 @@ essentielles du langage R.</p>
 <h2><span class="header-section-number">1.1</span> Scripts et environnement de travail<a href="tp1.html#scripts-et-environnement-de-travail" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="les-scripts" class="section level3 hasAnchor" number="1.1.1">
 <h3><span class="header-section-number">1.1.1</span> Les scripts<a href="tp1.html#les-scripts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Il est conseillé de travailler dans un <strong>script</strong> (<code>.R</code>) afin de garder une
+<p>Il est conseillé de travailler dans un <strong>script (.R)</strong> afin de garder une
 trace de vos commandes et de pouvoir les réutiliser plus tard.</p>
 <p>Pour créer un nouveau script : <em>File &gt; New File &gt; R Script</em>.</p>
 <p>Créez un script <strong>TP1.R</strong> et enregistrez-le dans votre répertoire de travail,
-que vous pouvez également nommer <strong>TP1</strong>.</p>
+que vous pouvez nommer <strong>TP1</strong>.</p>
 </div>
 <div id="commande-script-et-exécution" class="section level3 hasAnchor" number="1.1.2">
-<h3><span class="header-section-number">1.1.2</span> Commande, script et exécution<a href="#commande-script-et-ex%C3%A9cution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">1.1.2</span> Commande, script et exécution<a href="tp1.html#commande-script-et-ex%C3%A9cution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Une <strong>commande</strong> est une instruction unique que vous tapez directement dans
 la console (par exemple <code>2 + 2</code>). Elle est exécutée immédiatement en appuyant
@@ -223,8 +224,8 @@ analyses.<br />
 <li>L’<strong>exécution</strong> d’un script correspond au fait de lancer l’ensemble ou une
 partie du code qu’il contient. Dans RStudio, vous pouvez :
 <ul>
-<li>exécuter la ligne où se trouve le curseur avec <code>Ctrl + Enter</code><br />
-(ou <code>Cmd + Enter</code> sur Mac),<br />
+<li>exécuter la ligne où se trouve le curseur avec <strong>Ctrl + Enter</strong><br />
+(ou <strong>Cmd + Enter</strong> sur Mac),<br />
 </li>
 <li>exécuter un bloc de code sélectionné,</li>
 <li>ou lancer l’intégralité du script avec le bouton <strong>Source</strong> (en haut à
@@ -233,7 +234,7 @@ droite de l’éditeur).</li>
 </ul>
 <blockquote>
 <p><em>Bonne pratique : redémarrez régulièrement votre session R
-(<code>Session &gt; Restart R</code> ou <code>Ctrl + Shift + F10</code> sous RStudio) afin de
+(<strong>Session &gt; Restart R</strong> ou <strong>Ctrl + Shift + F10</strong> sous RStudio) afin de
 supprimer les objets en mémoire et éviter les conflits. Cela permet de
 vérifier que votre script contient bien toutes les étapes nécessaires pour
 reproduire vos résultats.</em></p>
@@ -241,7 +242,7 @@ reproduire vos résultats.</em></p>
 </div>
 </div>
 <div id="le-répertoire-de-travail" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Le répertoire de travail<a href="#le-r%C3%A9pertoire-de-travail" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.2</span> Le répertoire de travail<a href="tp1.html#le-r%C3%A9pertoire-de-travail" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Le <strong>répertoire de travail</strong> (<em>working directory</em>) est le dossier dans lequel R
 va chercher ou enregistrer vos fichiers par défaut. Il est donc essentiel de
 bien le définir pour éviter les erreurs lors des imports et exports.</p>
@@ -256,7 +257,7 @@ Tout ce qui suit ce symbole n’est pas exécuté par R.</em></p>
 </blockquote>
 <p>Un <strong>chemin absolu</strong> indique l’emplacement exact d’un fichier à partir de la
 racine de l’ordinateur. Il est indépendant du répertoire de travail. Ci-dessous
-un exemple d’import d’un fichier <code>.csv</code> à partir d’un chemin absolu.</p>
+un exemple d’import d’un fichier <strong>.csv</strong> à partir d’un chemin absolu.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="tp1.html#cb3-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;C:/Users/Nom/Desktop/TP1/Exemple.csv&quot;</span>)</span></code></pre></div>
 <blockquote>
 <p><em>Inconvénient : le code n’est pas facilement réutilisable sur un autre
@@ -274,15 +275,15 @@ modifier les chemins.</em></p>
 <p>Dans vos TPs et projets, vous serez amenés à importer et exporter différents
 types de fichiers et objets :</p>
 <ul>
-<li><strong>Fichiers de données</strong> : csv, txt, Excel… avec <code>read.csv()</code>, <code>read.table()</code>.</li>
+<li><strong>Fichiers de données</strong> : .csv, .txt, Excel… avec <code>read.csv()</code>, <code>read.table()</code>.</li>
 <li><strong>Fichiers résultats</strong> : exporter vos données transformées avec <code>write.csv()</code>.</li>
 <li><strong>Figures et graphiques</strong> : sauvegarder vos graphiques avec <code>pdf()</code>, <code>png()</code>,
 ou <code>ggsave()</code> pour les partager ou les inclure dans vos rapports.</li>
 <li><strong>Objets R complets</strong> : sauvegarder vos objets avec <code>save()</code> dans un fichier
-<code>.RData</code> (ou <code>.rda</code>) et les recharger avec <code>load()</code>.</li>
+<strong>.RData</strong> (ou <strong>.rda</strong>) et les recharger avec <code>load()</code>.</li>
 </ul>
-<p>Ci-dessous un exemple combinant l’export d’un fichier CSV, d’un objet <code>.rda</code>,
-d’un graphique en PDF, puis leur réimportation.</p>
+<p>Ci-dessous un exemple combinant l’export d’un fichier <strong>.csv</strong>, d’un objet <strong>.rda</strong>,
+d’un graphique en <strong>.pdf</strong>, puis leur réimportation.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="tp1.html#cb5-1" tabindex="-1"></a><span class="co"># Exemple de données</span></span>
 <span id="cb5-2"><a href="tp1.html#cb5-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">y=</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb5-3"><a href="tp1.html#cb5-3" tabindex="-1"></a></span>
@@ -313,7 +314,7 @@ ou manipulations de données. Ces fonctionnalités sont fournies par des
 <p>L’<strong>installation</strong> d’un package se fait une seule fois sur votre ordinateur dans un
 dossier dédié. Elle rend le package disponible “définitivement” pour toutes
 vos futures sessions R. Ci-dessous un exemple d’installation des packages
-<code>sf</code>, <code>TDLM</code> et <code>bioregion</code> que nous utiliserons dans les TP2 et TP3.</p>
+<strong>sf</strong>, <strong>TDLM</strong> et <strong>bioregion</strong> que nous utiliserons dans les TP2 et TP3.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="tp1.html#cb6-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sf&quot;</span>)</span>
 <span id="cb6-2"><a href="tp1.html#cb6-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;TDLM&quot;</span>)</span>
 <span id="cb6-3"><a href="tp1.html#cb6-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;bioregion&quot;</span>)</span></code></pre></div>
@@ -396,9 +397,9 @@ méthodes pour y parvenir.</p>
 On peut aussi utiliser des <strong>conditions logiques</strong> pour sélectionner des
 éléments.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="tp1.html#cb12-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span>
-<span id="cb12-2"><a href="tp1.html#cb12-2" tabindex="-1"></a>m[<span class="dv">1</span>, ]         <span class="co"># 1ère ligne</span></span>
-<span id="cb12-3"><a href="tp1.html#cb12-3" tabindex="-1"></a>m[, <span class="dv">2</span>]         <span class="co"># 2ème colonne</span></span>
-<span id="cb12-4"><a href="tp1.html#cb12-4" tabindex="-1"></a>m[m <span class="sc">&gt;</span> <span class="dv">5</span>]       <span class="co"># Eléments supérieurs à 5</span></span>
+<span id="cb12-2"><a href="tp1.html#cb12-2" tabindex="-1"></a>m[<span class="dv">1</span>, ]               <span class="co"># 1ère ligne</span></span>
+<span id="cb12-3"><a href="tp1.html#cb12-3" tabindex="-1"></a>m[, <span class="dv">2</span>]               <span class="co"># 2ème colonne</span></span>
+<span id="cb12-4"><a href="tp1.html#cb12-4" tabindex="-1"></a>m[m <span class="sc">&gt;</span> <span class="dv">5</span>]             <span class="co"># Eléments supérieurs à 5</span></span>
 <span id="cb12-5"><a href="tp1.html#cb12-5" tabindex="-1"></a>m[m <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="dv">0</span>  <span class="co"># Remplace les nombres pairs par 0</span></span>
 <span id="cb12-6"><a href="tp1.html#cb12-6" tabindex="-1"></a>m</span></code></pre></div>
 <p>On peut également combiner des matrices ou ajouter des lignes/colonnes
@@ -430,7 +431,7 @@ ou lignes dans un data frame.</p>
 matrice ou data frame. Vous pouvez également utiliser <code>summary()</code> pour
 résumer vos données rapidement.</p>
 <p>R permet également de <strong>résumer ou agréger</strong> les données par groupes ou conditions.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="tp1.html#cb17-1" tabindex="-1"></a><span class="fu">aggregate</span>(Age <span class="sc">~</span> Genre, <span class="at">data=</span>df, <span class="at">FUN=</span>mean) <span class="co"># Moyenne d&#39;âge par sexe</span></span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="tp1.html#cb17-1" tabindex="-1"></a><span class="fu">aggregate</span>(Age <span class="sc">~</span> Genre, <span class="at">data=</span>df, <span class="at">FUN=</span>mean) <span class="co"># Moyenne d&#39;âge par genre</span></span>
 <span id="cb17-2"><a href="tp1.html#cb17-2" tabindex="-1"></a><span class="fu">aggregate</span>(Age <span class="sc">~</span> Genre, <span class="at">data=</span>df, <span class="at">FUN=</span>sum)  <span class="co"># Somme ou autres fonctions</span></span></code></pre></div>
 </div>
 <div id="fonctions-en-r" class="section level2 hasAnchor" number="1.6">
@@ -500,7 +501,7 @@ Voici quelques fonctions de base pour visualiser vos données.</p>
 <span id="cb24-5"><a href="tp1.html#cb24-5" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;X&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>, <span class="at">col=</span><span class="st">&quot;steelblue3&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>)</span></code></pre></div>
 <p>Vous pouvez personnaliser les couleurs, les types de points (<code>pch</code>) et ajouter
 un titre (<code>main</code>) ainsi que des labels pour les axes (<code>xlab</code>, <code>ylab</code>). Vous
-pouvez également utiliser le package <code>ggplot2</code>, de nombreux exemples et tutos
+pouvez également utiliser le package <strong>ggplot2</strong>, de nombreux exemples et tutos
 son disponible en ligne.</p>
 <p>Pour visualiser la <strong>répartition d’une variable</strong>, on utilise <code>hist()</code>.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tp1.html#cb25-1" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>)</span>
@@ -536,9 +537,9 @@ séparé, puis les utiliser pour analyser et visualiser des données.</p>
 </li>
 <li><code>remplacer_grand(x)</code> : remplace les valeurs supérieures à la moyenne par 100</li>
 </ul></li>
-<li>Dans TP1.R :
+<li>Dans <strong>TP1.R</strong> :
 <ul>
-<li>Chargez les packages <code>sf</code>, <code>TDLM</code> et <code>bioregion</code></li>
+<li>Chargez les packages <strong>sf</strong>, <strong>TDLM</strong> et <strong>bioregion</strong></li>
 <li>Définissez votre répertoire de travail</li>
 <li>Importez vos fonctions depuis <strong>Mes_fonctions.R</strong> avec <code>source()</code><br />
 </li>
@@ -612,7 +613,7 @@ Solution (cliquer pour afficher)
 <hr />
 </div>
 <div id="introduction-à-r-shiny" class="section level2 hasAnchor" number="1.9">
-<h2><span class="header-section-number">1.9</span> Introduction à R Shiny<a href="#introduction-%C3%A0-r-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.9</span> Introduction à R Shiny<a href="tp1.html#introduction-%C3%A0-r-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R Shiny permet de créer des <strong>applications web interactives</strong> directement depuis R.
 Avec Shiny, vous pouvez rendre vos analyses et graphiques interactifs, sans
 avoir besoin de connaissances en HTML, CSS ou JavaScript.</p>
@@ -629,7 +630,7 @@ affichés dans l’UI.</li>
 </div>
 <div id="exemple-minimal" class="section level3 hasAnchor" number="1.9.2">
 <h3><span class="header-section-number">1.9.2</span> Exemple minimal<a href="tp1.html#exemple-minimal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Installez le package <code>shiny</code>, créez un fichier <strong>app.R</strong> dans votre dossier
+<p>Installez le package <strong>shiny</strong>, créez un fichier <strong>app.R</strong> dans votre dossier
 <strong>TP1</strong> et copiez-collez le code suivant :</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tp1.html#cb29-1" tabindex="-1"></a><span class="co"># Charger le package Shiny</span></span>
 <span id="cb29-2"><a href="tp1.html#cb29-2" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
@@ -658,7 +659,7 @@ affichés dans l’UI.</li>
 <span id="cb29-25"><a href="tp1.html#cb29-25" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
 </div>
 <div id="déployer-lapplication" class="section level3 hasAnchor" number="1.9.3">
-<h3><span class="header-section-number">1.9.3</span> Déployer l’application<a href="#d%C3%A9ployer-lapplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">1.9.3</span> Déployer l’application<a href="tp1.html#d%C3%A9ployer-lapplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Ouvrez le fichier <strong>app.R</strong> dans RStudio.<br />
 </li>
@@ -667,7 +668,7 @@ affichés dans l’UI.</li>
 <li>L’application s’ouvre dans le Viewer de RStudio ou dans votre navigateur.</li>
 </ol>
 <blockquote>
-<p><em>Astuce : Pour déployer votre application en ligne, vous pouvez utiliser
+<p><em>Pour déployer votre application en ligne, vous pouvez utiliser
 <a href="https://www.shinyapps.io/">shinyapps.io</a> ou un serveur Shiny propre. L’exemple
 ci-dessus fonctionne localement sur votre machine.</em></p>
 </blockquote>

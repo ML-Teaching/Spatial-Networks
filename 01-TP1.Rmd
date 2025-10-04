@@ -13,13 +13,13 @@ essentielles du langage R.
 
 ### Les scripts  
 
-Il est conseillé de travailler dans un **script** (`.R`) afin de garder une
+Il est conseillé de travailler dans un **script (.R)** afin de garder une
 trace de vos commandes et de pouvoir les réutiliser plus tard.  
 
 Pour créer un nouveau script : *File > New File > R Script*.  
 
 Créez un script **TP1.R** et enregistrez-le dans votre répertoire de travail,
-que vous pouvez également nommer **TP1**.  
+que vous pouvez nommer **TP1**.  
 
 ### Commande, script et exécution  
 
@@ -31,14 +31,14 @@ que vous pouvez également nommer **TP1**.
   analyses.  
 - L’**exécution** d’un script correspond au fait de lancer l’ensemble ou une
   partie du code qu’il contient. Dans RStudio, vous pouvez :  
-  - exécuter la ligne où se trouve le curseur avec `Ctrl + Enter`  
-    (ou `Cmd + Enter` sur Mac),  
+  - exécuter la ligne où se trouve le curseur avec **Ctrl + Enter**  
+    (ou **Cmd + Enter** sur Mac),  
   - exécuter un bloc de code sélectionné, 
   - ou lancer l’intégralité du script avec le bouton **Source** (en haut à 
   droite de l’éditeur).  
 
 > *Bonne pratique : redémarrez régulièrement votre session R 
-> (`Session > Restart R` ou `Ctrl + Shift + F10` sous RStudio) afin de 
+> (**Session > Restart R** ou **Ctrl + Shift + F10** sous RStudio) afin de 
 > supprimer les objets en mémoire et éviter les conflits. Cela permet de 
 > vérifier que votre script contient bien toutes les étapes nécessaires pour 
 > reproduire vos résultats.*
@@ -67,7 +67,7 @@ setwd("~/Desktop/TP1") # A adapter à votre chemin sur votre ordinateur !
 
 Un **chemin absolu** indique l’emplacement exact d’un fichier à partir de la
 racine de l’ordinateur. Il est indépendant du répertoire de travail. Ci-dessous
-un exemple d'import d'un fichier `.csv` à partir d'un chemin absolu.
+un exemple d'import d'un fichier **.csv** à partir d'un chemin absolu.
 
 ```{r, eval=FALSE}
 data <- read.csv("C:/Users/Nom/Desktop/TP1/Exemple.csv")
@@ -91,15 +91,15 @@ data <- read.csv("Exemple.csv")
 Dans vos TPs et projets, vous serez amenés à importer et exporter différents
 types de fichiers et objets :
 
-- **Fichiers de données** : csv, txt, Excel... avec `read.csv()`, `read.table()`.
+- **Fichiers de données** : .csv, .txt, Excel... avec `read.csv()`, `read.table()`.
 - **Fichiers résultats** : exporter vos données transformées avec `write.csv()`.
 - **Figures et graphiques** : sauvegarder vos graphiques avec `pdf()`, `png()`,
   ou `ggsave()` pour les partager ou les inclure dans vos rapports.
 - **Objets R complets** : sauvegarder vos objets avec `save()` dans un fichier 
-  `.RData` (ou `.rda`) et les recharger avec `load()`.
+  **.RData** (ou **.rda**) et les recharger avec `load()`.
 
-Ci-dessous un exemple combinant l’export d’un fichier CSV, d’un objet `.rda`, 
-d’un graphique en PDF, puis leur réimportation.
+Ci-dessous un exemple combinant l’export d’un fichier **.csv**, d’un objet **.rda**, 
+d’un graphique en **.pdf**, puis leur réimportation.
 
 ```{r, eval=FALSE}
 # Exemple de données
@@ -134,7 +134,7 @@ ou manipulations de données. Ces fonctionnalités sont fournies par des
 L’**installation** d’un package se fait une seule fois sur votre ordinateur dans un 
 dossier dédié. Elle rend le package disponible "définitivement" pour toutes 
 vos futures sessions R. Ci-dessous un exemple d'installation des packages 
-`sf`, `TDLM` et `bioregion` que nous utiliserons dans les TP2 et TP3.
+**sf**, **TDLM** et **bioregion** que nous utiliserons dans les TP2 et TP3.
 
 ```{r, eval=FALSE}
 install.packages("sf")
@@ -142,7 +142,7 @@ install.packages("TDLM")
 install.packages("bioregion")
 ```
 
-> *Remarque : vous n’avez pas besoin de réinstaller un package à chaque fois 
+> *Remarque : vous n'avez pas besoin de réinstaller un package à chaque fois 
 > que vous en avez besoin.*
 
 Le **chargement** d’un package se fait à chaque fois que vous voulez utiliser 
@@ -241,9 +241,9 @@ On peut aussi utiliser des **conditions logiques** pour sélectionner des
 
 ```{r, eval=FALSE}
 m <- matrix(1:9, nrow=3, ncol=3)
-m[1, ]         # 1ère ligne
-m[, 2]         # 2ème colonne
-m[m > 5]       # Eléments supérieurs à 5
+m[1, ]               # 1ère ligne
+m[, 2]               # 2ème colonne
+m[m > 5]             # Eléments supérieurs à 5
 m[m %% 2 == 0] <- 0  # Remplace les nombres pairs par 0
 m
 ```
@@ -297,7 +297,7 @@ résumer vos données rapidement.
 R permet également de **résumer ou agréger** les données par groupes ou conditions.
 
 ```{r, eval=FALSE}
-aggregate(Age ~ Genre, data=df, FUN=mean) # Moyenne d'âge par sexe
+aggregate(Age ~ Genre, data=df, FUN=mean) # Moyenne d'âge par genre
 aggregate(Age ~ Genre, data=df, FUN=sum)  # Somme ou autres fonctions
 ```
 
@@ -397,7 +397,7 @@ plot(x, y, main="Graphique de dispersion",
 
 Vous pouvez personnaliser les couleurs, les types de points (`pch`) et ajouter
 un titre (`main`) ainsi que des labels pour les axes (`xlab`, `ylab`). Vous 
-pouvez également utiliser le package `ggplot2`, de nombreux exemples et tutos 
+pouvez également utiliser le package **ggplot2**, de nombreux exemples et tutos 
 son disponible en ligne.
 
 Pour visualiser la **répartition d’une variable**, on utilise `hist()`.
@@ -443,8 +443,8 @@ séparé, puis les utiliser pour analyser et visualiser des données.
 2. Dans ce fichier, écrivez deux fonctions :  
    - `resumer_vecteur(x)` : retourne la moyenne, médiane, min, max, variance  
    - `remplacer_grand(x)` : remplace les valeurs supérieures à la moyenne par 100
-3. Dans TP1.R :  
-   - Chargez les packages `sf`, `TDLM` et `bioregion` 
+3. Dans **TP1.R** :  
+   - Chargez les packages **sf**, **TDLM** et **bioregion** 
    - Définissez votre répertoire de travail 
    - Importez vos fonctions depuis **Mes_fonctions.R** avec `source()`  
    - Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction `sample()`)
@@ -534,7 +534,7 @@ Une application Shiny se compose généralement de deux parties principales :
 
 ### Exemple minimal
 
-Installez le package `shiny`, créez un fichier **app.R** dans votre dossier 
+Installez le package **shiny**, créez un fichier **app.R** dans votre dossier 
 **TP1** et copiez-collez le code suivant :
 
 ```{r, eval=FALSE}
@@ -571,6 +571,6 @@ shinyApp(ui, server)
 2. Cliquez sur **Run App** en haut à droite de l’éditeur.  
 3. L’application s’ouvre dans le Viewer de RStudio ou dans votre navigateur.  
 
-> *Astuce : Pour déployer votre application en ligne, vous pouvez utiliser 
+> *Pour déployer votre application en ligne, vous pouvez utiliser 
 > [shinyapps.io](https://www.shinyapps.io/) ou un serveur Shiny propre. L’exemple 
 > ci-dessus fonctionne localement sur votre machine.*
