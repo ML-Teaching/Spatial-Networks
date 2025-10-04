@@ -582,11 +582,10 @@ dont les entrées de l’utilisateur sont traitées et reliées aux sorties affi
 - **style.css** est un fichier de **mise en forme** optionnel. Il permet de 
 modifier l’apparence de l’application (couleurs, polices, marges, tailles, etc.).  
 
-Prenez le temps de parcourir ces fichiers et d’expérimenter :  
-- changer le **titre** de l’application,  
-- modifier la **palette de couleurs** des cartes,  
-- renommer les **onglets** du tableau de bord,  
-- ou encore personnaliser les couleurs dans **style.css**.  
+Prenez le temps de parcourir ces fichiers et d’expérimenter en changeant 
+le **titre** de l’application, en renommant l'**onglet** du tableau de bord, 
+en modifiant la **palette de couleurs** de la cartes ou encore personnaliser 
+les couleurs dans **style.css**.  
 
 Ces ajustements simples vous aideront à mieux comprendre l’articulation des 
 différents fichiers et à prendre en main la structure d’une application Shiny 
