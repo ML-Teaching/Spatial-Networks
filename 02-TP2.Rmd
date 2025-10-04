@@ -569,7 +569,7 @@ L'application est composée de quatre fichiers principaux :
 
 - **global.R** contient les éléments **communs** à l’application, chargés 
 **une seule fois** au lancement. On y met par exemple le chargement des packages, 
-des données (**mtp** ici) ou la définition de fonctions utiles.  
+des données ou la définition de fonctions utiles.  
 
 - **ui.R** définit l’**interface utilisateur** (*User Interface*). C’est ici que 
 l’on décrit la mise en page, les onglets, les boutons, les cartes ou graphiques 
