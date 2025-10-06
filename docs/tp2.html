@@ -167,7 +167,10 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
 <li class="chapter" data-level="2.4" data-path="tp2.html"><a href="tp2.html#application-r-shiny"><i class="fa fa-check"></i><b>2.4</b> Application R Shiny</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a></li>
+<li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-donn%C3%A9es-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
 <li><a href="https://bookdown.org/" target="blank">Publié avec bookdown</a></li>
@@ -201,19 +204,20 @@ spatiales, ainsi que le contenu du TP.</p>
 </iframe>
 <div id="prise-en-main-des-données" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Prise en main des données<a href="tp2.html#prise-en-main-des-donn%C3%A9es" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Le package <strong>TDLM</strong> met à disposition des données d’exemple de flux
-domicile-travail entre les <strong>342 communes du département de l’Hérault en
-2020</strong>.</p>
+<p>Le package R <a href="https://rtdlm.github.io/TDLM/">TDLM</a> met à disposition des données
+d’exemple de flux domicile-travail entre les <strong>342 communes du département de
+l’Hérault en 2020</strong>.</p>
 <ul>
-<li><code>od_mtp</code> : matrice des flux observés.<br />
+<li><strong>od_mtp</strong> : matrice des flux observés.<br />
 </li>
-<li><code>distance_mtp</code> : matrice des distances.<br />
+<li><strong>distance_mtp</strong> : matrice des distances.<br />
 </li>
-<li><code>mass_mtp</code> : masses et marges (population, flux sortants, flux entrants).<br />
+<li><strong>mass_mtp</strong> : masses et marges (population, flux sortants, flux entrants).<br />
 </li>
-<li><code>mtp</code> : données spatiales associées.</li>
+<li><strong>mtp</strong> : données spatiales associées.</li>
 </ul>
-<p>Nous allons calculer quelques statistiques de base pour explorer ces données.</p>
+<p>Nous allons dans un premier temps calculer quelques statistiques de base pour
+explorer ces données.</p>
 <p>Créez un script <strong>TP2.R</strong> et enregistrez-le dans votre répertoire de travail,
 que vous pouvez également nommer <strong>TP2</strong>.</p>
 <div id="charger-les-données" class="section level3 hasAnchor" number="2.1.1">

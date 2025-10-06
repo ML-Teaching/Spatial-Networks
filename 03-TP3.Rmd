@@ -1,3 +1,23 @@
 # Analyse de réseaux biogéographiques {#tp3}
 
-En cours de rédaction
+Avant de commencer le TP, je vais vous présenter une introduction à la 
+biorégionalisation, ainsi que le contenu du TP.
+
+<div style="height:10px;">&nbsp;</div>
+
+<iframe src="slides/tp3/Cours_TP3.pdf" width="100%" height="450px"></iframe>
+
+## Prise en main des données
+
+Le package R [bioregion](https://biorgeo.github.io/bioregion/) met à disposition 
+des données d'exemple d'abondance d'espèces végétales dans le sud de la France, 
+fournies par le conservatoire botanique méditerranéen.
+
+- **vegemat** : matrice de co-occurrences sites-espèces.  
+- **vegesf** : données spatiales associées.  
+
+Nous allons dans un premier temps calculer quelques statistiques de base pour 
+explorer ces données.
+
+Créez un script **TP3.R** et enregistrez-le dans votre répertoire de travail, 
+que vous pouvez également nommer **TP3**.

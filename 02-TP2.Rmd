@@ -10,16 +10,17 @@ spatiales, ainsi que le contenu du TP.
 
 ## Prise en main des données 
 
-Le package **TDLM** met à disposition des données d'exemple de flux 
-domicile-travail entre les **342 communes du département de l'Hérault en 
-2020**.
+Le package R [TDLM](https://rtdlm.github.io/TDLM/) met à disposition des données 
+d'exemple de flux domicile-travail entre les **342 communes du département de 
+l'Hérault en 2020**.
 
-- `od_mtp` : matrice des flux observés.  
-- `distance_mtp` : matrice des distances.  
-- `mass_mtp` : masses et marges (population, flux sortants, flux entrants).  
-- `mtp` : données spatiales associées.  
+- **od_mtp** : matrice des flux observés.  
+- **distance_mtp** : matrice des distances.  
+- **mass_mtp** : masses et marges (population, flux sortants, flux entrants).  
+- **mtp** : données spatiales associées.  
 
-Nous allons calculer quelques statistiques de base pour explorer ces données.
+Nous allons dans un premier temps calculer quelques statistiques de base pour 
+explorer ces données.
 
 Créez un script **TP2.R** et enregistrez-le dans votre répertoire de travail,
 que vous pouvez également nommer **TP2**.  

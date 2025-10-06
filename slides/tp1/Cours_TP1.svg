@@ -629,7 +629,7 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="1.6141471"
-     inkscape:cx="157.97817"
+     inkscape:cx="158.28793"
      inkscape:cy="188.02499"
      inkscape:window-x="0"
      inkscape:window-y="32"
@@ -650,7 +650,7 @@
      inkscape:groupmode="layer"
      inkscape:label="Slide1"
      transform="matrix(1.25,0,0,-1.25,0,340.20001)"
-     style="display:none"><g
+     style="display:inline"><g
        id="g1"
        transform="translate(-0.49561787,6.525168)"><g
          transform="matrix(1.0395031,0,0,-1.0395031,37.750672,925.87545)"
@@ -880,11 +880,11 @@
              id="g2-2"
              style="fill:#00a3a6;stroke:none"><polygon
                class="cls-19"
-               points="405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 292.64,70.68 "
+               points="405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 "
                id="polygon1"
                style="fill:#00a3a6;stroke:none" /><polygon
                class="cls-6"
-               points="180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 "
+               points="292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 "
                id="polygon2"
                style="fill:#00a3a6;stroke:none;stroke-miterlimit:10" /></g></g><g
            id="g34"
@@ -1434,7 +1434,7 @@
          style="fill:#000000;stroke:none;stroke-width:2.4"
          x="240.47218"
          y="-140.69739">Editeur</tspan></text></g><g
-     style="display:inline"
+     style="display:none"
      transform="matrix(1.25,0,0,-1.25,0,340.20001)"
      inkscape:label="Slide2e"
      inkscape:groupmode="layer"
