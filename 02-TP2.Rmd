@@ -17,7 +17,8 @@ l'Hérault en 2020**.
 - **od_mtp** : matrice des flux observés.  
 - **distance_mtp** : matrice des distances.  
 - **mass_mtp** : masses et marges (population, flux sortants, flux entrants).  
-- **mtp** : données spatiales associées.  
+- **mtp** : données spatiales associées (nous aurons besoin de **sf** pour les
+manipuler).  
 
 Nous allons dans un premier temps calculer quelques statistiques de base pour 
 explorer ces données.
@@ -43,11 +44,14 @@ data(mass_mtp)
 data(mtp)
 ```
 
-### Taille des objets et aperçu
+### Taille et aperçu des objets 
 
 ```{r, eval=FALSE}
-dim(od_mtp)         # Dimensions de la matrice OD
-dim(distance_mtp)   # Dimensions de la matrice de distance
+dim(od_mtp)         # Dimensions et aperçu de la matrice OD
+od_mtp[1:10,1:10]
+
+dim(distance_mtp)   # Dimensions et aperçu de la matrice de distance
+distance_mtp[1:10,1:10]
 
 mass_mtp[1:10,]     # Aperçu des masses
 
@@ -55,6 +59,55 @@ mtp                 # Aperçu des entités spatiales
 class(mtp)          # Objet sf
 plot(mtp)           # Représentation spatiale de mtp
 plot(mtp[,2])       # Représentation spatiale de l'attribut Longitude
+```
+
+### Réseaux et matrices
+
+Avant de poursuivre les analyses, prenons un instant pour aborder la notion de 
+**réseau**. Il existe deux principales façons de représenter un réseau dirigé et
+pondéré comme celui que nous étudions ici. 
+
+- **Le format matriciel** : une matrice carrée où chaque case représente la 
+  valeur du flux entre une origine (ligne) et une destination (colonne). C'est 
+  le format que nous utilisons avec **od_mtp**.  
+- **Le format en trois colonnes** : un tableau (data frame) comportant une 
+  colonne pour l’origine, une pour la destination, et une pour le poids (flux). 
+
+Ce second format est souvent appelé **edge list** (*liste d'arêtes*). Il est 
+très pratique pour l'analyse de réseaux, car il permet d'intégrer les flux dans 
+d'autres outils spécialisé dans l'analyse de graphe (comme **igraph** par 
+exemple).
+
+> *Particularité importante : les liens inexistants 
+> (ou les flux nuls) ne sont généralement pas représentés. Autrement dit, 
+> seules les paires origine–destination où le flux est strictement positif 
+> apparaissent.*
+
+Nous pouvons facilement convertir notre matrice **od_mtp** en un format 
+"trois colonnes" à l’aide de la fonction `mat_to_net()` du package 
+**bioregion**.
+
+```{r, eval=FALSE}
+# Conversion matrice -> "réseau"
+net_mtp <- mat_to_net(od_mtp, weight = TRUE)
+net_mtp[1:10,]
+
+# Nombre de paires "non nulles"
+dim(net_mtp)
+```
+
+et inversement avec la fonction `net_to_mat()`
+
+```{r, eval=FALSE}
+# Conversion "réseau" -> matrice  
+mat_mtp2 <- net_to_mat(net_mtp, weight = TRUE, square = TRUE)
+
+mat_mtp2[1:10,1:10]
+mat_mtp[1:10,1:10]
+
+# Nombre total de paires et nombre de paires "nulles"
+length(mat_mtp)
+sum(mat_mtp==0)
 ```
 
 ### Statistiques de base
@@ -89,7 +142,7 @@ sum(mass_mtp$In_Commuters==apply(od_mtp, 2, sum))
 ### Exercices
 
 **1.** Calculer la **distance moyenne de navettage** à partir des matrices 
-`od_mtp` et `distance_mtp`. Calculer également la distance moyenne de 
+**od_mtp** et **distance_mtp**. Calculer également la distance moyenne de 
 navettage par commune (à l'aide de la fonction `apply()`). Ces métriques vont 
 nous resservir. N’hésitez pas à développer des fonctions dédiées dans un script 
 et à les charger ensuite avec `source()`, comme vu lors du premier TP.
@@ -113,7 +166,7 @@ d_com
 ---
 
 **2.** Visualiser les **flux sortants** par commune sur une carte. Pour cela, 
-ajoutez les valeurs de `Oi` (flux sortants) à l’objet spatial `mtp` et 
+ajoutez les valeurs de **Oi** (flux sortants) à l'objet spatial **mtp** et 
 affichez-les avec la fonction `plot()`.  
 
 ---

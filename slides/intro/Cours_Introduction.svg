@@ -26,10 +26,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4707821"
-     inkscape:cx="241.36818"
-     inkscape:cy="124.08364"
+     inkscape:cx="247.48737"
+     inkscape:cy="3.0595967"
      inkscape:document-units="px"
-     inkscape:current-layer="g15059"
+     inkscape:current-layer="g9378"
      showgrid="false"
      borderlayer="true"
      inkscape:showpageshadow="false"
@@ -64,6 +64,16 @@
        position="194.58217,311.54146"
        orientation="0,-1"
        id="guide13"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="136.66198,174.81181"
+       orientation="0,-1"
+       id="guide92"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="130.7652,170.27436"
+       orientation="0,-1"
+       id="guide93"
        inkscape:locked="false" />
   </sodipodi:namedview>
   <defs
@@ -76767,6 +76777,37 @@
          stop-opacity="1"
          id="stop2-3-7" />
     </linearGradient>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-5"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path2056-2"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-3"
+       style="overflow:visible"
+       inkscape:isstock="true"
+       inkscape:collect="always">
+      <path
+         inkscape:connector-curvature="0"
+         id="path2056-0"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
   </defs>
   <metadata
      id="metadata7">
@@ -78038,7 +78079,7 @@
   <g
      inkscape:groupmode="layer"
      id="g22083"
-     inkscape:label="Slide3"
+     inkscape:label="Slide3a"
      transform="translate(0,-865.23308)"
      style="display:none">
     <flowRoot
@@ -78541,6 +78582,19 @@
            y="236.46097" /></flowRegion><flowPara
          id="flowPara18692"
          style="font-size:10px;line-height:1.25">Lien</flowPara></flowRoot>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot18686-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.9833003,0,0,0.9833003,-11.626724,868.80269)"><flowRegion
+         id="flowRegion18688-9"><rect
+           id="rect18690-12"
+           width="98.396255"
+           height="28.04961"
+           x="121.54832"
+           y="236.46097" /></flowRegion><flowPara
+         id="flowPara18692-7"
+         style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Oblique';fill:#808080">Link</flowPara></flowRoot>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.850594;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-4-0-8-0-2-2)"
        d="m 60.7041,1143.2756 c 8.740851,-31.1122 8.740851,-31.1122 8.740851,-31.1122"
@@ -78558,7 +78612,24 @@
            x="121.54832"
            y="236.46097" /></flowRegion><flowPara
          id="flowPara18692-8"
-         style="font-size:10px;line-height:1.25">Noeud</flowPara></flowRoot>
+         style="font-size:10px;line-height:1.25">Noeud</flowPara><flowPara
+         style="font-size:10px;line-height:1.25"
+         id="flowPara1" /></flowRoot>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot18686-9-6"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.9833003,0,0,0.9833003,-73.482659,923.32624)"><flowRegion
+         id="flowRegion18688-0-7"><rect
+           id="rect18690-8-5"
+           width="98.396255"
+           height="28.04961"
+           x="121.54832"
+           y="236.46097" /></flowRegion><flowPara
+         id="flowPara18692-8-3"
+         style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Oblique';fill:#808080">Node</flowPara><flowPara
+         style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Oblique';fill:#808080"
+         id="flowPara1-5" /></flowRoot>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.850594;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-4-0-8-0-2-5)"
        d="m 378.43872,1089.2226 c -10.81048,-30.455 -10.81048,-30.455 -10.81048,-30.455"
@@ -78577,6 +78648,19 @@
            y="236.46097" /></flowRegion><flowPara
          id="flowPara18692-1"
          style="font-size:10px;line-height:1.25">Arête</flowPara></flowRoot>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot18686-5-2"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.9833003,0,0,0.9833003,251.99197,867.544)"><flowRegion
+         id="flowRegion18688-6-6"><rect
+           id="rect18690-1-1"
+           width="98.396255"
+           height="28.04961"
+           x="121.54832"
+           y="236.46097" /></flowRegion><flowPara
+         id="flowPara18692-1-8"
+         style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Oblique';fill:#808080">Edge</flowPara></flowRoot>
     <path
        style="display:inline;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.850594;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;marker-end:url(#Arrow2Lend-4-0-8-0-2-2-9)"
        d="m 324.03273,1142.3568 c 8.74085,-31.1122 8.74085,-31.1122 8.74085,-31.1122"
@@ -78595,6 +78679,182 @@
            y="236.46097" /></flowRegion><flowPara
          id="flowPara18692-8-8"
          style="font-size:10px;line-height:1.25">Sommet</flowPara></flowRoot>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot18686-9-9-9"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.9833003,0,0,0.9833003,189.74764,921.38762)"><flowRegion
+         id="flowRegion18688-0-8-3"><rect
+           id="rect18690-8-4-6"
+           width="98.396255"
+           height="28.04961"
+           x="121.54832"
+           y="236.46097" /></flowRegion><flowPara
+         id="flowPara18692-8-8-0"
+         style="font-style:oblique;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Oblique';fill:#808080">Vertice</flowPara></flowRoot>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="g91"
+     inkscape:label="Slide3b"
+     transform="translate(0,-865.23308)"
+     style="display:inline">
+    <flowRoot
+       transform="translate(19.95896,10.363652)"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot2"
+       xml:space="preserve"><flowRegion
+         id="flowRegion1"><rect
+           style="text-align:start;text-anchor:start"
+           y="862.9519"
+           x="-7.4579854"
+           height="205.15315"
+           width="410.3063"
+           id="rect1" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:22.2452px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Ultra-Bold';text-align:start;text-anchor:start;fill:#808080"
+         id="flowPara2"><flowSpan
+   style="font-style:oblique;font-variant:normal;font-weight:800;font-stretch:normal;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Ultra-Bold Oblique'"
+   id="flowSpan91">Edge list</flowSpan> ou matrice ?</flowPara></flowRoot>
+    <g
+       id="g4195"
+       transform="matrix(0.77271531,0,0,0.77271531,-755.94768,1195.0592)"
+       style="display:inline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.1187;stroke-dasharray:none;stroke-opacity:1">
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path4415-2-9"
+         d="m 1233.1232,-193.01488 h 104.2881"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.1187;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-5)" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path4415-2-9-0"
+         d="M 1339.9387,-173.68901 H 1237.7584"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.1187;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow1Mend-3)" />
+    </g>
+    <g
+       id="g9378"
+       transform="matrix(0.87918599,0,0,0.87918599,509.53594,675.95782)"
+       style="display:inline;fill:#000000;fill-opacity:1">
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.03279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M -238.77008,408.41233 H -74.488656"
+         id="path4312-7-0"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1.03279;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m -164.59688,384.75502 v 70.30447"
+         id="path4314-6-0"
+         inkscape:connector-curvature="0" />
+      <flowRoot
+         transform="matrix(0.75892089,0,0,0.75892089,-189.87798,349.9328)"
+         xml:space="preserve"
+         id="flowRoot4136-5-0-5-3"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.7433px;line-height:0.01%;font-family:Corbel;-inkscape-font-specification:Corbel;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+           id="flowRegion4138-8-5-2-0"
+           style="fill:#000000;fill-opacity:1"><rect
+             id="rect4140-3-5-3-9"
+             width="181.37358"
+             height="26.741858"
+             x="40.406101"
+             y="26.886175"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Corbel;-inkscape-font-specification:Corbel;fill:#000000;fill-opacity:1.0" /></flowRegion><flowPara
+           id="flowPara4142-4-0-6-1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.7433px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;fill-opacity:1">Noeud 2</flowPara></flowRoot>
+      <flowRoot
+         transform="matrix(0.75892089,0,0,0.75892089,-261.84239,368.34513)"
+         xml:space="preserve"
+         id="flowRoot4136-5-0-2-9-4"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.7433px;line-height:0.01%;font-family:Corbel;-inkscape-font-specification:Corbel;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+           id="flowRegion4138-8-5-3-2-9"
+           style="fill:#000000;fill-opacity:1"><rect
+             id="rect4140-3-5-7-9-8"
+             width="181.37358"
+             height="26.741858"
+             x="40.406101"
+             y="26.886175"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Corbel;-inkscape-font-specification:Corbel;fill:#000000;fill-opacity:1.0" /></flowRegion><flowPara
+           id="flowPara4142-4-0-3-0-3"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.7433px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;fill-opacity:1">Noeud 1</flowPara></flowRoot>
+    </g>
+    <path
+       style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.908018;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 7.9932779,1035.0039 H 184.90323"
+       id="path4312-0"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.908018;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 73.123447,1016.8182 v 60.9599"
+       id="path4314-5"
+       inkscape:connector-curvature="0" />
+    <flowRoot
+       transform="matrix(0.66723263,0,0,0.66723263,48.735987,999.97822)"
+       xml:space="preserve"
+       id="flowRoot4136-5-0-8"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.7433px;line-height:0.01%;font-family:Corbel;-inkscape-font-specification:Corbel;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+         id="flowRegion4138-8-5-9"
+         style="fill:#000000;fill-opacity:1"><rect
+           id="rect4140-3-5-8"
+           width="181.37358"
+           height="26.741858"
+           x="40.406101"
+           y="26.886175"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Corbel;-inkscape-font-specification:Corbel;fill:#000000;fill-opacity:1.0" /></flowRegion><flowPara
+         id="flowPara4142-4-0-32"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.7433px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;fill-opacity:1">Noeud 2</flowPara></flowRoot>
+    <flowRoot
+       transform="matrix(0.66723263,0,0,0.66723263,-11.89,1000.0379)"
+       xml:space="preserve"
+       id="flowRoot4136-5-0-2-02"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.7433px;line-height:0.01%;font-family:Corbel;-inkscape-font-specification:Corbel;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
+         id="flowRegion4138-8-5-3-6"
+         style="fill:#000000;fill-opacity:1"><rect
+           id="rect4140-3-5-7-6"
+           width="181.37358"
+           height="26.741858"
+           x="40.406101"
+           y="26.886175"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Corbel;-inkscape-font-specification:Corbel;fill:#000000;fill-opacity:1.0" /></flowRegion><flowPara
+         id="flowPara4142-4-0-3-18"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.7433px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;fill-opacity:1">Noeud 1</flowPara></flowRoot>
+    <path
+       inkscape:connector-curvature="0"
+       id="path4314-5-1"
+       d="m 132.6653,1016.8182 v 60.9599"
+       style="display:inline;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.908018;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <flowRoot
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.7269px;line-height:0.01%;font-family:Corbel;-inkscape-font-specification:Corbel;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4136-5-0-2-02-1"
+       xml:space="preserve"
+       transform="matrix(0.78076803,0,0,0.78076803,143.73938,1019.229)"><flowRegion
+         id="flowRegion4138-8-5-3-6-7"
+         style="fill:#000000;fill-opacity:1"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Corbel;-inkscape-font-specification:Corbel;fill:#000000;fill-opacity:1.0"
+           y="-1.560096"
+           x="-0.93482941"
+           height="22.853189"
+           width="154.99913"
+           id="rect4140-3-5-7-6-5" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.7269px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;fill-opacity:1"
+         id="flowPara4485">(Poids)</flowPara></flowRoot>
+    <flowRoot
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:0.01%;font-family:Corbel;-inkscape-font-specification:Corbel;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       id="flowRoot4136-5-0-2-02-1-3"
+       xml:space="preserve"
+       transform="matrix(0.78076803,0,0,0.78076803,384.39836,1047.541)"><flowRegion
+         id="flowRegion4138-8-5-3-6-7-6"
+         style="fill:#000000;fill-opacity:1"><rect
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Corbel;-inkscape-font-specification:Corbel;fill:#000000;fill-opacity:1.0"
+           y="-1.560096"
+           x="-0.93482941"
+           height="22.853189"
+           width="154.99913"
+           id="rect4140-3-5-7-6-5-7" /></flowRegion><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;fill-opacity:1"
+         id="flowPara4142-4-0-3-18-8-5">(Poids)</flowPara><flowPara
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;fill-opacity:1"
+         id="flowPara4485-3" /></flowRoot>
   </g>
   <g
      style="display:none"
@@ -80077,7 +80337,7 @@
      id="g15059"
      inkscape:label="Slide7a"
      transform="translate(0,-865.23308)"
-     style="display:inline">
+     style="display:none">
     <flowRoot
        transform="translate(17.95896,10.363652)"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0.01%;font-family:'Futura LT';-inkscape-font-specification:'Futura LT, Normal';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"

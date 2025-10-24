@@ -14,10 +14,55 @@ des données d'exemple d'abondance d'espèces végétales dans le sud de la Fran
 fournies par le conservatoire botanique méditerranéen.
 
 - **vegemat** : matrice de co-occurrences sites-espèces.  
-- **vegesf** : données spatiales associées.  
+- **vegenet** : data.frame de co-occurrences sites-espèces. 
+- **vegesf** : données spatiales associées  (nous aurons besoin de **sf** pour 
+les manipuler).   
 
 Nous allons dans un premier temps calculer quelques statistiques de base pour 
-explorer ces données.
+explorer ces données. 
 
 Créez un script **TP3.R** et enregistrez-le dans votre répertoire de travail, 
 que vous pouvez également nommer **TP3**.
+
+
+> *Dans ce TP, je m'inspire largement du cours sur la 
+> [bioregionalisation avec les réseaux](https://github.com/Farewe/Cours_Bioregionalisation)
+> proposé par mon collègue [Boris Leroy](https://farewe.github.io/markdown-cv/)
+> du Muséum national d’Histoire naturelle.*
+
+### Charger les données
+
+```{r, eval=FALSE}
+# Charger les packages
+library(bioregion)
+library(sf)
+
+# Définir le répertoire de travail
+setwd("~/Desktop/TP3") # A adapter à votre chemin sur votre ordinateur !
+
+# Charger les données
+data(vegemat)
+data(vegenet)
+data(vegesf)
+```
+
+### Taille et aperçu des objets 
+
+```{r, eval=FALSE}
+dim(vegemat)        # Dimensions et aperçu de la matrice sites-espèces
+vegemat[1:10,1:10]
+
+dim(vegedf)         # Dimensions et apeçu de la version "trois colonnes"
+vegedf[1:10,]
+
+vegesf              # Aperçu des entités spatiales 
+class(vegesf)       # Objet sf
+plot(vegesf)        # Représentation spatiale de vegesf
+```
+
+
+
+
+
+
+

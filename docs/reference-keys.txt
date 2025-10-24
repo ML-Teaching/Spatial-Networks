@@ -16,7 +16,8 @@ déployer-lapplication
 tp2
 prise-en-main-des-données
 charger-les-données
-taille-des-objets-et-aperçu
+taille-et-aperçu-des-objets
+réseaux-et-matrices
 statistiques-de-base
 exercices
 estimation-des-flux-avec-tdlm
@@ -30,3 +31,4 @@ exercice-1
 application-r-shiny
 tp3
 prise-en-main-des-données-1
+taille-et-aperçu-des-objets-1

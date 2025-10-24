@@ -1,9 +1,9 @@
 # Premiers pas avec R {#tp1}
 
-Avant de commencer le TP, nous allons parcourir ensemble quelques diapositives 
-afin de nous assurer que tout le monde dispose des mêmes bases. Ce sera 
-l’occasion de prendre en main RStudio et de découvrir rapidement les notions 
-essentielles du langage R.
+Avant de commencer le TP, nous allons parcourir ensemble le support de 
+présentation ci-dessous afin de nous assurer que tout le monde dispose des mêmes 
+bases. Ce sera l'occasion de prendre en main RStudio et de découvrir rapidement 
+les notions essentielles du langage R.
 
 <div style="height:10px;">&nbsp;</div>
 

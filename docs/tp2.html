@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -214,7 +215,8 @@ l’Hérault en 2020</strong>.</p>
 </li>
 <li><strong>mass_mtp</strong> : masses et marges (population, flux sortants, flux entrants).<br />
 </li>
-<li><strong>mtp</strong> : données spatiales associées.</li>
+<li><strong>mtp</strong> : données spatiales associées (nous aurons besoin de <strong>sf</strong> pour les
+manipuler).</li>
 </ul>
 <p>Nous allons dans un premier temps calculer quelques statistiques de base pour
 explorer ces données.</p>
@@ -236,8 +238,8 @@ que vous pouvez également nommer <strong>TP2</strong>.</p>
 <span id="cb30-12"><a href="tp2.html#cb30-12" tabindex="-1"></a><span class="fu">data</span>(mass_mtp)</span>
 <span id="cb30-13"><a href="tp2.html#cb30-13" tabindex="-1"></a><span class="fu">data</span>(mtp)</span></code></pre></div>
 </div>
-<div id="taille-des-objets-et-aperçu" class="section level3 hasAnchor" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Taille des objets et aperçu<a href="tp2.html#taille-des-objets-et-aper%C3%A7u" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="taille-et-aperçu-des-objets" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Taille et aperçu des objets<a href="tp2.html#taille-et-aper%C3%A7u-des-objets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tp2.html#cb31-1" tabindex="-1"></a><span class="fu">dim</span>(od_mtp)         <span class="co"># Dimensions de la matrice OD</span></span>
 <span id="cb31-2"><a href="tp2.html#cb31-2" tabindex="-1"></a><span class="fu">dim</span>(distance_mtp)   <span class="co"># Dimensions de la matrice de distance</span></span>
 <span id="cb31-3"><a href="tp2.html#cb31-3" tabindex="-1"></a></span>
@@ -248,37 +250,73 @@ que vous pouvez également nommer <strong>TP2</strong>.</p>
 <span id="cb31-8"><a href="tp2.html#cb31-8" tabindex="-1"></a><span class="fu">plot</span>(mtp)           <span class="co"># Représentation spatiale de mtp</span></span>
 <span id="cb31-9"><a href="tp2.html#cb31-9" tabindex="-1"></a><span class="fu">plot</span>(mtp[,<span class="dv">2</span>])       <span class="co"># Représentation spatiale de l&#39;attribut Longitude</span></span></code></pre></div>
 </div>
-<div id="statistiques-de-base" class="section level3 hasAnchor" number="2.1.3">
-<h3><span class="header-section-number">2.1.3</span> Statistiques de base<a href="tp2.html#statistiques-de-base" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tp2.html#cb32-1" tabindex="-1"></a><span class="co"># Population moyenne</span></span>
-<span id="cb32-2"><a href="tp2.html#cb32-2" tabindex="-1"></a><span class="fu">mean</span>(mass_mtp<span class="sc">$</span>Population)</span>
-<span id="cb32-3"><a href="tp2.html#cb32-3" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="tp2.html#cb32-4" tabindex="-1"></a><span class="co"># Entité avec le plus d&#39;habitants</span></span>
-<span id="cb32-5"><a href="tp2.html#cb32-5" tabindex="-1"></a>mass_mtp[<span class="fu">which.max</span>(mass_mtp<span class="sc">$</span>Population), ]</span>
-<span id="cb32-6"><a href="tp2.html#cb32-6" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="tp2.html#cb32-7" tabindex="-1"></a><span class="co"># Flux totaux sortants et entrants</span></span>
-<span id="cb32-8"><a href="tp2.html#cb32-8" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>Out_Commuters)</span>
-<span id="cb32-9"><a href="tp2.html#cb32-9" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>In_Commuters)</span>
-<span id="cb32-10"><a href="tp2.html#cb32-10" tabindex="-1"></a></span>
-<span id="cb32-11"><a href="tp2.html#cb32-11" tabindex="-1"></a><span class="co"># Comparaison</span></span>
-<span id="cb32-12"><a href="tp2.html#cb32-12" tabindex="-1"></a><span class="fu">plot</span>(mass_mtp<span class="sc">$</span>Population, mass_mtp<span class="sc">$</span>Out_Commuters,</span>
-<span id="cb32-13"><a href="tp2.html#cb32-13" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Population&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Flux sortants&quot;</span>,</span>
-<span id="cb32-14"><a href="tp2.html#cb32-14" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Population vs Flux sortants&quot;</span>)</span>
-<span id="cb32-15"><a href="tp2.html#cb32-15" tabindex="-1"></a></span>
-<span id="cb32-16"><a href="tp2.html#cb32-16" tabindex="-1"></a><span class="co"># Comparaison log-log</span></span>
-<span id="cb32-17"><a href="tp2.html#cb32-17" tabindex="-1"></a><span class="fu">plot</span>(mass_mtp<span class="sc">$</span>Population, mass_mtp<span class="sc">$</span>Out_Commuters,</span>
-<span id="cb32-18"><a href="tp2.html#cb32-18" tabindex="-1"></a>     <span class="at">log=</span><span class="st">&quot;xy&quot;</span>,</span>
-<span id="cb32-19"><a href="tp2.html#cb32-19" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Population&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Flux sortants&quot;</span>,</span>
-<span id="cb32-20"><a href="tp2.html#cb32-20" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Population vs Flux sortants&quot;</span>)</span>
-<span id="cb32-21"><a href="tp2.html#cb32-21" tabindex="-1"></a></span>
-<span id="cb32-22"><a href="tp2.html#cb32-22" tabindex="-1"></a><span class="co"># Vérifier que les flux sont cohérents</span></span>
-<span id="cb32-23"><a href="tp2.html#cb32-23" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>Out_Commuters<span class="sc">==</span><span class="fu">apply</span>(od_mtp, <span class="dv">1</span>, sum))</span>
-<span id="cb32-24"><a href="tp2.html#cb32-24" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>In_Commuters<span class="sc">==</span><span class="fu">apply</span>(od_mtp, <span class="dv">2</span>, sum))</span></code></pre></div>
+<div id="réseaux-et-matrices" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Réseaux et matrices<a href="tp2.html#r%C3%A9seaux-et-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Avant de poursuivre les analyses, prenons un instant pour aborder la notion de
+<strong>réseau</strong>. Il existe deux principales façons de représenter un réseau dirigé et
+pondéré comme celui que nous étudions ici.</p>
+<ul>
+<li><strong>Le format matriciel</strong> : une matrice carrée où chaque case représente la
+valeur du flux entre une origine (ligne) et une destination (colonne). C’est
+le format que nous utilisons avec <strong>od_mtp</strong>.<br />
+</li>
+<li><strong>Le format en trois colonnes</strong> : un tableau (data frame) comportant une
+colonne pour l’origine, une pour la destination, et une pour le poids (flux).</li>
+</ul>
+<p>Ce second format est souvent appelé <strong>edge list</strong> (<em>liste d’arêtes</em>). Il est
+très pratique pour l’analyse de réseaux, car il permet d’intégrer les flux dans
+d’autres outils spécialisé dans l’analyse de graphe (comme <strong>igraph</strong> par
+exemple).</p>
+<blockquote>
+<p><em>Particularité importante : les liens inexistants
+(ou les flux nuls) ne sont généralement pas représentés. Autrement dit,
+seules les paires origine–destination où le flux est strictement positif
+apparaissent.</em></p>
+</blockquote>
+<p>Nous pouvons facilement convertir notre matrice <strong>od_mtp</strong> en un format
+“trois colonnes” à l’aide de la fonction <code>mat_to_net()</code> du package
+<strong>bioregion</strong>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tp2.html#cb32-1" tabindex="-1"></a><span class="co"># Conversion matrice -&gt; &quot;réseau&quot;</span></span>
+<span id="cb32-2"><a href="tp2.html#cb32-2" tabindex="-1"></a>net_mtp <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_mtp, <span class="at">weight =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb32-3"><a href="tp2.html#cb32-3" tabindex="-1"></a>net_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<p>et inversement avec la fonction <code>net_to_mat()</code></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tp2.html#cb33-1" tabindex="-1"></a><span class="co"># Conversion &quot;réseau&quot; -&gt; matrice  </span></span>
+<span id="cb33-2"><a href="tp2.html#cb33-2" tabindex="-1"></a>mat_mtp2 <span class="ot">&lt;-</span> <span class="fu">net_to_mat</span>(net_mtp, <span class="at">weight =</span> <span class="cn">TRUE</span>, <span class="at">square =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb33-3"><a href="tp2.html#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="tp2.html#cb33-4" tabindex="-1"></a>mat_mtp2[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb33-5"><a href="tp2.html#cb33-5" tabindex="-1"></a>mat_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
 </div>
-<div id="exercices" class="section level3 hasAnchor" number="2.1.4">
-<h3><span class="header-section-number">2.1.4</span> Exercices<a href="tp2.html#exercices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="statistiques-de-base" class="section level3 hasAnchor" number="2.1.4">
+<h3><span class="header-section-number">2.1.4</span> Statistiques de base<a href="tp2.html#statistiques-de-base" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tp2.html#cb34-1" tabindex="-1"></a><span class="co"># Population moyenne</span></span>
+<span id="cb34-2"><a href="tp2.html#cb34-2" tabindex="-1"></a><span class="fu">mean</span>(mass_mtp<span class="sc">$</span>Population)</span>
+<span id="cb34-3"><a href="tp2.html#cb34-3" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="tp2.html#cb34-4" tabindex="-1"></a><span class="co"># Entité avec le plus d&#39;habitants</span></span>
+<span id="cb34-5"><a href="tp2.html#cb34-5" tabindex="-1"></a>mass_mtp[<span class="fu">which.max</span>(mass_mtp<span class="sc">$</span>Population), ]</span>
+<span id="cb34-6"><a href="tp2.html#cb34-6" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="tp2.html#cb34-7" tabindex="-1"></a><span class="co"># Flux totaux sortants et entrants</span></span>
+<span id="cb34-8"><a href="tp2.html#cb34-8" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>Out_Commuters)</span>
+<span id="cb34-9"><a href="tp2.html#cb34-9" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>In_Commuters)</span>
+<span id="cb34-10"><a href="tp2.html#cb34-10" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="tp2.html#cb34-11" tabindex="-1"></a><span class="co"># Comparaison</span></span>
+<span id="cb34-12"><a href="tp2.html#cb34-12" tabindex="-1"></a><span class="fu">plot</span>(mass_mtp<span class="sc">$</span>Population, mass_mtp<span class="sc">$</span>Out_Commuters,</span>
+<span id="cb34-13"><a href="tp2.html#cb34-13" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Population&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Flux sortants&quot;</span>,</span>
+<span id="cb34-14"><a href="tp2.html#cb34-14" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Population vs Flux sortants&quot;</span>)</span>
+<span id="cb34-15"><a href="tp2.html#cb34-15" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="tp2.html#cb34-16" tabindex="-1"></a><span class="co"># Comparaison log-log</span></span>
+<span id="cb34-17"><a href="tp2.html#cb34-17" tabindex="-1"></a><span class="fu">plot</span>(mass_mtp<span class="sc">$</span>Population, mass_mtp<span class="sc">$</span>Out_Commuters,</span>
+<span id="cb34-18"><a href="tp2.html#cb34-18" tabindex="-1"></a>     <span class="at">log=</span><span class="st">&quot;xy&quot;</span>,</span>
+<span id="cb34-19"><a href="tp2.html#cb34-19" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Population&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Flux sortants&quot;</span>,</span>
+<span id="cb34-20"><a href="tp2.html#cb34-20" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Population vs Flux sortants&quot;</span>)</span>
+<span id="cb34-21"><a href="tp2.html#cb34-21" tabindex="-1"></a></span>
+<span id="cb34-22"><a href="tp2.html#cb34-22" tabindex="-1"></a><span class="co"># Vérifier que les flux sont cohérents</span></span>
+<span id="cb34-23"><a href="tp2.html#cb34-23" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>Out_Commuters<span class="sc">==</span><span class="fu">apply</span>(od_mtp, <span class="dv">1</span>, sum))</span>
+<span id="cb34-24"><a href="tp2.html#cb34-24" tabindex="-1"></a><span class="fu">sum</span>(mass_mtp<span class="sc">$</span>In_Commuters<span class="sc">==</span><span class="fu">apply</span>(od_mtp, <span class="dv">2</span>, sum))</span></code></pre></div>
+</div>
+<div id="exercices" class="section level3 hasAnchor" number="2.1.5">
+<h3><span class="header-section-number">2.1.5</span> Exercices<a href="tp2.html#exercices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>1.</strong> Calculer la <strong>distance moyenne de navettage</strong> à partir des matrices
-<code>od_mtp</code> et <code>distance_mtp</code>. Calculer également la distance moyenne de
+<strong>od_mtp</strong> et <strong>distance_mtp</strong>. Calculer également la distance moyenne de
 navettage par commune (à l’aide de la fonction <code>apply()</code>). Ces métriques vont
 nous resservir. N’hésitez pas à développer des fonctions dédiées dans un script
 et à les charger ensuite avec <code>source()</code>, comme vu lors du premier TP.</p>
@@ -287,45 +325,45 @@ et à les charger ensuite avec <code>source()</code>, comme vu lors du premier T
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tp2.html#cb33-1" tabindex="-1"></a><span class="co"># Moyenne pondérée distance x flux</span></span>
-<span id="cb33-2"><a href="tp2.html#cb33-2" tabindex="-1"></a>d_mean <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_mtp <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_mtp)</span>
-<span id="cb33-3"><a href="tp2.html#cb33-3" tabindex="-1"></a>d_mean</span>
-<span id="cb33-4"><a href="tp2.html#cb33-4" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="tp2.html#cb33-5" tabindex="-1"></a><span class="co"># Moyenne pondérée distance x flux par commune</span></span>
-<span id="cb33-6"><a href="tp2.html#cb33-6" tabindex="-1"></a>d_com <span class="ot">&lt;-</span> <span class="fu">apply</span>(od_mtp <span class="sc">*</span> distance_mtp, <span class="dv">1</span>, sum) <span class="sc">/</span> <span class="fu">apply</span>(od_mtp, <span class="dv">1</span>, sum)</span>
-<span id="cb33-7"><a href="tp2.html#cb33-7" tabindex="-1"></a>d_com</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="tp2.html#cb35-1" tabindex="-1"></a><span class="co"># Moyenne pondérée distance x flux</span></span>
+<span id="cb35-2"><a href="tp2.html#cb35-2" tabindex="-1"></a>d_mean <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_mtp <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_mtp)</span>
+<span id="cb35-3"><a href="tp2.html#cb35-3" tabindex="-1"></a>d_mean</span>
+<span id="cb35-4"><a href="tp2.html#cb35-4" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="tp2.html#cb35-5" tabindex="-1"></a><span class="co"># Moyenne pondérée distance x flux par commune</span></span>
+<span id="cb35-6"><a href="tp2.html#cb35-6" tabindex="-1"></a>d_com <span class="ot">&lt;-</span> <span class="fu">apply</span>(od_mtp <span class="sc">*</span> distance_mtp, <span class="dv">1</span>, sum) <span class="sc">/</span> <span class="fu">apply</span>(od_mtp, <span class="dv">1</span>, sum)</span>
+<span id="cb35-7"><a href="tp2.html#cb35-7" tabindex="-1"></a>d_com</span></code></pre></div>
 </details>
 <hr />
 <p><strong>2.</strong> Visualiser les <strong>flux sortants</strong> par commune sur une carte. Pour cela,
-ajoutez les valeurs de <code>Oi</code> (flux sortants) à l’objet spatial <code>mtp</code> et
+ajoutez les valeurs de <strong>Oi</strong> (flux sortants) à l’objet spatial <strong>mtp</strong> et
 affichez-les avec la fonction <code>plot()</code>.</p>
 <hr />
 <details>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tp2.html#cb34-1" tabindex="-1"></a><span class="co"># Ajouter les flux sortants à l&#39;objet spatial</span></span>
-<span id="cb34-2"><a href="tp2.html#cb34-2" tabindex="-1"></a>mtp<span class="sc">$</span>Oi <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>Out_Commuters</span>
-<span id="cb34-3"><a href="tp2.html#cb34-3" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="tp2.html#cb34-4" tabindex="-1"></a><span class="co"># Visualiser avec une carte simple</span></span>
-<span id="cb34-5"><a href="tp2.html#cb34-5" tabindex="-1"></a><span class="fu">plot</span>(mtp[<span class="st">&quot;Oi&quot;</span>], <span class="at">main=</span><span class="st">&quot;Flux sortants par commune&quot;</span>)</span>
-<span id="cb34-6"><a href="tp2.html#cb34-6" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="tp2.html#cb34-7" tabindex="-1"></a><span class="co"># Visualisation par quantile</span></span>
-<span id="cb34-8"><a href="tp2.html#cb34-8" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
-<span id="cb34-9"><a href="tp2.html#cb34-9" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="tp2.html#cb34-10" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">cut</span>(mtp<span class="sc">$</span>Oi,</span>
-<span id="cb34-11"><a href="tp2.html#cb34-11" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">quantile</span>(mtp<span class="sc">$</span>Oi, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">length=</span><span class="dv">11</span>),</span>
-<span id="cb34-12"><a href="tp2.html#cb34-12" tabindex="-1"></a>                                 <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
-<span id="cb34-13"><a href="tp2.html#cb34-13" tabindex="-1"></a>               <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb34-14"><a href="tp2.html#cb34-14" tabindex="-1"></a>               <span class="at">labels =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb34-15"><a href="tp2.html#cb34-15" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">viridis</span>(<span class="dv">10</span>)</span>
-<span id="cb34-16"><a href="tp2.html#cb34-16" tabindex="-1"></a></span>
-<span id="cb34-17"><a href="tp2.html#cb34-17" tabindex="-1"></a><span class="fu">plot</span>(mtp[<span class="st">&quot;Oi&quot;</span>], <span class="at">main=</span><span class="st">&quot;Flux sortants par commune&quot;</span>, <span class="at">col=</span>colors[classes])</span>
-<span id="cb34-18"><a href="tp2.html#cb34-18" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>,</span>
-<span id="cb34-19"><a href="tp2.html#cb34-19" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">paste0</span>(<span class="st">&quot;Q&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
-<span id="cb34-20"><a href="tp2.html#cb34-20" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>,</span>
-<span id="cb34-21"><a href="tp2.html#cb34-21" tabindex="-1"></a>       <span class="at">xpd =</span> <span class="cn">NA</span>,</span>
-<span id="cb34-22"><a href="tp2.html#cb34-22" tabindex="-1"></a>       <span class="at">fill =</span> colors)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="tp2.html#cb36-1" tabindex="-1"></a><span class="co"># Ajouter les flux sortants à l&#39;objet spatial</span></span>
+<span id="cb36-2"><a href="tp2.html#cb36-2" tabindex="-1"></a>mtp<span class="sc">$</span>Oi <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>Out_Commuters</span>
+<span id="cb36-3"><a href="tp2.html#cb36-3" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="tp2.html#cb36-4" tabindex="-1"></a><span class="co"># Visualiser avec une carte simple</span></span>
+<span id="cb36-5"><a href="tp2.html#cb36-5" tabindex="-1"></a><span class="fu">plot</span>(mtp[<span class="st">&quot;Oi&quot;</span>], <span class="at">main=</span><span class="st">&quot;Flux sortants par commune&quot;</span>)</span>
+<span id="cb36-6"><a href="tp2.html#cb36-6" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="tp2.html#cb36-7" tabindex="-1"></a><span class="co"># Visualisation par quantile</span></span>
+<span id="cb36-8"><a href="tp2.html#cb36-8" tabindex="-1"></a><span class="fu">library</span>(viridis)</span>
+<span id="cb36-9"><a href="tp2.html#cb36-9" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="tp2.html#cb36-10" tabindex="-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">cut</span>(mtp<span class="sc">$</span>Oi,</span>
+<span id="cb36-11"><a href="tp2.html#cb36-11" tabindex="-1"></a>               <span class="at">breaks =</span> <span class="fu">quantile</span>(mtp<span class="sc">$</span>Oi, <span class="at">probs =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="at">length=</span><span class="dv">11</span>),</span>
+<span id="cb36-12"><a href="tp2.html#cb36-12" tabindex="-1"></a>                                 <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb36-13"><a href="tp2.html#cb36-13" tabindex="-1"></a>               <span class="at">include.lowest =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb36-14"><a href="tp2.html#cb36-14" tabindex="-1"></a>               <span class="at">labels =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb36-15"><a href="tp2.html#cb36-15" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">viridis</span>(<span class="dv">10</span>)</span>
+<span id="cb36-16"><a href="tp2.html#cb36-16" tabindex="-1"></a></span>
+<span id="cb36-17"><a href="tp2.html#cb36-17" tabindex="-1"></a><span class="fu">plot</span>(mtp[<span class="st">&quot;Oi&quot;</span>], <span class="at">main=</span><span class="st">&quot;Flux sortants par commune&quot;</span>, <span class="at">col=</span>colors[classes])</span>
+<span id="cb36-18"><a href="tp2.html#cb36-18" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;right&quot;</span>,</span>
+<span id="cb36-19"><a href="tp2.html#cb36-19" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">paste0</span>(<span class="st">&quot;Q&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>),</span>
+<span id="cb36-20"><a href="tp2.html#cb36-20" tabindex="-1"></a>       <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb36-21"><a href="tp2.html#cb36-21" tabindex="-1"></a>       <span class="at">xpd =</span> <span class="cn">NA</span>,</span>
+<span id="cb36-22"><a href="tp2.html#cb36-22" tabindex="-1"></a>       <span class="at">fill =</span> colors)</span></code></pre></div>
 </details>
 <hr />
 <p><strong>3.</strong> Visualiser le <strong>ratio flux entrant / flux sortant</strong> par commune sur une
@@ -335,11 +373,11 @@ carte.</p>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="tp2.html#cb35-1" tabindex="-1"></a><span class="co"># Ajouter le ratio</span></span>
-<span id="cb35-2"><a href="tp2.html#cb35-2" tabindex="-1"></a>mtp<span class="sc">$</span>ratio <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>In_Commuters<span class="sc">/</span>mass_mtp<span class="sc">$</span>Out_Commuters</span>
-<span id="cb35-3"><a href="tp2.html#cb35-3" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="tp2.html#cb35-4" tabindex="-1"></a><span class="co"># Visualiser avec une carte simple</span></span>
-<span id="cb35-5"><a href="tp2.html#cb35-5" tabindex="-1"></a><span class="fu">plot</span>(mtp[<span class="st">&quot;ratio&quot;</span>], <span class="at">main=</span><span class="st">&quot;Ratio&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="tp2.html#cb37-1" tabindex="-1"></a><span class="co"># Ajouter le ratio</span></span>
+<span id="cb37-2"><a href="tp2.html#cb37-2" tabindex="-1"></a>mtp<span class="sc">$</span>ratio <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>In_Commuters<span class="sc">/</span>mass_mtp<span class="sc">$</span>Out_Commuters</span>
+<span id="cb37-3"><a href="tp2.html#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="tp2.html#cb37-4" tabindex="-1"></a><span class="co"># Visualiser avec une carte simple</span></span>
+<span id="cb37-5"><a href="tp2.html#cb37-5" tabindex="-1"></a><span class="fu">plot</span>(mtp[<span class="st">&quot;ratio&quot;</span>], <span class="at">main=</span><span class="st">&quot;Ratio&quot;</span>)</span></code></pre></div>
 </details>
 <hr />
 </div>
@@ -350,64 +388,64 @@ Solution (cliquer pour afficher)
 <h3><span class="header-section-number">2.2.1</span> Familiarisation avec TDLM<a href="tp2.html#familiarisation-avec-tdlm" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Nous allons commencer par préparer les données en formatant les masses
 (<span class="math inline">\(m_i\)</span> et <span class="math inline">\(m_j\)</span>) et les marges (<span class="math inline">\(D_i\)</span> et <span class="math inline">\(D_j\)</span>).</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="tp2.html#cb36-1" tabindex="-1"></a><span class="co"># Préparons les données d&#39;entrées</span></span>
-<span id="cb36-2"><a href="tp2.html#cb36-2" tabindex="-1"></a>mi <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>Population</span>
-<span id="cb36-3"><a href="tp2.html#cb36-3" tabindex="-1"></a><span class="fu">names</span>(mi) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mass_mtp)</span>
-<span id="cb36-4"><a href="tp2.html#cb36-4" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="tp2.html#cb36-5" tabindex="-1"></a>mj <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>Population</span>
-<span id="cb36-6"><a href="tp2.html#cb36-6" tabindex="-1"></a><span class="fu">names</span>(mj) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mass_mtp)</span>
-<span id="cb36-7"><a href="tp2.html#cb36-7" tabindex="-1"></a></span>
-<span id="cb36-8"><a href="tp2.html#cb36-8" tabindex="-1"></a>Oi <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>Out_Commuters</span>
-<span id="cb36-9"><a href="tp2.html#cb36-9" tabindex="-1"></a><span class="fu">names</span>(Oi) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mass_mtp)</span>
-<span id="cb36-10"><a href="tp2.html#cb36-10" tabindex="-1"></a></span>
-<span id="cb36-11"><a href="tp2.html#cb36-11" tabindex="-1"></a>Dj <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>In_Commuters</span>
-<span id="cb36-12"><a href="tp2.html#cb36-12" tabindex="-1"></a><span class="fu">names</span>(Dj) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mass_mtp)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="tp2.html#cb38-1" tabindex="-1"></a><span class="co"># Préparons les données d&#39;entrées</span></span>
+<span id="cb38-2"><a href="tp2.html#cb38-2" tabindex="-1"></a>mi <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>Population</span>
+<span id="cb38-3"><a href="tp2.html#cb38-3" tabindex="-1"></a><span class="fu">names</span>(mi) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mass_mtp)</span>
+<span id="cb38-4"><a href="tp2.html#cb38-4" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="tp2.html#cb38-5" tabindex="-1"></a>mj <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>Population</span>
+<span id="cb38-6"><a href="tp2.html#cb38-6" tabindex="-1"></a><span class="fu">names</span>(mj) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mass_mtp)</span>
+<span id="cb38-7"><a href="tp2.html#cb38-7" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="tp2.html#cb38-8" tabindex="-1"></a>Oi <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>Out_Commuters</span>
+<span id="cb38-9"><a href="tp2.html#cb38-9" tabindex="-1"></a><span class="fu">names</span>(Oi) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mass_mtp)</span>
+<span id="cb38-10"><a href="tp2.html#cb38-10" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="tp2.html#cb38-11" tabindex="-1"></a>Dj <span class="ot">&lt;-</span> mass_mtp<span class="sc">$</span>In_Commuters</span>
+<span id="cb38-12"><a href="tp2.html#cb38-12" tabindex="-1"></a><span class="fu">names</span>(Dj) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(mass_mtp)</span></code></pre></div>
 <p>Nous allons ensuite estimer les flux à l’aide d’une loi gravitaire
 exponentielle (<code>law = "NGravExp"</code>) avec un modèle doublement contraint
 (<code>model = "DCM"</code>).</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="tp2.html#cb37-1" tabindex="-1"></a><span class="co"># Loi gravitaire exponentielle avec un modèle doublement contraint</span></span>
-<span id="cb37-2"><a href="tp2.html#cb37-2" tabindex="-1"></a>od_sim <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;NGravExp&quot;</span>, </span>
-<span id="cb37-3"><a href="tp2.html#cb37-3" tabindex="-1"></a>                        <span class="at">mass_origin =</span> mi, </span>
-<span id="cb37-4"><a href="tp2.html#cb37-4" tabindex="-1"></a>                        <span class="at">mass_destination =</span> mj, </span>
-<span id="cb37-5"><a href="tp2.html#cb37-5" tabindex="-1"></a>                        <span class="at">distance =</span> distance_mtp, </span>
-<span id="cb37-6"><a href="tp2.html#cb37-6" tabindex="-1"></a>                        <span class="at">opportunity =</span> <span class="cn">NULL</span>,</span>
-<span id="cb37-7"><a href="tp2.html#cb37-7" tabindex="-1"></a>                        <span class="at">param =</span> <span class="fl">0.01</span>,</span>
-<span id="cb37-8"><a href="tp2.html#cb37-8" tabindex="-1"></a>                        <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb37-9"><a href="tp2.html#cb37-9" tabindex="-1"></a>                        </span>
-<span id="cb37-10"><a href="tp2.html#cb37-10" tabindex="-1"></a>                        <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
-<span id="cb37-11"><a href="tp2.html#cb37-11" tabindex="-1"></a>                        <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
-<span id="cb37-12"><a href="tp2.html#cb37-12" tabindex="-1"></a>                        <span class="at">out_trips =</span> Oi, </span>
-<span id="cb37-13"><a href="tp2.html#cb37-13" tabindex="-1"></a>                        <span class="at">in_trips =</span> Dj,</span>
-<span id="cb37-14"><a href="tp2.html#cb37-14" tabindex="-1"></a>                        <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb37-15"><a href="tp2.html#cb37-15" tabindex="-1"></a>                        <span class="at">nbrep =</span> <span class="dv">3</span>,</span>
-<span id="cb37-16"><a href="tp2.html#cb37-16" tabindex="-1"></a>                        </span>
-<span id="cb37-17"><a href="tp2.html#cb37-17" tabindex="-1"></a>                        <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="tp2.html#cb39-1" tabindex="-1"></a><span class="co"># Loi gravitaire exponentielle avec un modèle doublement contraint</span></span>
+<span id="cb39-2"><a href="tp2.html#cb39-2" tabindex="-1"></a>od_sim <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;NGravExp&quot;</span>, </span>
+<span id="cb39-3"><a href="tp2.html#cb39-3" tabindex="-1"></a>                        <span class="at">mass_origin =</span> mi, </span>
+<span id="cb39-4"><a href="tp2.html#cb39-4" tabindex="-1"></a>                        <span class="at">mass_destination =</span> mj, </span>
+<span id="cb39-5"><a href="tp2.html#cb39-5" tabindex="-1"></a>                        <span class="at">distance =</span> distance_mtp, </span>
+<span id="cb39-6"><a href="tp2.html#cb39-6" tabindex="-1"></a>                        <span class="at">opportunity =</span> <span class="cn">NULL</span>,</span>
+<span id="cb39-7"><a href="tp2.html#cb39-7" tabindex="-1"></a>                        <span class="at">param =</span> <span class="fl">0.01</span>,</span>
+<span id="cb39-8"><a href="tp2.html#cb39-8" tabindex="-1"></a>                        <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb39-9"><a href="tp2.html#cb39-9" tabindex="-1"></a>                        </span>
+<span id="cb39-10"><a href="tp2.html#cb39-10" tabindex="-1"></a>                        <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
+<span id="cb39-11"><a href="tp2.html#cb39-11" tabindex="-1"></a>                        <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
+<span id="cb39-12"><a href="tp2.html#cb39-12" tabindex="-1"></a>                        <span class="at">out_trips =</span> Oi, </span>
+<span id="cb39-13"><a href="tp2.html#cb39-13" tabindex="-1"></a>                        <span class="at">in_trips =</span> Dj,</span>
+<span id="cb39-14"><a href="tp2.html#cb39-14" tabindex="-1"></a>                        <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb39-15"><a href="tp2.html#cb39-15" tabindex="-1"></a>                        <span class="at">nbrep =</span> <span class="dv">3</span>,</span>
+<span id="cb39-16"><a href="tp2.html#cb39-16" tabindex="-1"></a>                        </span>
+<span id="cb39-17"><a href="tp2.html#cb39-17" tabindex="-1"></a>                        <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Nous pouvons faire une comparaison rapide pour comprendre les résultats.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="tp2.html#cb38-1" tabindex="-1"></a><span class="co"># Comparaison rapide des flux simulés et observés</span></span>
-<span id="cb38-2"><a href="tp2.html#cb38-2" tabindex="-1"></a>od_sim<span class="sc">$</span>replication_1[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb38-3"><a href="tp2.html#cb38-3" tabindex="-1"></a>od_sim<span class="sc">$</span>replication_2[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb38-4"><a href="tp2.html#cb38-4" tabindex="-1"></a>od_sim<span class="sc">$</span>replication_3[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
-<span id="cb38-5"><a href="tp2.html#cb38-5" tabindex="-1"></a>od_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="tp2.html#cb40-1" tabindex="-1"></a><span class="co"># Comparaison rapide des flux simulés et observés</span></span>
+<span id="cb40-2"><a href="tp2.html#cb40-2" tabindex="-1"></a>od_sim<span class="sc">$</span>replication_1[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb40-3"><a href="tp2.html#cb40-3" tabindex="-1"></a>od_sim<span class="sc">$</span>replication_2[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb40-4"><a href="tp2.html#cb40-4" tabindex="-1"></a>od_sim<span class="sc">$</span>replication_3[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb40-5"><a href="tp2.html#cb40-5" tabindex="-1"></a>od_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
 <p>Pour aller plus loin, la fonction <code>gof()</code> (<em>goodness-of-fit</em>) permet de
 calculer plusieurs indicateurs pour comparer les matrices simulées à la
 matrice observée.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="tp2.html#cb39-1" tabindex="-1"></a><span class="co"># Goodness-of-fit entre flux simulés et observés</span></span>
-<span id="cb39-2"><a href="tp2.html#cb39-2" tabindex="-1"></a><span class="fu">gof</span>(od_sim, od_mtp,</span>
-<span id="cb39-3"><a href="tp2.html#cb39-3" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
-<span id="cb39-4"><a href="tp2.html#cb39-4" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="tp2.html#cb41-1" tabindex="-1"></a><span class="co"># Goodness-of-fit entre flux simulés et observés</span></span>
+<span id="cb41-2"><a href="tp2.html#cb41-2" tabindex="-1"></a><span class="fu">gof</span>(od_sim, od_mtp,</span>
+<span id="cb41-3"><a href="tp2.html#cb41-3" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb41-4"><a href="tp2.html#cb41-4" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
 <p>Vous pouvez également comparer les distances moyennes simulées à la distance
 moyenne observée à l’aide de votre fonction ou du code ci-dessous.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="tp2.html#cb40-1" tabindex="-1"></a>d_mean_1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_1)</span>
-<span id="cb40-2"><a href="tp2.html#cb40-2" tabindex="-1"></a>d_mean_1</span>
-<span id="cb40-3"><a href="tp2.html#cb40-3" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="tp2.html#cb40-4" tabindex="-1"></a>d_mean_2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_2 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_1)</span>
-<span id="cb40-5"><a href="tp2.html#cb40-5" tabindex="-1"></a>d_mean_2</span>
-<span id="cb40-6"><a href="tp2.html#cb40-6" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="tp2.html#cb40-7" tabindex="-1"></a>d_mean_3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_3 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_1)</span>
-<span id="cb40-8"><a href="tp2.html#cb40-8" tabindex="-1"></a>d_mean_3</span>
-<span id="cb40-9"><a href="tp2.html#cb40-9" tabindex="-1"></a></span>
-<span id="cb40-10"><a href="tp2.html#cb40-10" tabindex="-1"></a>d_mean_obs <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_mtp <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_mtp)</span>
-<span id="cb40-11"><a href="tp2.html#cb40-11" tabindex="-1"></a>d_mean_obs</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="tp2.html#cb42-1" tabindex="-1"></a>d_mean_1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_1)</span>
+<span id="cb42-2"><a href="tp2.html#cb42-2" tabindex="-1"></a>d_mean_1</span>
+<span id="cb42-3"><a href="tp2.html#cb42-3" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="tp2.html#cb42-4" tabindex="-1"></a>d_mean_2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_2 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_1)</span>
+<span id="cb42-5"><a href="tp2.html#cb42-5" tabindex="-1"></a>d_mean_2</span>
+<span id="cb42-6"><a href="tp2.html#cb42-6" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="tp2.html#cb42-7" tabindex="-1"></a>d_mean_3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_3 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>replication_1)</span>
+<span id="cb42-8"><a href="tp2.html#cb42-8" tabindex="-1"></a>d_mean_3</span>
+<span id="cb42-9"><a href="tp2.html#cb42-9" tabindex="-1"></a></span>
+<span id="cb42-10"><a href="tp2.html#cb42-10" tabindex="-1"></a>d_mean_obs <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_mtp <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_mtp)</span>
+<span id="cb42-11"><a href="tp2.html#cb42-11" tabindex="-1"></a>d_mean_obs</span></code></pre></div>
 </div>
 <div id="calibration-de-paramètre" class="section level3 hasAnchor" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Calibration de paramètre<a href="tp2.html#calibration-de-param%C3%A8tre" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -418,47 +456,47 @@ l’effet de la distance dans la loi gravitaire, est probablement <strong>trop f
 afin d’évaluer la qualité des ajustements via différents indicateurs de
 <em>goodness-of-fit</em> et de comparer la distance moyenne simulée avec celle
 observée.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="tp2.html#cb41-1" tabindex="-1"></a><span class="co"># Loi gravitaire exponentielle avec un modèle doublement contraint</span></span>
-<span id="cb41-2"><a href="tp2.html#cb41-2" tabindex="-1"></a>od_sim <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;NGravExp&quot;</span>, </span>
-<span id="cb41-3"><a href="tp2.html#cb41-3" tabindex="-1"></a>                        <span class="at">mass_origin =</span> mi, </span>
-<span id="cb41-4"><a href="tp2.html#cb41-4" tabindex="-1"></a>                        <span class="at">mass_destination =</span> mj, </span>
-<span id="cb41-5"><a href="tp2.html#cb41-5" tabindex="-1"></a>                        <span class="at">distance =</span> distance_mtp, </span>
-<span id="cb41-6"><a href="tp2.html#cb41-6" tabindex="-1"></a>                        <span class="at">opportunity =</span> <span class="cn">NULL</span>,</span>
-<span id="cb41-7"><a href="tp2.html#cb41-7" tabindex="-1"></a>                        <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>),  <span class="co"># Valeurs testées pour β</span></span>
-<span id="cb41-8"><a href="tp2.html#cb41-8" tabindex="-1"></a>                        <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb41-9"><a href="tp2.html#cb41-9" tabindex="-1"></a>                        </span>
-<span id="cb41-10"><a href="tp2.html#cb41-10" tabindex="-1"></a>                        <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
-<span id="cb41-11"><a href="tp2.html#cb41-11" tabindex="-1"></a>                        <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
-<span id="cb41-12"><a href="tp2.html#cb41-12" tabindex="-1"></a>                        <span class="at">out_trips =</span> Oi, </span>
-<span id="cb41-13"><a href="tp2.html#cb41-13" tabindex="-1"></a>                        <span class="at">in_trips =</span> Dj,</span>
-<span id="cb41-14"><a href="tp2.html#cb41-14" tabindex="-1"></a>                        <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb41-15"><a href="tp2.html#cb41-15" tabindex="-1"></a>                        <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
-<span id="cb41-16"><a href="tp2.html#cb41-16" tabindex="-1"></a>                        </span>
-<span id="cb41-17"><a href="tp2.html#cb41-17" tabindex="-1"></a>                        <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="tp2.html#cb42-1" tabindex="-1"></a><span class="co"># Comparaison entre flux simulés et flux observés</span></span>
-<span id="cb42-2"><a href="tp2.html#cb42-2" tabindex="-1"></a><span class="fu">gof</span>(od_sim, od_mtp,</span>
-<span id="cb42-3"><a href="tp2.html#cb42-3" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
-<span id="cb42-4"><a href="tp2.html#cb42-4" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="tp2.html#cb43-1" tabindex="-1"></a><span class="co"># Calcul de la distance moyenne pour chaque paramètre β testé</span></span>
-<span id="cb43-2"><a href="tp2.html#cb43-2" tabindex="-1"></a>d_mean_1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_1<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> </span>
-<span id="cb43-3"><a href="tp2.html#cb43-3" tabindex="-1"></a>            <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_1<span class="sc">$</span>replication_1)</span>
-<span id="cb43-4"><a href="tp2.html#cb43-4" tabindex="-1"></a>d_mean_1</span>
-<span id="cb43-5"><a href="tp2.html#cb43-5" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="tp2.html#cb43-6" tabindex="-1"></a>d_mean_2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> </span>
-<span id="cb43-7"><a href="tp2.html#cb43-7" tabindex="-1"></a>            <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1)</span>
-<span id="cb43-8"><a href="tp2.html#cb43-8" tabindex="-1"></a>d_mean_2</span>
-<span id="cb43-9"><a href="tp2.html#cb43-9" tabindex="-1"></a></span>
-<span id="cb43-10"><a href="tp2.html#cb43-10" tabindex="-1"></a>d_mean_3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_3<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> </span>
-<span id="cb43-11"><a href="tp2.html#cb43-11" tabindex="-1"></a>            <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_3<span class="sc">$</span>replication_1)</span>
-<span id="cb43-12"><a href="tp2.html#cb43-12" tabindex="-1"></a>d_mean_3</span>
-<span id="cb43-13"><a href="tp2.html#cb43-13" tabindex="-1"></a></span>
-<span id="cb43-14"><a href="tp2.html#cb43-14" tabindex="-1"></a>d_mean_4 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_4<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> </span>
-<span id="cb43-15"><a href="tp2.html#cb43-15" tabindex="-1"></a>            <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_4<span class="sc">$</span>replication_1)</span>
-<span id="cb43-16"><a href="tp2.html#cb43-16" tabindex="-1"></a>d_mean_4</span>
-<span id="cb43-17"><a href="tp2.html#cb43-17" tabindex="-1"></a></span>
-<span id="cb43-18"><a href="tp2.html#cb43-18" tabindex="-1"></a><span class="co"># Distance observée</span></span>
-<span id="cb43-19"><a href="tp2.html#cb43-19" tabindex="-1"></a>d_mean_obs <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_mtp <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_mtp)</span>
-<span id="cb43-20"><a href="tp2.html#cb43-20" tabindex="-1"></a>d_mean_obs</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="tp2.html#cb43-1" tabindex="-1"></a><span class="co"># Loi gravitaire exponentielle avec un modèle doublement contraint</span></span>
+<span id="cb43-2"><a href="tp2.html#cb43-2" tabindex="-1"></a>od_sim <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;NGravExp&quot;</span>, </span>
+<span id="cb43-3"><a href="tp2.html#cb43-3" tabindex="-1"></a>                        <span class="at">mass_origin =</span> mi, </span>
+<span id="cb43-4"><a href="tp2.html#cb43-4" tabindex="-1"></a>                        <span class="at">mass_destination =</span> mj, </span>
+<span id="cb43-5"><a href="tp2.html#cb43-5" tabindex="-1"></a>                        <span class="at">distance =</span> distance_mtp, </span>
+<span id="cb43-6"><a href="tp2.html#cb43-6" tabindex="-1"></a>                        <span class="at">opportunity =</span> <span class="cn">NULL</span>,</span>
+<span id="cb43-7"><a href="tp2.html#cb43-7" tabindex="-1"></a>                        <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>),  <span class="co"># Valeurs testées pour β</span></span>
+<span id="cb43-8"><a href="tp2.html#cb43-8" tabindex="-1"></a>                        <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb43-9"><a href="tp2.html#cb43-9" tabindex="-1"></a>                        </span>
+<span id="cb43-10"><a href="tp2.html#cb43-10" tabindex="-1"></a>                        <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
+<span id="cb43-11"><a href="tp2.html#cb43-11" tabindex="-1"></a>                        <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
+<span id="cb43-12"><a href="tp2.html#cb43-12" tabindex="-1"></a>                        <span class="at">out_trips =</span> Oi, </span>
+<span id="cb43-13"><a href="tp2.html#cb43-13" tabindex="-1"></a>                        <span class="at">in_trips =</span> Dj,</span>
+<span id="cb43-14"><a href="tp2.html#cb43-14" tabindex="-1"></a>                        <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb43-15"><a href="tp2.html#cb43-15" tabindex="-1"></a>                        <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
+<span id="cb43-16"><a href="tp2.html#cb43-16" tabindex="-1"></a>                        </span>
+<span id="cb43-17"><a href="tp2.html#cb43-17" tabindex="-1"></a>                        <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tp2.html#cb44-1" tabindex="-1"></a><span class="co"># Comparaison entre flux simulés et flux observés</span></span>
+<span id="cb44-2"><a href="tp2.html#cb44-2" tabindex="-1"></a><span class="fu">gof</span>(od_sim, od_mtp,</span>
+<span id="cb44-3"><a href="tp2.html#cb44-3" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb44-4"><a href="tp2.html#cb44-4" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="tp2.html#cb45-1" tabindex="-1"></a><span class="co"># Calcul de la distance moyenne pour chaque paramètre β testé</span></span>
+<span id="cb45-2"><a href="tp2.html#cb45-2" tabindex="-1"></a>d_mean_1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_1<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> </span>
+<span id="cb45-3"><a href="tp2.html#cb45-3" tabindex="-1"></a>            <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_1<span class="sc">$</span>replication_1)</span>
+<span id="cb45-4"><a href="tp2.html#cb45-4" tabindex="-1"></a>d_mean_1</span>
+<span id="cb45-5"><a href="tp2.html#cb45-5" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="tp2.html#cb45-6" tabindex="-1"></a>d_mean_2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> </span>
+<span id="cb45-7"><a href="tp2.html#cb45-7" tabindex="-1"></a>            <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1)</span>
+<span id="cb45-8"><a href="tp2.html#cb45-8" tabindex="-1"></a>d_mean_2</span>
+<span id="cb45-9"><a href="tp2.html#cb45-9" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="tp2.html#cb45-10" tabindex="-1"></a>d_mean_3 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_3<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> </span>
+<span id="cb45-11"><a href="tp2.html#cb45-11" tabindex="-1"></a>            <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_3<span class="sc">$</span>replication_1)</span>
+<span id="cb45-12"><a href="tp2.html#cb45-12" tabindex="-1"></a>d_mean_3</span>
+<span id="cb45-13"><a href="tp2.html#cb45-13" tabindex="-1"></a></span>
+<span id="cb45-14"><a href="tp2.html#cb45-14" tabindex="-1"></a>d_mean_4 <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_4<span class="sc">$</span>replication_1 <span class="sc">*</span> distance_mtp) <span class="sc">/</span> </span>
+<span id="cb45-15"><a href="tp2.html#cb45-15" tabindex="-1"></a>            <span class="fu">sum</span>(od_sim<span class="sc">$</span>parameter_4<span class="sc">$</span>replication_1)</span>
+<span id="cb45-16"><a href="tp2.html#cb45-16" tabindex="-1"></a>d_mean_4</span>
+<span id="cb45-17"><a href="tp2.html#cb45-17" tabindex="-1"></a></span>
+<span id="cb45-18"><a href="tp2.html#cb45-18" tabindex="-1"></a><span class="co"># Distance observée</span></span>
+<span id="cb45-19"><a href="tp2.html#cb45-19" tabindex="-1"></a>d_mean_obs <span class="ot">&lt;-</span> <span class="fu">sum</span>(od_mtp <span class="sc">*</span> distance_mtp) <span class="sc">/</span> <span class="fu">sum</span>(od_mtp)</span>
+<span id="cb45-20"><a href="tp2.html#cb45-20" tabindex="-1"></a>d_mean_obs</span></code></pre></div>
 </div>
 <div id="exercices-1" class="section level3 hasAnchor" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Exercices<a href="tp2.html#exercices-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -469,27 +507,27 @@ chiffres après la virgule.</p>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tp2.html#cb44-1" tabindex="-1"></a><span class="co"># Loi gravitaire exponentielle avec un modèle doublement contraint</span></span>
-<span id="cb44-2"><a href="tp2.html#cb44-2" tabindex="-1"></a>od_sim <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;NGravExp&quot;</span>, </span>
-<span id="cb44-3"><a href="tp2.html#cb44-3" tabindex="-1"></a>                        <span class="at">mass_origin =</span> mi, </span>
-<span id="cb44-4"><a href="tp2.html#cb44-4" tabindex="-1"></a>                        <span class="at">mass_destination =</span> mj, </span>
-<span id="cb44-5"><a href="tp2.html#cb44-5" tabindex="-1"></a>                        <span class="at">distance =</span> distance_mtp, </span>
-<span id="cb44-6"><a href="tp2.html#cb44-6" tabindex="-1"></a>                        <span class="at">opportunity =</span> <span class="cn">NULL</span>,</span>
-<span id="cb44-7"><a href="tp2.html#cb44-7" tabindex="-1"></a>                        <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.124</span>, <span class="fl">0.125</span>, <span class="fl">0.126</span>, <span class="fl">0.127</span>, <span class="fl">0.128</span>, <span class="fl">0.129</span>),</span>
-<span id="cb44-8"><a href="tp2.html#cb44-8" tabindex="-1"></a>                        <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb44-9"><a href="tp2.html#cb44-9" tabindex="-1"></a>                        </span>
-<span id="cb44-10"><a href="tp2.html#cb44-10" tabindex="-1"></a>                        <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
-<span id="cb44-11"><a href="tp2.html#cb44-11" tabindex="-1"></a>                        <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
-<span id="cb44-12"><a href="tp2.html#cb44-12" tabindex="-1"></a>                        <span class="at">out_trips =</span> Oi, </span>
-<span id="cb44-13"><a href="tp2.html#cb44-13" tabindex="-1"></a>                        <span class="at">in_trips =</span> Dj,</span>
-<span id="cb44-14"><a href="tp2.html#cb44-14" tabindex="-1"></a>                        <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb44-15"><a href="tp2.html#cb44-15" tabindex="-1"></a>                        <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
-<span id="cb44-16"><a href="tp2.html#cb44-16" tabindex="-1"></a>                        </span>
-<span id="cb44-17"><a href="tp2.html#cb44-17" tabindex="-1"></a>                        <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb44-18"><a href="tp2.html#cb44-18" tabindex="-1"></a></span>
-<span id="cb44-19"><a href="tp2.html#cb44-19" tabindex="-1"></a><span class="fu">gof</span>(od_sim, od_mtp,</span>
-<span id="cb44-20"><a href="tp2.html#cb44-20" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
-<span id="cb44-21"><a href="tp2.html#cb44-21" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tp2.html#cb46-1" tabindex="-1"></a><span class="co"># Loi gravitaire exponentielle avec un modèle doublement contraint</span></span>
+<span id="cb46-2"><a href="tp2.html#cb46-2" tabindex="-1"></a>od_sim <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;NGravExp&quot;</span>, </span>
+<span id="cb46-3"><a href="tp2.html#cb46-3" tabindex="-1"></a>                        <span class="at">mass_origin =</span> mi, </span>
+<span id="cb46-4"><a href="tp2.html#cb46-4" tabindex="-1"></a>                        <span class="at">mass_destination =</span> mj, </span>
+<span id="cb46-5"><a href="tp2.html#cb46-5" tabindex="-1"></a>                        <span class="at">distance =</span> distance_mtp, </span>
+<span id="cb46-6"><a href="tp2.html#cb46-6" tabindex="-1"></a>                        <span class="at">opportunity =</span> <span class="cn">NULL</span>,</span>
+<span id="cb46-7"><a href="tp2.html#cb46-7" tabindex="-1"></a>                        <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.124</span>, <span class="fl">0.125</span>, <span class="fl">0.126</span>, <span class="fl">0.127</span>, <span class="fl">0.128</span>, <span class="fl">0.129</span>),</span>
+<span id="cb46-8"><a href="tp2.html#cb46-8" tabindex="-1"></a>                        <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb46-9"><a href="tp2.html#cb46-9" tabindex="-1"></a>                        </span>
+<span id="cb46-10"><a href="tp2.html#cb46-10" tabindex="-1"></a>                        <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
+<span id="cb46-11"><a href="tp2.html#cb46-11" tabindex="-1"></a>                        <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
+<span id="cb46-12"><a href="tp2.html#cb46-12" tabindex="-1"></a>                        <span class="at">out_trips =</span> Oi, </span>
+<span id="cb46-13"><a href="tp2.html#cb46-13" tabindex="-1"></a>                        <span class="at">in_trips =</span> Dj,</span>
+<span id="cb46-14"><a href="tp2.html#cb46-14" tabindex="-1"></a>                        <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb46-15"><a href="tp2.html#cb46-15" tabindex="-1"></a>                        <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
+<span id="cb46-16"><a href="tp2.html#cb46-16" tabindex="-1"></a>                        </span>
+<span id="cb46-17"><a href="tp2.html#cb46-17" tabindex="-1"></a>                        <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb46-18"><a href="tp2.html#cb46-18" tabindex="-1"></a></span>
+<span id="cb46-19"><a href="tp2.html#cb46-19" tabindex="-1"></a><span class="fu">gof</span>(od_sim, od_mtp,</span>
+<span id="cb46-20"><a href="tp2.html#cb46-20" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb46-21"><a href="tp2.html#cb46-21" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
 </details>
 <hr />
 <p><strong>2.</strong> Utiliser la fonction <code>extract_opportunities()</code> pour calculer le nombre
@@ -500,10 +538,10 @@ population (i.e. <span class="math inline">\(m_i\)</span>).</p>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="tp2.html#cb45-1" tabindex="-1"></a><span class="co"># Calcule du nombre d&#39;opportunités</span></span>
-<span id="cb45-2"><a href="tp2.html#cb45-2" tabindex="-1"></a>opportunity_mtp <span class="ot">&lt;-</span> <span class="fu">extract_opportunities</span>(<span class="at">opportunity =</span> mi,</span>
-<span id="cb45-3"><a href="tp2.html#cb45-3" tabindex="-1"></a>                                         <span class="at">distance =</span> distance_mtp,</span>
-<span id="cb45-4"><a href="tp2.html#cb45-4" tabindex="-1"></a>                                         <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tp2.html#cb47-1" tabindex="-1"></a><span class="co"># Calcule du nombre d&#39;opportunités</span></span>
+<span id="cb47-2"><a href="tp2.html#cb47-2" tabindex="-1"></a>opportunity_mtp <span class="ot">&lt;-</span> <span class="fu">extract_opportunities</span>(<span class="at">opportunity =</span> mi,</span>
+<span id="cb47-3"><a href="tp2.html#cb47-3" tabindex="-1"></a>                                         <span class="at">distance =</span> distance_mtp,</span>
+<span id="cb47-4"><a href="tp2.html#cb47-4" tabindex="-1"></a>                                         <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </details>
 <hr />
 <p><strong>3.</strong> Chercher le paramètre optimal (selon le CPC) de la loi radiative
@@ -513,27 +551,27 @@ Solution (cliquer pour afficher)
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tp2.html#cb46-1" tabindex="-1"></a><span class="co"># Loi radiative avec un modèle doublement contraint</span></span>
-<span id="cb46-2"><a href="tp2.html#cb46-2" tabindex="-1"></a>od_sim_rad <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;RadExt&quot;</span>, </span>
-<span id="cb46-3"><a href="tp2.html#cb46-3" tabindex="-1"></a>                            <span class="at">mass_origin =</span> mi, </span>
-<span id="cb46-4"><a href="tp2.html#cb46-4" tabindex="-1"></a>                            <span class="at">mass_destination =</span> mj, </span>
-<span id="cb46-5"><a href="tp2.html#cb46-5" tabindex="-1"></a>                            <span class="at">distance =</span> <span class="cn">NULL</span>, </span>
-<span id="cb46-6"><a href="tp2.html#cb46-6" tabindex="-1"></a>                            <span class="at">opportunity =</span> opportunity_mtp,</span>
-<span id="cb46-7"><a href="tp2.html#cb46-7" tabindex="-1"></a>                            <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.126</span>, <span class="fl">0.127</span>, <span class="fl">0.128</span>, <span class="fl">0.129</span>),  </span>
-<span id="cb46-8"><a href="tp2.html#cb46-8" tabindex="-1"></a>                            <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb46-9"><a href="tp2.html#cb46-9" tabindex="-1"></a>                            </span>
-<span id="cb46-10"><a href="tp2.html#cb46-10" tabindex="-1"></a>                            <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
-<span id="cb46-11"><a href="tp2.html#cb46-11" tabindex="-1"></a>                            <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
-<span id="cb46-12"><a href="tp2.html#cb46-12" tabindex="-1"></a>                            <span class="at">out_trips =</span> Oi, </span>
-<span id="cb46-13"><a href="tp2.html#cb46-13" tabindex="-1"></a>                            <span class="at">in_trips =</span> Dj,</span>
-<span id="cb46-14"><a href="tp2.html#cb46-14" tabindex="-1"></a>                            <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb46-15"><a href="tp2.html#cb46-15" tabindex="-1"></a>                            <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
-<span id="cb46-16"><a href="tp2.html#cb46-16" tabindex="-1"></a>                            </span>
-<span id="cb46-17"><a href="tp2.html#cb46-17" tabindex="-1"></a>                            <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb46-18"><a href="tp2.html#cb46-18" tabindex="-1"></a></span>
-<span id="cb46-19"><a href="tp2.html#cb46-19" tabindex="-1"></a><span class="fu">gof</span>(od_sim_rad, od_mtp,</span>
-<span id="cb46-20"><a href="tp2.html#cb46-20" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
-<span id="cb46-21"><a href="tp2.html#cb46-21" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="tp2.html#cb48-1" tabindex="-1"></a><span class="co"># Loi radiative avec un modèle doublement contraint</span></span>
+<span id="cb48-2"><a href="tp2.html#cb48-2" tabindex="-1"></a>od_sim_rad <span class="ot">&lt;-</span> <span class="fu">run_law_model</span>(<span class="at">law =</span> <span class="st">&quot;RadExt&quot;</span>, </span>
+<span id="cb48-3"><a href="tp2.html#cb48-3" tabindex="-1"></a>                            <span class="at">mass_origin =</span> mi, </span>
+<span id="cb48-4"><a href="tp2.html#cb48-4" tabindex="-1"></a>                            <span class="at">mass_destination =</span> mj, </span>
+<span id="cb48-5"><a href="tp2.html#cb48-5" tabindex="-1"></a>                            <span class="at">distance =</span> <span class="cn">NULL</span>, </span>
+<span id="cb48-6"><a href="tp2.html#cb48-6" tabindex="-1"></a>                            <span class="at">opportunity =</span> opportunity_mtp,</span>
+<span id="cb48-7"><a href="tp2.html#cb48-7" tabindex="-1"></a>                            <span class="at">param =</span> <span class="fu">c</span>(<span class="fl">0.126</span>, <span class="fl">0.127</span>, <span class="fl">0.128</span>, <span class="fl">0.129</span>),  </span>
+<span id="cb48-8"><a href="tp2.html#cb48-8" tabindex="-1"></a>                            <span class="at">write_proba =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb48-9"><a href="tp2.html#cb48-9" tabindex="-1"></a>                            </span>
+<span id="cb48-10"><a href="tp2.html#cb48-10" tabindex="-1"></a>                            <span class="at">model =</span> <span class="st">&quot;DCM&quot;</span>, </span>
+<span id="cb48-11"><a href="tp2.html#cb48-11" tabindex="-1"></a>                            <span class="at">nb_trips =</span> <span class="cn">NULL</span>, </span>
+<span id="cb48-12"><a href="tp2.html#cb48-12" tabindex="-1"></a>                            <span class="at">out_trips =</span> Oi, </span>
+<span id="cb48-13"><a href="tp2.html#cb48-13" tabindex="-1"></a>                            <span class="at">in_trips =</span> Dj,</span>
+<span id="cb48-14"><a href="tp2.html#cb48-14" tabindex="-1"></a>                            <span class="at">average =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb48-15"><a href="tp2.html#cb48-15" tabindex="-1"></a>                            <span class="at">nbrep =</span> <span class="dv">1</span>,</span>
+<span id="cb48-16"><a href="tp2.html#cb48-16" tabindex="-1"></a>                            </span>
+<span id="cb48-17"><a href="tp2.html#cb48-17" tabindex="-1"></a>                            <span class="at">check_names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-18"><a href="tp2.html#cb48-18" tabindex="-1"></a></span>
+<span id="cb48-19"><a href="tp2.html#cb48-19" tabindex="-1"></a><span class="fu">gof</span>(od_sim_rad, od_mtp,</span>
+<span id="cb48-20"><a href="tp2.html#cb48-20" tabindex="-1"></a>    <span class="at">measures =</span> <span class="st">&quot;all&quot;</span>,</span>
+<span id="cb48-21"><a href="tp2.html#cb48-21" tabindex="-1"></a>    <span class="at">distance =</span> distance_mtp)</span></code></pre></div>
 </details>
 <hr />
 <p><strong>4.</strong> Quelle est la meilleure loi sur ce cas d’étude : gravitaire ou radiative ?</p>
@@ -548,18 +586,18 @@ et je vais vous proposer une façon simple de calculer rapidement des itinérair
 <p>Commençons par mettre nos matrices origine-destination observées et simulées
 sous un format “réseaux” (i.e. trois colonnes) à l’aide de la fonction
 <code>mat_to_net()</code> du package <strong>bioregion</strong>.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tp2.html#cb47-1" tabindex="-1"></a><span class="co"># Conversion des matrices en format &quot;réseau&quot;</span></span>
-<span id="cb47-2"><a href="tp2.html#cb47-2" tabindex="-1"></a>net_obs <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_mtp, <span class="at">weight=</span><span class="cn">TRUE</span>)</span>
-<span id="cb47-3"><a href="tp2.html#cb47-3" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1, <span class="at">weight=</span><span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="tp2.html#cb49-1" tabindex="-1"></a><span class="co"># Conversion des matrices en format &quot;réseau&quot;</span></span>
+<span id="cb49-2"><a href="tp2.html#cb49-2" tabindex="-1"></a>net_obs <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_mtp, <span class="at">weight=</span><span class="cn">TRUE</span>)</span>
+<span id="cb49-3"><a href="tp2.html#cb49-3" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(od_sim<span class="sc">$</span>parameter_2<span class="sc">$</span>replication_1, <span class="at">weight=</span><span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Nous pouvons ensuite les trier par ordre décroissant de taille de flux et
 comparer le top 10 des plus gros flux dans les deux matrices.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="tp2.html#cb48-1" tabindex="-1"></a><span class="co"># Tri des flux par ordre décroissant</span></span>
-<span id="cb48-2"><a href="tp2.html#cb48-2" tabindex="-1"></a>net_obs <span class="ot">&lt;-</span> net_obs[<span class="fu">order</span>(net_obs<span class="sc">$</span>Weight, <span class="at">decreasing=</span><span class="cn">TRUE</span>),]</span>
-<span id="cb48-3"><a href="tp2.html#cb48-3" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> net_sim[<span class="fu">order</span>(net_sim<span class="sc">$</span>Weight, <span class="at">decreasing=</span><span class="cn">TRUE</span>),]</span>
-<span id="cb48-4"><a href="tp2.html#cb48-4" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="tp2.html#cb48-5" tabindex="-1"></a><span class="co"># Top 10 des flux observés et simulés</span></span>
-<span id="cb48-6"><a href="tp2.html#cb48-6" tabindex="-1"></a>net_obs[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
-<span id="cb48-7"><a href="tp2.html#cb48-7" tabindex="-1"></a>net_sim[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="tp2.html#cb50-1" tabindex="-1"></a><span class="co"># Tri des flux par ordre décroissant</span></span>
+<span id="cb50-2"><a href="tp2.html#cb50-2" tabindex="-1"></a>net_obs <span class="ot">&lt;-</span> net_obs[<span class="fu">order</span>(net_obs<span class="sc">$</span>Weight, <span class="at">decreasing=</span><span class="cn">TRUE</span>),]</span>
+<span id="cb50-3"><a href="tp2.html#cb50-3" tabindex="-1"></a>net_sim <span class="ot">&lt;-</span> net_sim[<span class="fu">order</span>(net_sim<span class="sc">$</span>Weight, <span class="at">decreasing=</span><span class="cn">TRUE</span>),]</span>
+<span id="cb50-4"><a href="tp2.html#cb50-4" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="tp2.html#cb50-5" tabindex="-1"></a><span class="co"># Top 10 des flux observés et simulés</span></span>
+<span id="cb50-6"><a href="tp2.html#cb50-6" tabindex="-1"></a>net_obs[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
+<span id="cb50-7"><a href="tp2.html#cb50-7" tabindex="-1"></a>net_sim[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
 <p>Nous observons que le plus gros flux d’individus va de la commune ayant pour
 code INSEE <strong>34057</strong> (Castelnau-le-Lez) vers le code INSEE <strong>34172</strong>
 (Montpellier). Nous allons maintenant essayer de déterminer un itinéraire
@@ -574,52 +612,52 @@ pouvez placer dans votre répertoire de travail et importer avec la commande
 <code>load()</code> comme vu lors du premier TP.</p>
 <p>Si cela vous intéresse, voici le bout de code que j’ai utilisé pour obtenir
 <strong>road</strong> à l’aide des packages <strong>dodgr</strong> et <strong>osmdata</strong> :</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="tp2.html#cb49-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
-<span id="cb49-2"><a href="tp2.html#cb49-2" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span>
-<span id="cb49-3"><a href="tp2.html#cb49-3" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span>
-<span id="cb49-4"><a href="tp2.html#cb49-4" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="tp2.html#cb49-5" tabindex="-1"></a><span class="co"># Charger, filtrer, pondérer et simplifier le réseau routier</span></span>
-<span id="cb49-6"><a href="tp2.html#cb49-6" tabindex="-1"></a>road_dl <span class="ot">&lt;-</span> <span class="fu">dodgr_streetnet</span>(<span class="fu">getbb</span>(<span class="st">&quot;Montpellier, France&quot;</span>), <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb49-7"><a href="tp2.html#cb49-7" tabindex="-1"></a>road <span class="ot">&lt;-</span> road_dl[road_dl<span class="sc">$</span>highway <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;motorway&quot;</span>,<span class="st">&quot;trunk&quot;</span>,<span class="st">&quot;primary&quot;</span>,</span>
-<span id="cb49-8"><a href="tp2.html#cb49-8" tabindex="-1"></a>                                       <span class="st">&quot;secondary&quot;</span>,<span class="st">&quot;tertiary&quot;</span>,<span class="st">&quot;residential&quot;</span>), ]</span>
-<span id="cb49-9"><a href="tp2.html#cb49-9" tabindex="-1"></a>road <span class="ot">&lt;-</span> <span class="fu">weight_streetnet</span>(road, <span class="at">wt_profile =</span> <span class="st">&quot;motorcar&quot;</span>)</span>
-<span id="cb49-10"><a href="tp2.html#cb49-10" tabindex="-1"></a>road <span class="ot">&lt;-</span> <span class="fu">dodgr_contract_graph</span>(road)</span>
-<span id="cb49-11"><a href="tp2.html#cb49-11" tabindex="-1"></a></span>
-<span id="cb49-12"><a href="tp2.html#cb49-12" tabindex="-1"></a><span class="co"># Exporter road</span></span>
-<span id="cb49-13"><a href="tp2.html#cb49-13" tabindex="-1"></a><span class="fu">save</span>(road, <span class="at">file=</span><span class="st">&quot;road.rda&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="tp2.html#cb51-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
+<span id="cb51-2"><a href="tp2.html#cb51-2" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span>
+<span id="cb51-3"><a href="tp2.html#cb51-3" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span>
+<span id="cb51-4"><a href="tp2.html#cb51-4" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="tp2.html#cb51-5" tabindex="-1"></a><span class="co"># Charger, filtrer, pondérer et simplifier le réseau routier</span></span>
+<span id="cb51-6"><a href="tp2.html#cb51-6" tabindex="-1"></a>road_dl <span class="ot">&lt;-</span> <span class="fu">dodgr_streetnet</span>(<span class="fu">getbb</span>(<span class="st">&quot;Montpellier, France&quot;</span>), <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb51-7"><a href="tp2.html#cb51-7" tabindex="-1"></a>road <span class="ot">&lt;-</span> road_dl[road_dl<span class="sc">$</span>highway <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;motorway&quot;</span>,<span class="st">&quot;trunk&quot;</span>,<span class="st">&quot;primary&quot;</span>,</span>
+<span id="cb51-8"><a href="tp2.html#cb51-8" tabindex="-1"></a>                                       <span class="st">&quot;secondary&quot;</span>,<span class="st">&quot;tertiary&quot;</span>,<span class="st">&quot;residential&quot;</span>), ]</span>
+<span id="cb51-9"><a href="tp2.html#cb51-9" tabindex="-1"></a>road <span class="ot">&lt;-</span> <span class="fu">weight_streetnet</span>(road, <span class="at">wt_profile =</span> <span class="st">&quot;motorcar&quot;</span>)</span>
+<span id="cb51-10"><a href="tp2.html#cb51-10" tabindex="-1"></a>road <span class="ot">&lt;-</span> <span class="fu">dodgr_contract_graph</span>(road)</span>
+<span id="cb51-11"><a href="tp2.html#cb51-11" tabindex="-1"></a></span>
+<span id="cb51-12"><a href="tp2.html#cb51-12" tabindex="-1"></a><span class="co"># Exporter road</span></span>
+<span id="cb51-13"><a href="tp2.html#cb51-13" tabindex="-1"></a><span class="fu">save</span>(road, <span class="at">file=</span><span class="st">&quot;road.rda&quot;</span>)</span></code></pre></div>
 <p>Pour calculer l’itinéraire entre les centroides des deux communes, nous allons
 avoir besoin du package <strong>dodgr</strong> et du package <strong>ggplot2</strong> pour visualiser
 facilement cet itinéraire.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="tp2.html#cb50-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
-<span id="cb50-2"><a href="tp2.html#cb50-2" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span>
-<span id="cb50-3"><a href="tp2.html#cb50-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb50-4"><a href="tp2.html#cb50-4" tabindex="-1"></a></span>
-<span id="cb50-5"><a href="tp2.html#cb50-5" tabindex="-1"></a><span class="co"># Charger le réseau routier</span></span>
-<span id="cb50-6"><a href="tp2.html#cb50-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;road.rda&quot;</span>)</span>
-<span id="cb50-7"><a href="tp2.html#cb50-7" tabindex="-1"></a></span>
-<span id="cb50-8"><a href="tp2.html#cb50-8" tabindex="-1"></a><span class="co"># Définir l&#39;origine et la destination (coordonnées des centroides)</span></span>
-<span id="cb50-9"><a href="tp2.html#cb50-9" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34057</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Castelnau-le-Lez</span></span>
-<span id="cb50-10"><a href="tp2.html#cb50-10" tabindex="-1"></a>to   <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34172</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Montpellier</span></span>
-<span id="cb50-11"><a href="tp2.html#cb50-11" tabindex="-1"></a></span>
-<span id="cb50-12"><a href="tp2.html#cb50-12" tabindex="-1"></a><span class="co"># Trouver les sommets les plus proches</span></span>
-<span id="cb50-13"><a href="tp2.html#cb50-13" tabindex="-1"></a>vertices <span class="ot">&lt;-</span> <span class="fu">dodgr_vertices</span>(road)</span>
-<span id="cb50-14"><a href="tp2.html#cb50-14" tabindex="-1"></a>from_id <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> from[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> from[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
-<span id="cb50-15"><a href="tp2.html#cb50-15" tabindex="-1"></a>to_id   <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> to[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> to[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
-<span id="cb50-16"><a href="tp2.html#cb50-16" tabindex="-1"></a></span>
-<span id="cb50-17"><a href="tp2.html#cb50-17" tabindex="-1"></a><span class="co"># Calculer le chemin le plus court</span></span>
-<span id="cb50-18"><a href="tp2.html#cb50-18" tabindex="-1"></a>path_nodes <span class="ot">&lt;-</span> <span class="fu">dodgr_paths</span>(road, <span class="at">from =</span> from_id, <span class="at">to =</span> to_id, <span class="at">vertices =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-19"><a href="tp2.html#cb50-19" tabindex="-1"></a></span>
-<span id="cb50-20"><a href="tp2.html#cb50-20" tabindex="-1"></a><span class="co"># Convertir en sf LINESTRING</span></span>
-<span id="cb50-21"><a href="tp2.html#cb50-21" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(path_nodes[[<span class="dv">1</span>]][[<span class="dv">1</span>]], <span class="cf">function</span>(id) {</span>
-<span id="cb50-22"><a href="tp2.html#cb50-22" tabindex="-1"></a>  <span class="fu">c</span>(vertices<span class="sc">$</span>x[vertices<span class="sc">$</span>id <span class="sc">==</span> id], vertices<span class="sc">$</span>y[vertices<span class="sc">$</span>id <span class="sc">==</span> id])</span>
-<span id="cb50-23"><a href="tp2.html#cb50-23" tabindex="-1"></a>}))</span>
-<span id="cb50-24"><a href="tp2.html#cb50-24" tabindex="-1"></a>path_line <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(<span class="fu">st_linestring</span>(coords), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
-<span id="cb50-25"><a href="tp2.html#cb50-25" tabindex="-1"></a></span>
-<span id="cb50-26"><a href="tp2.html#cb50-26" tabindex="-1"></a><span class="co"># Tracer le chemin</span></span>
-<span id="cb50-27"><a href="tp2.html#cb50-27" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb50-28"><a href="tp2.html#cb50-28" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mtp[mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34057</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34172</span>,], <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span>) <span class="sc">+</span></span>
-<span id="cb50-29"><a href="tp2.html#cb50-29" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line, <span class="at">color =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb50-30"><a href="tp2.html#cb50-30" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Castelnau-le-Lez → Montpellier&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="tp2.html#cb52-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
+<span id="cb52-2"><a href="tp2.html#cb52-2" tabindex="-1"></a><span class="fu">library</span>(dodgr)</span>
+<span id="cb52-3"><a href="tp2.html#cb52-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb52-4"><a href="tp2.html#cb52-4" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="tp2.html#cb52-5" tabindex="-1"></a><span class="co"># Charger le réseau routier</span></span>
+<span id="cb52-6"><a href="tp2.html#cb52-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;road.rda&quot;</span>)</span>
+<span id="cb52-7"><a href="tp2.html#cb52-7" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="tp2.html#cb52-8" tabindex="-1"></a><span class="co"># Définir l&#39;origine et la destination (coordonnées des centroides)</span></span>
+<span id="cb52-9"><a href="tp2.html#cb52-9" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34057</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Castelnau-le-Lez</span></span>
+<span id="cb52-10"><a href="tp2.html#cb52-10" tabindex="-1"></a>to   <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34172</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Montpellier</span></span>
+<span id="cb52-11"><a href="tp2.html#cb52-11" tabindex="-1"></a></span>
+<span id="cb52-12"><a href="tp2.html#cb52-12" tabindex="-1"></a><span class="co"># Trouver les sommets les plus proches</span></span>
+<span id="cb52-13"><a href="tp2.html#cb52-13" tabindex="-1"></a>vertices <span class="ot">&lt;-</span> <span class="fu">dodgr_vertices</span>(road)</span>
+<span id="cb52-14"><a href="tp2.html#cb52-14" tabindex="-1"></a>from_id <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> from[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> from[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb52-15"><a href="tp2.html#cb52-15" tabindex="-1"></a>to_id   <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> to[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> to[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb52-16"><a href="tp2.html#cb52-16" tabindex="-1"></a></span>
+<span id="cb52-17"><a href="tp2.html#cb52-17" tabindex="-1"></a><span class="co"># Calculer le chemin le plus court</span></span>
+<span id="cb52-18"><a href="tp2.html#cb52-18" tabindex="-1"></a>path_nodes <span class="ot">&lt;-</span> <span class="fu">dodgr_paths</span>(road, <span class="at">from =</span> from_id, <span class="at">to =</span> to_id, <span class="at">vertices =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb52-19"><a href="tp2.html#cb52-19" tabindex="-1"></a></span>
+<span id="cb52-20"><a href="tp2.html#cb52-20" tabindex="-1"></a><span class="co"># Convertir en sf LINESTRING</span></span>
+<span id="cb52-21"><a href="tp2.html#cb52-21" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(path_nodes[[<span class="dv">1</span>]][[<span class="dv">1</span>]], <span class="cf">function</span>(id) {</span>
+<span id="cb52-22"><a href="tp2.html#cb52-22" tabindex="-1"></a>  <span class="fu">c</span>(vertices<span class="sc">$</span>x[vertices<span class="sc">$</span>id <span class="sc">==</span> id], vertices<span class="sc">$</span>y[vertices<span class="sc">$</span>id <span class="sc">==</span> id])</span>
+<span id="cb52-23"><a href="tp2.html#cb52-23" tabindex="-1"></a>}))</span>
+<span id="cb52-24"><a href="tp2.html#cb52-24" tabindex="-1"></a>path_line <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(<span class="fu">st_linestring</span>(coords), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb52-25"><a href="tp2.html#cb52-25" tabindex="-1"></a></span>
+<span id="cb52-26"><a href="tp2.html#cb52-26" tabindex="-1"></a><span class="co"># Tracer le chemin</span></span>
+<span id="cb52-27"><a href="tp2.html#cb52-27" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb52-28"><a href="tp2.html#cb52-28" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mtp[mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34057</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34172</span>,], <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span>) <span class="sc">+</span></span>
+<span id="cb52-29"><a href="tp2.html#cb52-29" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line, <span class="at">color =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb52-30"><a href="tp2.html#cb52-30" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Castelnau-le-Lez → Montpellier&quot;</span>)</span></code></pre></div>
 </div>
 <div id="exercice-1" class="section level3 hasAnchor" number="2.3.3">
 <h3><span class="header-section-number">2.3.3</span> Exercice<a href="tp2.html#exercice-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -632,29 +670,29 @@ carte afin de les comparer visuellement.</p>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="tp2.html#cb51-1" tabindex="-1"></a><span class="co"># Définir l&#39;origine et la destination (coordonnées des centroides)</span></span>
-<span id="cb51-2"><a href="tp2.html#cb51-2" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34129</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Lattes</span></span>
-<span id="cb51-3"><a href="tp2.html#cb51-3" tabindex="-1"></a>to   <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34172</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Montpellier</span></span>
-<span id="cb51-4"><a href="tp2.html#cb51-4" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="tp2.html#cb51-5" tabindex="-1"></a><span class="co"># Trouver les sommets les plus proches</span></span>
-<span id="cb51-6"><a href="tp2.html#cb51-6" tabindex="-1"></a>vertices <span class="ot">&lt;-</span> <span class="fu">dodgr_vertices</span>(road)</span>
-<span id="cb51-7"><a href="tp2.html#cb51-7" tabindex="-1"></a>from_id <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> from[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> from[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
-<span id="cb51-8"><a href="tp2.html#cb51-8" tabindex="-1"></a>to_id   <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> to[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> to[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
-<span id="cb51-9"><a href="tp2.html#cb51-9" tabindex="-1"></a></span>
-<span id="cb51-10"><a href="tp2.html#cb51-10" tabindex="-1"></a><span class="co"># Calculer le chemin le plus court</span></span>
-<span id="cb51-11"><a href="tp2.html#cb51-11" tabindex="-1"></a>path_nodes <span class="ot">&lt;-</span> <span class="fu">dodgr_paths</span>(road, <span class="at">from =</span> from_id, <span class="at">to =</span> to_id, <span class="at">vertices =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb51-12"><a href="tp2.html#cb51-12" tabindex="-1"></a></span>
-<span id="cb51-13"><a href="tp2.html#cb51-13" tabindex="-1"></a><span class="co"># Convertir en sf LINESTRING</span></span>
-<span id="cb51-14"><a href="tp2.html#cb51-14" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(path_nodes[[<span class="dv">1</span>]][[<span class="dv">1</span>]], <span class="cf">function</span>(id) {</span>
-<span id="cb51-15"><a href="tp2.html#cb51-15" tabindex="-1"></a>  <span class="fu">c</span>(vertices<span class="sc">$</span>x[vertices<span class="sc">$</span>id <span class="sc">==</span> id], vertices<span class="sc">$</span>y[vertices<span class="sc">$</span>id <span class="sc">==</span> id])</span>
-<span id="cb51-16"><a href="tp2.html#cb51-16" tabindex="-1"></a>}))</span>
-<span id="cb51-17"><a href="tp2.html#cb51-17" tabindex="-1"></a>path_line_2 <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(<span class="fu">st_linestring</span>(coords), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
-<span id="cb51-18"><a href="tp2.html#cb51-18" tabindex="-1"></a></span>
-<span id="cb51-19"><a href="tp2.html#cb51-19" tabindex="-1"></a><span class="co"># Tracer les chemins</span></span>
-<span id="cb51-20"><a href="tp2.html#cb51-20" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb51-21"><a href="tp2.html#cb51-21" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mtp[mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34057</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34129</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34172</span>,], <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span>) <span class="sc">+</span></span>
-<span id="cb51-22"><a href="tp2.html#cb51-22" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line, <span class="at">color =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb51-23"><a href="tp2.html#cb51-23" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line_2, <span class="at">color =</span> <span class="st">&quot;steelblue2&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="tp2.html#cb53-1" tabindex="-1"></a><span class="co"># Définir l&#39;origine et la destination (coordonnées des centroides)</span></span>
+<span id="cb53-2"><a href="tp2.html#cb53-2" tabindex="-1"></a>from <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34129</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Lattes</span></span>
+<span id="cb53-3"><a href="tp2.html#cb53-3" tabindex="-1"></a>to   <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(mtp[mtp<span class="sc">$</span>ID <span class="sc">==</span> <span class="dv">34172</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])[<span class="sc">-</span><span class="dv">3</span>]   <span class="co"># Montpellier</span></span>
+<span id="cb53-4"><a href="tp2.html#cb53-4" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="tp2.html#cb53-5" tabindex="-1"></a><span class="co"># Trouver les sommets les plus proches</span></span>
+<span id="cb53-6"><a href="tp2.html#cb53-6" tabindex="-1"></a>vertices <span class="ot">&lt;-</span> <span class="fu">dodgr_vertices</span>(road)</span>
+<span id="cb53-7"><a href="tp2.html#cb53-7" tabindex="-1"></a>from_id <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> from[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> from[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb53-8"><a href="tp2.html#cb53-8" tabindex="-1"></a>to_id   <span class="ot">&lt;-</span> vertices<span class="sc">$</span>id[<span class="fu">which.min</span>((vertices<span class="sc">$</span>x <span class="sc">-</span> to[<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (vertices<span class="sc">$</span>y <span class="sc">-</span> to[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)]</span>
+<span id="cb53-9"><a href="tp2.html#cb53-9" tabindex="-1"></a></span>
+<span id="cb53-10"><a href="tp2.html#cb53-10" tabindex="-1"></a><span class="co"># Calculer le chemin le plus court</span></span>
+<span id="cb53-11"><a href="tp2.html#cb53-11" tabindex="-1"></a>path_nodes <span class="ot">&lt;-</span> <span class="fu">dodgr_paths</span>(road, <span class="at">from =</span> from_id, <span class="at">to =</span> to_id, <span class="at">vertices =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb53-12"><a href="tp2.html#cb53-12" tabindex="-1"></a></span>
+<span id="cb53-13"><a href="tp2.html#cb53-13" tabindex="-1"></a><span class="co"># Convertir en sf LINESTRING</span></span>
+<span id="cb53-14"><a href="tp2.html#cb53-14" tabindex="-1"></a>coords <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(path_nodes[[<span class="dv">1</span>]][[<span class="dv">1</span>]], <span class="cf">function</span>(id) {</span>
+<span id="cb53-15"><a href="tp2.html#cb53-15" tabindex="-1"></a>  <span class="fu">c</span>(vertices<span class="sc">$</span>x[vertices<span class="sc">$</span>id <span class="sc">==</span> id], vertices<span class="sc">$</span>y[vertices<span class="sc">$</span>id <span class="sc">==</span> id])</span>
+<span id="cb53-16"><a href="tp2.html#cb53-16" tabindex="-1"></a>}))</span>
+<span id="cb53-17"><a href="tp2.html#cb53-17" tabindex="-1"></a>path_line_2 <span class="ot">&lt;-</span> <span class="fu">st_sfc</span>(<span class="fu">st_linestring</span>(coords), <span class="at">crs =</span> <span class="dv">4326</span>)</span>
+<span id="cb53-18"><a href="tp2.html#cb53-18" tabindex="-1"></a></span>
+<span id="cb53-19"><a href="tp2.html#cb53-19" tabindex="-1"></a><span class="co"># Tracer les chemins</span></span>
+<span id="cb53-20"><a href="tp2.html#cb53-20" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb53-21"><a href="tp2.html#cb53-21" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> mtp[mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34057</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34129</span> <span class="sc">|</span> mtp<span class="sc">$</span>ID<span class="sc">==</span><span class="dv">34172</span>,], <span class="at">color =</span> <span class="st">&quot;grey80&quot;</span>) <span class="sc">+</span></span>
+<span id="cb53-22"><a href="tp2.html#cb53-22" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line, <span class="at">color =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb53-23"><a href="tp2.html#cb53-23" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> path_line_2, <span class="at">color =</span> <span class="st">&quot;steelblue2&quot;</span>, <span class="at">size =</span> <span class="fl">1.2</span>)</span></code></pre></div>
 </details>
 <hr />
 </div>
