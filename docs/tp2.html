@@ -170,6 +170,7 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-données-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="3.2" data-path="tp3.html"><a href="tp3.html#première-bioregionalisation"><i class="fa fa-check"></i><b>3.2</b> Première bioregionalisation</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
@@ -208,7 +209,7 @@ spatiales, ainsi que le contenu du TP.</p>
 d’exemple de flux domicile-travail entre les <strong>342 communes du département de
 l’Hérault en 2020</strong>.</p>
 <ul>
-<li><strong>od_mtp</strong> : matrice des flux observés.<br />
+<li><strong>od_mtp</strong> : matrice Origine-Destination (OD) des flux observés.<br />
 </li>
 <li><strong>distance_mtp</strong> : matrice des distances.<br />
 </li>
@@ -239,28 +240,29 @@ que vous pouvez également nommer <strong>TP2</strong>.</p>
 </div>
 <div id="taille-et-aperçu-des-objets" class="section level3 hasAnchor" number="2.1.2">
 <h3><span class="header-section-number">2.1.2</span> Taille et aperçu des objets<a href="tp2.html#taille-et-aperçu-des-objets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tp2.html#cb31-1" tabindex="-1"></a><span class="fu">dim</span>(od_mtp)         <span class="co"># Dimensions et aperçu de la matrice OD</span></span>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tp2.html#cb31-1" tabindex="-1"></a><span class="fu">dim</span>(od_mtp)             <span class="co"># Dimensions et aperçu de la matrice OD</span></span>
 <span id="cb31-2"><a href="tp2.html#cb31-2" tabindex="-1"></a>od_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
 <span id="cb31-3"><a href="tp2.html#cb31-3" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="tp2.html#cb31-4" tabindex="-1"></a><span class="fu">dim</span>(distance_mtp)   <span class="co"># Dimensions et aperçu de la matrice de distance</span></span>
+<span id="cb31-4"><a href="tp2.html#cb31-4" tabindex="-1"></a><span class="fu">dim</span>(distance_mtp)       <span class="co"># Dimensions et aperçu de la matrice de distance</span></span>
 <span id="cb31-5"><a href="tp2.html#cb31-5" tabindex="-1"></a>distance_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
 <span id="cb31-6"><a href="tp2.html#cb31-6" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="tp2.html#cb31-7" tabindex="-1"></a>mass_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]     <span class="co"># Aperçu des masses</span></span>
+<span id="cb31-7"><a href="tp2.html#cb31-7" tabindex="-1"></a>mass_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]         <span class="co"># Aperçu des masses</span></span>
 <span id="cb31-8"><a href="tp2.html#cb31-8" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="tp2.html#cb31-9" tabindex="-1"></a>mtp                 <span class="co"># Aperçu des entités spatiales </span></span>
-<span id="cb31-10"><a href="tp2.html#cb31-10" tabindex="-1"></a><span class="fu">class</span>(mtp)          <span class="co"># Objet sf</span></span>
-<span id="cb31-11"><a href="tp2.html#cb31-11" tabindex="-1"></a><span class="fu">plot</span>(mtp)           <span class="co"># Représentation spatiale de mtp</span></span>
-<span id="cb31-12"><a href="tp2.html#cb31-12" tabindex="-1"></a><span class="fu">plot</span>(mtp[,<span class="dv">2</span>])       <span class="co"># Représentation spatiale de l&#39;attribut Longitude</span></span></code></pre></div>
+<span id="cb31-9"><a href="tp2.html#cb31-9" tabindex="-1"></a>mtp                     <span class="co"># Aperçu des entités spatiales </span></span>
+<span id="cb31-10"><a href="tp2.html#cb31-10" tabindex="-1"></a><span class="fu">class</span>(mtp)              <span class="co"># Objet sf</span></span>
+<span id="cb31-11"><a href="tp2.html#cb31-11" tabindex="-1"></a><span class="fu">plot</span>(mtp)               <span class="co"># Représentation spatiale de mtp</span></span>
+<span id="cb31-12"><a href="tp2.html#cb31-12" tabindex="-1"></a><span class="fu">plot</span>(mtp[,<span class="dv">2</span>])           <span class="co"># Représentation spatiale de l&#39;attribut Longitude</span></span></code></pre></div>
 </div>
-<div id="réseaux-et-matrices" class="section level3 hasAnchor" number="2.1.3">
-<h3><span class="header-section-number">2.1.3</span> Réseaux et matrices<a href="tp2.html#réseaux-et-matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Avant de poursuivre les analyses, prenons un instant pour aborder la notion de
-<strong>réseau</strong>. Il existe deux principales façons de représenter un réseau dirigé et
-pondéré comme celui que nous étudions ici.</p>
+<div id="réseau-et-matrice-origine-destination" class="section level3 hasAnchor" number="2.1.3">
+<h3><span class="header-section-number">2.1.3</span> Réseau et matrice Origine-Destination<a href="tp2.html#réseau-et-matrice-origine-destination" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Avant de commencer à analyser les données, prenons un instant pour aborder la
+notion de <strong>réseau</strong> dans le cadre de ce TP et la façon dont elle est prise en
+charge par R. Il existe deux principales façons de représenter un réseau
+dirigé et pondéré comme celui que nous étudions ici.</p>
 <ul>
-<li><strong>Le format matriciel</strong> : une matrice carrée où chaque case représente la
-valeur du flux entre une origine (ligne) et une destination (colonne). C’est
-le format que nous utilisons avec <strong>od_mtp</strong>.<br />
+<li><strong>Le format matriciel</strong> : une matrice Origine-Destination carrée où chaque
+case représente la valeur du flux entre une origine (ligne) et une destination
+(colonne). C’est le format que nous utilisons avec <strong>od_mtp</strong>.<br />
 </li>
 <li><strong>Le format en trois colonnes</strong> : un tableau (data frame) comportant une
 colonne pour l’origine, une pour la destination, et une pour le poids (flux).</li>
@@ -284,7 +286,7 @@ apparaissent.</em></p>
 <span id="cb32-4"><a href="tp2.html#cb32-4" tabindex="-1"></a></span>
 <span id="cb32-5"><a href="tp2.html#cb32-5" tabindex="-1"></a><span class="co"># Nombre de paires &quot;non nulles&quot;</span></span>
 <span id="cb32-6"><a href="tp2.html#cb32-6" tabindex="-1"></a><span class="fu">dim</span>(net_mtp)</span></code></pre></div>
-<p>et inversement avec la fonction <code>net_to_mat()</code></p>
+<p>Et inversement avec la fonction <code>net_to_mat()</code>.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tp2.html#cb33-1" tabindex="-1"></a><span class="co"># Conversion &quot;réseau&quot; -&gt; matrice  </span></span>
 <span id="cb33-2"><a href="tp2.html#cb33-2" tabindex="-1"></a>mat_mtp2 <span class="ot">&lt;-</span> <span class="fu">net_to_mat</span>(net_mtp, <span class="at">weight =</span> <span class="cn">TRUE</span>, <span class="at">square =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb33-3"><a href="tp2.html#cb33-3" tabindex="-1"></a></span>

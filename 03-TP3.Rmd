@@ -14,7 +14,6 @@ des données d'exemple d'abondance d'espèces végétales dans le sud de la Fran
 fournies par le conservatoire botanique méditerranéen.
 
 - **vegemat** : matrice de co-occurrences sites-espèces.  
-- **vegenet** : data.frame de co-occurrences sites-espèces. 
 - **vegesf** : données spatiales associées  (nous aurons besoin de **sf** pour 
 les manipuler).   
 
@@ -42,27 +41,84 @@ setwd("~/Desktop/TP3") # A adapter à votre chemin sur votre ordinateur !
 
 # Charger les données
 data(vegemat)
-data(vegenet)
 data(vegesf)
 ```
 
 ### Taille et aperçu des objets 
 
 ```{r, eval=FALSE}
-dim(vegemat)        # Dimensions et aperçu de la matrice sites-espèces
+dim(vegemat)         # Dimensions et aperçu de la matrice sites-espèces
 vegemat[1:10,1:10]
 
-dim(vegedf)         # Dimensions et apeçu de la version "trois colonnes"
-vegedf[1:10,]
-
-vegesf              # Aperçu des entités spatiales 
-class(vegesf)       # Objet sf
-plot(vegesf)        # Représentation spatiale de vegesf
+vegesf               # Aperçu des entités spatiales 
+class(vegesf)        # Objet sf
+plot(vegesf)         # Représentation spatiale de vegesf
 ```
 
+### Les réseaux en biogéographie
 
+Dans le TP précédent, nous avons travaillé sur un réseau **dirigé et pondéré**, 
+où chaque lien représentait un **flux** entre deux communes (origine → 
+destination). En biogéographie, nous allons maintenant manipuler un 
+**réseau bipartite**.
 
+Un **réseau bipartite** relie deux ensembles de noeuds distincts,  ici les 
+**sites** (zones géographiques) et les **espèces** (entités biologiques). 
+Autrement dit, un lien existe uniquement **entre un site et une espèce**, jamais 
+entre deux sites ou deux espèces directement. Ce type de réseau peut être 
+**pondéré** (abondance d’espèces) ou **non pondéré** (présence/absence).
 
+Le réseau bipartite sites-espèces que nous considérons dans ce TP est pondéré et
+stocké sous forme matricielle dans l'objet **vegemat**. Nous pouvons ici aussi 
+facilement convertir cette matrice en un format "trois colonnes" à l’aide de la 
+fonction `mat_to_net()`.
 
+```{r, eval=FALSE}
+# Conversion matrice -> "réseau"
+vegenet <- mat_to_net(vegemat, weight = TRUE)
+vegenet[1:10,]
+```
+
+On peut également considérer un réseau non pondéré.
+
+```{r, eval=FALSE}
+# Suppression de la colonne poids
+vegenet_bin <- vegenet[,-3]
+vegenet_bin[1:10,]
+```
+
+Et le reconvertir en matrice avec `net_to_mat()`.
+
+```{r, eval=FALSE}
+# Conversion "réseau" -> matrice  
+vegemat_bin <- net_to_mat(vegenet_bin)
+vegemat_bin[1:10,1:10]
+```
+
+### Exercice
+
+Tracer les histogrammes du nombre moyen d'espèces par site et du nombre moyen 
+de sites par espèce à partir de **vegemat_bin** (à l'aide de la fonction 
+`apply()`). 
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Histogramme du nombre d'espèces par site
+species_per_site <- apply(vegemat_bin,1,sum)
+hist(species_per_site, col = "steelblue3")
+
+# Histogramme du nombre d'espèces par site
+sites_per_species <- apply(vegemat_bin,2,sum)
+hist(sites_per_species, col = "#CC6666")
+```
+</details>
+
+---
+
+## Première bioregionalisation
 
 

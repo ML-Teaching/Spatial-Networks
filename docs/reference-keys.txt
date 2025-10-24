@@ -17,7 +17,7 @@ tp2
 prise-en-main-des-données
 charger-les-données
 taille-et-aperçu-des-objets
-réseaux-et-matrices
+réseau-et-matrice-origine-destination
 statistiques-de-base
 exercices
 estimation-des-flux-avec-tdlm
@@ -33,3 +33,6 @@ tp3
 prise-en-main-des-données-1
 charger-les-données-1
 taille-et-aperçu-des-objets-1
+les-réseaux-en-biogéographie
+exercice-2
+première-bioregionalisation

@@ -14,7 +14,7 @@ Le package R [TDLM](https://rtdlm.github.io/TDLM/) met à disposition des donné
 d'exemple de flux domicile-travail entre les **342 communes du département de 
 l'Hérault en 2020**.
 
-- **od_mtp** : matrice des flux observés.  
+- **od_mtp** : matrice Origine-Destination (OD) des flux observés.  
 - **distance_mtp** : matrice des distances.  
 - **mass_mtp** : masses et marges (population, flux sortants, flux entrants).  
 - **mtp** : données spatiales associées (nous aurons besoin de **sf** pour les
@@ -47,29 +47,30 @@ data(mtp)
 ### Taille et aperçu des objets 
 
 ```{r, eval=FALSE}
-dim(od_mtp)         # Dimensions et aperçu de la matrice OD
+dim(od_mtp)             # Dimensions et aperçu de la matrice OD
 od_mtp[1:10,1:10]
 
-dim(distance_mtp)   # Dimensions et aperçu de la matrice de distance
+dim(distance_mtp)       # Dimensions et aperçu de la matrice de distance
 distance_mtp[1:10,1:10]
 
-mass_mtp[1:10,]     # Aperçu des masses
+mass_mtp[1:10,]         # Aperçu des masses
 
-mtp                 # Aperçu des entités spatiales 
-class(mtp)          # Objet sf
-plot(mtp)           # Représentation spatiale de mtp
-plot(mtp[,2])       # Représentation spatiale de l'attribut Longitude
+mtp                     # Aperçu des entités spatiales 
+class(mtp)              # Objet sf
+plot(mtp)               # Représentation spatiale de mtp
+plot(mtp[,2])           # Représentation spatiale de l'attribut Longitude
 ```
 
-### Réseaux et matrices
+### Réseau et matrice Origine-Destination
 
-Avant de poursuivre les analyses, prenons un instant pour aborder la notion de 
-**réseau**. Il existe deux principales façons de représenter un réseau dirigé et
-pondéré comme celui que nous étudions ici. 
+Avant de commencer à analyser les données, prenons un instant pour aborder la 
+notion de **réseau** dans le cadre de ce TP et la façon dont elle est prise en 
+charge par R. Il existe deux principales façons de représenter un réseau 
+dirigé et pondéré comme celui que nous étudions ici. 
 
-- **Le format matriciel** : une matrice carrée où chaque case représente la 
-  valeur du flux entre une origine (ligne) et une destination (colonne). C'est 
-  le format que nous utilisons avec **od_mtp**.  
+- **Le format matriciel** : une matrice Origine-Destination carrée où chaque 
+  case représente la valeur du flux entre une origine (ligne) et une destination
+  (colonne). C'est le format que nous utilisons avec **od_mtp**.  
 - **Le format en trois colonnes** : un tableau (data frame) comportant une 
   colonne pour l’origine, une pour la destination, et une pour le poids (flux). 
 
@@ -96,7 +97,7 @@ net_mtp[1:10,]
 dim(net_mtp)
 ```
 
-et inversement avec la fonction `net_to_mat()`
+Et inversement avec la fonction `net_to_mat()`.
 
 ```{r, eval=FALSE}
 # Conversion "réseau" -> matrice  
