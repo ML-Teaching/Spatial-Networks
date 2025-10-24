@@ -31,4 +31,5 @@ exercice-1
 application-r-shiny
 tp3
 prise-en-main-des-données-1
+charger-les-données-1
 taille-et-aperçu-des-objets-1

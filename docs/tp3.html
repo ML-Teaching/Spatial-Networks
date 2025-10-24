@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>TP3 Analyse de réseaux biogéographiques | Introduction aux réseaux spatiaux avec R</title>
   <meta name="description" content="Réseaux spatiaux" />
-  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
 
   <meta property="og:title" content="TP3 Analyse de réseaux biogéographiques | Introduction aux réseaux spatiaux avec R" />
   <meta property="og:type" content="book" />
@@ -54,9 +54,8 @@
 
 
 <style type="text/css">
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -66,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -152,25 +151,25 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="1" data-path="tp1.html"><a href="tp1.html"><i class="fa fa-check"></i><b>1</b> Premiers pas avec R</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="tp1.html"><a href="tp1.html#scripts-et-environnement-de-travail"><i class="fa fa-check"></i><b>1.1</b> Scripts et environnement de travail</a></li>
-<li class="chapter" data-level="1.2" data-path="tp1.html"><a href="tp1.html#le-r%C3%A9pertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
+<li class="chapter" data-level="1.2" data-path="tp1.html"><a href="tp1.html#le-répertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
 <li class="chapter" data-level="1.3" data-path="tp1.html"><a href="tp1.html#les-librairies"><i class="fa fa-check"></i><b>1.3</b> Les librairies</a></li>
 <li class="chapter" data-level="1.4" data-path="tp1.html"><a href="tp1.html#types-et-objets-de-base"><i class="fa fa-check"></i><b>1.4</b> Types et objets de base</a></li>
 <li class="chapter" data-level="1.5" data-path="tp1.html"><a href="tp1.html#manipulation-des-objets"><i class="fa fa-check"></i><b>1.5</b> Manipulation des objets</a></li>
 <li class="chapter" data-level="1.6" data-path="tp1.html"><a href="tp1.html#fonctions-en-r"><i class="fa fa-check"></i><b>1.6</b> Fonctions en R</a></li>
 <li class="chapter" data-level="1.7" data-path="tp1.html"><a href="tp1.html#visualisation-avec-r"><i class="fa fa-check"></i><b>1.7</b> Visualisation avec R</a></li>
 <li class="chapter" data-level="1.8" data-path="tp1.html"><a href="tp1.html#exercice"><i class="fa fa-check"></i><b>1.8</b> Exercice</a></li>
-<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
+<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-à-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="tp2.html"><a href="tp2.html#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="2.1" data-path="tp2.html"><a href="tp2.html#prise-en-main-des-données"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
 <li class="chapter" data-level="2.2" data-path="tp2.html"><a href="tp2.html#estimation-des-flux-avec-tdlm"><i class="fa fa-check"></i><b>2.2</b> Estimation des flux avec TDLM</a></li>
-<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
+<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itinéraires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
 <li class="chapter" data-level="2.4" data-path="tp2.html"><a href="tp2.html#application-r-shiny"><i class="fa fa-check"></i><b>2.4</b> Application R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-donn%C3%A9es-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-données-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
@@ -203,13 +202,14 @@ biorégionalisation, ainsi que le contenu du TP.</p>
 <iframe src="slides/tp3/Cours_TP3.pdf" width="100%" height="450px">
 </iframe>
 <div id="prise-en-main-des-données-1" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Prise en main des données<a href="tp3.html#prise-en-main-des-donn%C3%A9es-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.1</span> Prise en main des données<a href="tp3.html#prise-en-main-des-données-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Le package R <a href="https://biorgeo.github.io/bioregion/">bioregion</a> met à disposition
 des données d’exemple d’abondance d’espèces végétales dans le sud de la France,
 fournies par le conservatoire botanique méditerranéen.</p>
 <ul>
 <li><strong>vegemat</strong> : matrice de co-occurrences sites-espèces.<br />
 </li>
+<li><strong>vegenet</strong> : data.frame de co-occurrences sites-espèces.</li>
 <li><strong>vegesf</strong> : données spatiales associées (nous aurons besoin de <strong>sf</strong> pour
 les manipuler).</li>
 </ul>
@@ -223,17 +223,31 @@ que vous pouvez également nommer <strong>TP3</strong>.</p>
 proposé par mon collègue <a href="https://farewe.github.io/markdown-cv/">Boris Leroy</a>
 du Muséum national d’Histoire naturelle.</em></p>
 </blockquote>
-<div id="taille-et-aperçu-des-objets-1" class="section level3 hasAnchor" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Taille et aperçu des objets<a href="tp3.html#taille-et-aper%C3%A7u-des-objets-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="tp3.html#cb54-1" tabindex="-1"></a><span class="fu">dim</span>(od_mtp)         <span class="co"># Dimensions de la matrice OD</span></span>
-<span id="cb54-2"><a href="tp3.html#cb54-2" tabindex="-1"></a><span class="fu">dim</span>(distance_mtp)   <span class="co"># Dimensions de la matrice de distance</span></span>
-<span id="cb54-3"><a href="tp3.html#cb54-3" tabindex="-1"></a></span>
-<span id="cb54-4"><a href="tp3.html#cb54-4" tabindex="-1"></a>mass_mtp[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]     <span class="co"># Aperçu des masses</span></span>
-<span id="cb54-5"><a href="tp3.html#cb54-5" tabindex="-1"></a></span>
-<span id="cb54-6"><a href="tp3.html#cb54-6" tabindex="-1"></a>mtp                 <span class="co"># Aperçu des entités spatiales </span></span>
-<span id="cb54-7"><a href="tp3.html#cb54-7" tabindex="-1"></a><span class="fu">class</span>(mtp)          <span class="co"># Objet sf</span></span>
-<span id="cb54-8"><a href="tp3.html#cb54-8" tabindex="-1"></a><span class="fu">plot</span>(mtp)           <span class="co"># Représentation spatiale de mtp</span></span>
-<span id="cb54-9"><a href="tp3.html#cb54-9" tabindex="-1"></a><span class="fu">plot</span>(mtp[,<span class="dv">2</span>])       <span class="co"># Représentation spatiale de l&#39;attribut Longitude</span></span></code></pre></div>
+<div id="charger-les-données-1" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Charger les données<a href="tp3.html#charger-les-données-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="tp3.html#cb54-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
+<span id="cb54-2"><a href="tp3.html#cb54-2" tabindex="-1"></a><span class="fu">library</span>(bioregion)</span>
+<span id="cb54-3"><a href="tp3.html#cb54-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb54-4"><a href="tp3.html#cb54-4" tabindex="-1"></a></span>
+<span id="cb54-5"><a href="tp3.html#cb54-5" tabindex="-1"></a><span class="co"># Définir le répertoire de travail</span></span>
+<span id="cb54-6"><a href="tp3.html#cb54-6" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/TP3&quot;</span>) <span class="co"># A adapter à votre chemin sur votre ordinateur !</span></span>
+<span id="cb54-7"><a href="tp3.html#cb54-7" tabindex="-1"></a></span>
+<span id="cb54-8"><a href="tp3.html#cb54-8" tabindex="-1"></a><span class="co"># Charger les données</span></span>
+<span id="cb54-9"><a href="tp3.html#cb54-9" tabindex="-1"></a><span class="fu">data</span>(vegemat)</span>
+<span id="cb54-10"><a href="tp3.html#cb54-10" tabindex="-1"></a><span class="fu">data</span>(vegenet)</span>
+<span id="cb54-11"><a href="tp3.html#cb54-11" tabindex="-1"></a><span class="fu">data</span>(vegesf)</span></code></pre></div>
+</div>
+<div id="taille-et-aperçu-des-objets-1" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Taille et aperçu des objets<a href="tp3.html#taille-et-aperçu-des-objets-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="tp3.html#cb55-1" tabindex="-1"></a><span class="fu">dim</span>(vegemat)        <span class="co"># Dimensions et aperçu de la matrice sites-espèces</span></span>
+<span id="cb55-2"><a href="tp3.html#cb55-2" tabindex="-1"></a>vegemat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb55-3"><a href="tp3.html#cb55-3" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="tp3.html#cb55-4" tabindex="-1"></a><span class="fu">dim</span>(vegedf)         <span class="co"># Dimensions et apeçu de la version &quot;trois colonnes&quot;</span></span>
+<span id="cb55-5"><a href="tp3.html#cb55-5" tabindex="-1"></a>vegedf[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span>
+<span id="cb55-6"><a href="tp3.html#cb55-6" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="tp3.html#cb55-7" tabindex="-1"></a>vegesf              <span class="co"># Aperçu des entités spatiales </span></span>
+<span id="cb55-8"><a href="tp3.html#cb55-8" tabindex="-1"></a><span class="fu">class</span>(vegesf)       <span class="co"># Objet sf</span></span>
+<span id="cb55-9"><a href="tp3.html#cb55-9" tabindex="-1"></a><span class="fu">plot</span>(vegesf)        <span class="co"># Représentation spatiale de vegesf</span></span></code></pre></div>
 
 </div>
 </div>
