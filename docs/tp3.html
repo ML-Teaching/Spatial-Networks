@@ -307,10 +307,14 @@ de richesse spécifique.</p>
 <span id="cb60-2"><a href="tp3.html#cb60-2" tabindex="-1"></a>sim[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
 <p>Pour mieux comprendre la manière dont cet indice est construit, il est possible
 de récupérer les trois composantes fondamentales de la comparaison entre deux
-sites :<br />
-- <strong>a</strong> : nombre d’espèces partagées (intersection),<br />
-- <strong>b</strong> : espèces uniques au site 1,<br />
-- <strong>c</strong> : espèces uniques au site 2.</p>
+sites :</p>
+<ul>
+<li><strong>a</strong> : nombre d’espèces partagées (intersection)<br />
+</li>
+<li><strong>b</strong> : espèces uniques au site 1<br />
+</li>
+<li><strong>c</strong> : espèces uniques au site 2</li>
+</ul>
 <p>Ces quantités peuvent être obtenues via :</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="tp3.html#cb61-1" tabindex="-1"></a>simabc <span class="ot">&lt;-</span> <span class="fu">similarity</span>(vegemat, <span class="at">metric =</span> <span class="st">&quot;abc&quot;</span>)</span>
 <span id="cb61-2"><a href="tp3.html#cb61-2" tabindex="-1"></a>simabc[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
@@ -366,13 +370,9 @@ ici sur le réseau de similarité calculé avec l’indice de Simpson ci-dessous
 <span id="cb64-8"><a href="tp3.html#cb64-8" tabindex="-1"></a><span class="fu">map_bioregions</span>(clu, vegesf)</span></code></pre></div>
 <div id="exercice-3" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Exercice<a href="tp3.html#exercice-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Le paramètre <code>cut_weight</code> permet de retirer du réseau les liens (similarités)
-dont la valeur est inférieure à un seuil donné. Plus ce seuil est élevé, plus
-le réseau est “épuré” et plus les communautés détectées sont contrastées (mais
-potentiellement plus nombreuses). Il est important d’expérimenter plusieurs
-valeurs de <code>cut_weight</code> car cela peut fortement influencer la structure du
+<p>Le paramètre **cut_weight*<code>** permet de retirer du réseau les liens (similarités)  dont la valeur est inférieure à un seuil donné. Plus ce seuil est élevé, plus  le réseau est "épuré" et plus les communautés détectées sont contrastées (mais  potentiellement plus nombreuses). Il est important d’expérimenter plusieurs  valeurs de *</code>**cut_weight*`** car cela peut fortement influencer la structure du
 réseau et donc la partition obtenue.</p>
-<p>Tester différentes valeurs de <code>cut_weight</code> (0.5, 0.7, 0.8, 0.9) puis visualiser
+<p>Tester différentes valeurs de <strong>cut_weight</strong> (0.5, 0.7, 0.8, 0.9) puis visualiser
 la biorégionalisation obtenue.</p>
 <hr />
 <details>

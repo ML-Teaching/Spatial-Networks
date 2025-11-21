@@ -135,9 +135,10 @@ sim[1:10,]
 Pour mieux comprendre la manière dont cet indice est construit, il est possible 
 de récupérer les trois composantes fondamentales de la comparaison entre deux 
 sites :  
-- **a** : nombre d’espèces partagées (intersection),  
-- **b** : espèces uniques au site 1,  
-- **c** : espèces uniques au site 2.
+
+- **a** : nombre d’espèces partagées (intersection)  
+- **b** : espèces uniques au site 1  
+- **c** : espèces uniques au site 2
 
 Ces quantités peuvent être obtenues via :
 
@@ -211,14 +212,14 @@ map_bioregions(clu, vegesf)
 
 ### Exercice
 
-Le paramètre `cut_weight` permet de retirer du réseau les liens (similarités) 
+Le paramètre **cut_weight*`** permet de retirer du réseau les liens (similarités) 
 dont la valeur est inférieure à un seuil donné. Plus ce seuil est élevé, plus 
 le réseau est "épuré" et plus les communautés détectées sont contrastées (mais 
 potentiellement plus nombreuses). Il est important d’expérimenter plusieurs 
-valeurs de `cut_weight` car cela peut fortement influencer la structure du 
+valeurs de *`**cut_weight*`** car cela peut fortement influencer la structure du 
 réseau et donc la partition obtenue. 
 
-Tester différentes valeurs de `cut_weight` (0.5, 0.7, 0.8, 0.9) puis visualiser
+Tester différentes valeurs de **cut_weight** (0.5, 0.7, 0.8, 0.9) puis visualiser
 la biorégionalisation obtenue.
 
 ---
