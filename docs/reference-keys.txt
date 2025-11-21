@@ -37,6 +37,6 @@ les-réseaux-en-biogéographie
 exercice-2
 similarité-entre-sites
 exercices-2
-bioregionalisation-à-partir-du-réseau-de-similarité
+bioregionalisation
 exercice-3
 application-r-shiny-1

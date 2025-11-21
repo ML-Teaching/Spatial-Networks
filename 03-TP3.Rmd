@@ -190,7 +190,7 @@ sim[1:10,]
 
 ---
 
-## Bioregionalisation à partir du réseau de similarité
+## Bioregionalisation
 
 La biorégionalisation consiste à identifier des groupes de sites partageant des 
 caractéristiques écologiques ou biogéographiques similaires. Nous nous baserons
