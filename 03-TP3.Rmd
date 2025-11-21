@@ -212,11 +212,11 @@ map_bioregions(clu, vegesf)
 
 ### Exercice
 
-Le paramètre **cut_weight*`** permet de retirer du réseau les liens (similarités) 
+Le paramètre **cut_weight** permet de retirer du réseau les liens (similarités) 
 dont la valeur est inférieure à un seuil donné. Plus ce seuil est élevé, plus 
-le réseau est "épuré" et plus les communautés détectées sont contrastées (mais 
+le réseau est ***épuré*** et plus les communautés détectées sont contrastées (mais 
 potentiellement plus nombreuses). Il est important d’expérimenter plusieurs 
-valeurs de *`**cut_weight*`** car cela peut fortement influencer la structure du 
+valeurs de **cut_weight** car cela peut fortement influencer la structure du 
 réseau et donc la partition obtenue. 
 
 Tester différentes valeurs de **cut_weight** (0.5, 0.7, 0.8, 0.9) puis visualiser
