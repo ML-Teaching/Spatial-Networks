@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>TP3 Analyse de réseaux biogéographiques | Introduction aux réseaux spatiaux avec R</title>
   <meta name="description" content="Réseaux spatiaux" />
-  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
 
   <meta property="og:title" content="TP3 Analyse de réseaux biogéographiques | Introduction aux réseaux spatiaux avec R" />
   <meta property="og:type" content="book" />
@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -151,26 +152,28 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="1" data-path="tp1.html"><a href="tp1.html"><i class="fa fa-check"></i><b>1</b> Premiers pas avec R</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="tp1.html"><a href="tp1.html#scripts-et-environnement-de-travail"><i class="fa fa-check"></i><b>1.1</b> Scripts et environnement de travail</a></li>
-<li class="chapter" data-level="1.2" data-path="tp1.html"><a href="tp1.html#le-répertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
+<li class="chapter" data-level="1.2" data-path="tp1.html"><a href="tp1.html#le-r%C3%A9pertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
 <li class="chapter" data-level="1.3" data-path="tp1.html"><a href="tp1.html#les-librairies"><i class="fa fa-check"></i><b>1.3</b> Les librairies</a></li>
 <li class="chapter" data-level="1.4" data-path="tp1.html"><a href="tp1.html#types-et-objets-de-base"><i class="fa fa-check"></i><b>1.4</b> Types et objets de base</a></li>
 <li class="chapter" data-level="1.5" data-path="tp1.html"><a href="tp1.html#manipulation-des-objets"><i class="fa fa-check"></i><b>1.5</b> Manipulation des objets</a></li>
 <li class="chapter" data-level="1.6" data-path="tp1.html"><a href="tp1.html#fonctions-en-r"><i class="fa fa-check"></i><b>1.6</b> Fonctions en R</a></li>
 <li class="chapter" data-level="1.7" data-path="tp1.html"><a href="tp1.html#visualisation-avec-r"><i class="fa fa-check"></i><b>1.7</b> Visualisation avec R</a></li>
 <li class="chapter" data-level="1.8" data-path="tp1.html"><a href="tp1.html#exercice"><i class="fa fa-check"></i><b>1.8</b> Exercice</a></li>
-<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-à-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
+<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="tp2.html"><a href="tp2.html#prise-en-main-des-données"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="2.1" data-path="tp2.html"><a href="tp2.html#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
 <li class="chapter" data-level="2.2" data-path="tp2.html"><a href="tp2.html#estimation-des-flux-avec-tdlm"><i class="fa fa-check"></i><b>2.2</b> Estimation des flux avec TDLM</a></li>
-<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itinéraires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
+<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
 <li class="chapter" data-level="2.4" data-path="tp2.html"><a href="tp2.html#application-r-shiny"><i class="fa fa-check"></i><b>2.4</b> Application R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-données-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
-<li class="chapter" data-level="3.2" data-path="tp3.html"><a href="tp3.html#première-bioregionalisation"><i class="fa fa-check"></i><b>3.2</b> Première bioregionalisation</a></li>
+<li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-donn%C3%A9es-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="3.2" data-path="tp3.html"><a href="tp3.html#similarit%C3%A9-entre-sites"><i class="fa fa-check"></i><b>3.2</b> Similarité entre sites</a></li>
+<li class="chapter" data-level="3.3" data-path="tp3.html"><a href="tp3.html#bioregionalisation-%C3%A0-partir-du-r%C3%A9seau-de-similarit%C3%A9"><i class="fa fa-check"></i><b>3.3</b> Bioregionalisation à partir du réseau de similarité</a></li>
+<li class="chapter" data-level="3.4" data-path="tp3.html"><a href="tp3.html#application-r-shiny-1"><i class="fa fa-check"></i><b>3.4</b> Application R Shiny</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
@@ -203,7 +206,7 @@ biorégionalisation, ainsi que le contenu du TP.</p>
 <iframe src="slides/tp3/Cours_TP3.pdf" width="100%" height="450px">
 </iframe>
 <div id="prise-en-main-des-données-1" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Prise en main des données<a href="tp3.html#prise-en-main-des-données-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">3.1</span> Prise en main des données<a href="tp3.html#prise-en-main-des-donn%C3%A9es-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Le package R <a href="https://biorgeo.github.io/bioregion/">bioregion</a> met à disposition
 des données d’exemple d’abondance d’espèces végétales dans le sud de la France,
 fournies par le conservatoire botanique méditerranéen.</p>
@@ -218,13 +221,13 @@ explorer ces données.</p>
 <p>Créez un script <strong>TP3.R</strong> et enregistrez-le dans votre répertoire de travail,
 que vous pouvez également nommer <strong>TP3</strong>.</p>
 <blockquote>
-<p><em>Dans ce TP, je m’inspire largement du cours sur la
+<p><em>Dans ce TP, je m’inspire du cours sur la
 <a href="https://github.com/Farewe/Cours_Bioregionalisation">bioregionalisation avec les réseaux</a>
 proposé par mon collègue <a href="https://farewe.github.io/markdown-cv/">Boris Leroy</a>
 du Muséum national d’Histoire naturelle.</em></p>
 </blockquote>
 <div id="charger-les-données-1" class="section level3 hasAnchor" number="3.1.1">
-<h3><span class="header-section-number">3.1.1</span> Charger les données<a href="tp3.html#charger-les-données-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">3.1.1</span> Charger les données<a href="tp3.html#charger-les-donn%C3%A9es-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="tp3.html#cb54-1" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
 <span id="cb54-2"><a href="tp3.html#cb54-2" tabindex="-1"></a><span class="fu">library</span>(bioregion)</span>
 <span id="cb54-3"><a href="tp3.html#cb54-3" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
@@ -237,7 +240,7 @@ du Muséum national d’Histoire naturelle.</em></p>
 <span id="cb54-10"><a href="tp3.html#cb54-10" tabindex="-1"></a><span class="fu">data</span>(vegesf)</span></code></pre></div>
 </div>
 <div id="taille-et-aperçu-des-objets-1" class="section level3 hasAnchor" number="3.1.2">
-<h3><span class="header-section-number">3.1.2</span> Taille et aperçu des objets<a href="tp3.html#taille-et-aperçu-des-objets-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">3.1.2</span> Taille et aperçu des objets<a href="tp3.html#taille-et-aper%C3%A7u-des-objets-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="tp3.html#cb55-1" tabindex="-1"></a><span class="fu">dim</span>(vegemat)         <span class="co"># Dimensions et aperçu de la matrice sites-espèces</span></span>
 <span id="cb55-2"><a href="tp3.html#cb55-2" tabindex="-1"></a>vegemat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
 <span id="cb55-3"><a href="tp3.html#cb55-3" tabindex="-1"></a></span>
@@ -246,7 +249,7 @@ du Muséum national d’Histoire naturelle.</em></p>
 <span id="cb55-6"><a href="tp3.html#cb55-6" tabindex="-1"></a><span class="fu">plot</span>(vegesf)         <span class="co"># Représentation spatiale de vegesf</span></span></code></pre></div>
 </div>
 <div id="les-réseaux-en-biogéographie" class="section level3 hasAnchor" number="3.1.3">
-<h3><span class="header-section-number">3.1.3</span> Les réseaux en biogéographie<a href="tp3.html#les-réseaux-en-biogéographie" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">3.1.3</span> Les réseaux en biogéographie<a href="tp3.html#les-r%C3%A9seaux-en-biog%C3%A9ographie" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Dans le TP précédent, nous avons travaillé sur un réseau <strong>dirigé et pondéré</strong>,
 où chaque lien représentait un <strong>flux</strong> entre deux communes (origine →
 destination). En biogéographie, nous allons maintenant manipuler un
@@ -293,8 +296,117 @@ Solution (cliquer pour afficher)
 <hr />
 </div>
 </div>
-<div id="première-bioregionalisation" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Première bioregionalisation<a href="tp3.html#première-bioregionalisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="similarité-entre-sites" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Similarité entre sites<a href="tp3.html#similarit%C3%A9-entre-sites" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Pour comparer les sites entre eux, nous pouvons calculer un <strong>indice de similarité</strong>
+basé sur la composition en espèces. Par exemple, l’indice de <strong>Simpson</strong> mesure
+la proportion d’espèces partagées entre deux sites, en donnant un poids plus
+fort aux espèces présentes dans les deux zones. Il est robuste aux différences
+de richesse spécifique.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="tp3.html#cb60-1" tabindex="-1"></a>sim <span class="ot">&lt;-</span> <span class="fu">similarity</span>(vegemat, <span class="at">metric =</span> <span class="st">&quot;Simpson&quot;</span>)</span>
+<span id="cb60-2"><a href="tp3.html#cb60-2" tabindex="-1"></a>sim[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<p>Pour mieux comprendre la manière dont cet indice est construit, il est possible
+de récupérer les trois composantes fondamentales de la comparaison entre deux
+sites :<br />
+- <strong>a</strong> : nombre d’espèces partagées (intersection),<br />
+- <strong>b</strong> : espèces uniques au site 1,<br />
+- <strong>c</strong> : espèces uniques au site 2.</p>
+<p>Ces quantités peuvent être obtenues via :</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="tp3.html#cb61-1" tabindex="-1"></a>simabc <span class="ot">&lt;-</span> <span class="fu">similarity</span>(vegemat, <span class="at">metric =</span> <span class="st">&quot;abc&quot;</span>)</span>
+<span id="cb61-2"><a href="tp3.html#cb61-2" tabindex="-1"></a>simabc[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<div id="exercices-2" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Exercices<a href="tp3.html#exercices-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>1.</strong> Tracer l’histogramme des similarités.</p>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="tp3.html#cb62-1" tabindex="-1"></a><span class="co"># Histogramme du nombre d&#39;espèces par site</span></span>
+<span id="cb62-2"><a href="tp3.html#cb62-2" tabindex="-1"></a><span class="fu">hist</span>(sim<span class="sc">$</span>Simpson, <span class="at">col =</span> <span class="st">&quot;steelblue3&quot;</span>)</span></code></pre></div>
+</details>
+<hr />
+<p><strong>2.</strong> A partir de la formule de Simpson que vous trouverez <a href="https://biorgeo.github.io/bioregion/reference/similarity.html#details">ici</a> et de la
+fonction <code>pmin()</code>, reconstruisez l’indice de Simpson à partir des valeurs<br />
+<strong>a</strong>, <strong>b</strong> et <strong>c</strong> de <strong>simabc</strong>.</p>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="tp3.html#cb63-1" tabindex="-1"></a><span class="co"># Extraire a, b et c</span></span>
+<span id="cb63-2"><a href="tp3.html#cb63-2" tabindex="-1"></a>a <span class="ot">&lt;-</span> simabc<span class="sc">$</span>a</span>
+<span id="cb63-3"><a href="tp3.html#cb63-3" tabindex="-1"></a>b <span class="ot">&lt;-</span> simabc<span class="sc">$</span>b</span>
+<span id="cb63-4"><a href="tp3.html#cb63-4" tabindex="-1"></a>c <span class="ot">&lt;-</span> simabc<span class="sc">$</span>c</span>
+<span id="cb63-5"><a href="tp3.html#cb63-5" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="tp3.html#cb63-6" tabindex="-1"></a><span class="co"># Reconstruction de Simpson</span></span>
+<span id="cb63-7"><a href="tp3.html#cb63-7" tabindex="-1"></a>simpson <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pmin</span>(b,c) <span class="sc">/</span> (a <span class="sc">+</span> <span class="fu">pmin</span>(b, c))</span>
+<span id="cb63-8"><a href="tp3.html#cb63-8" tabindex="-1"></a></span>
+<span id="cb63-9"><a href="tp3.html#cb63-9" tabindex="-1"></a><span class="co"># Aperçu</span></span>
+<span id="cb63-10"><a href="tp3.html#cb63-10" tabindex="-1"></a>sim<span class="sc">$</span>Simpson2 <span class="ot">&lt;-</span> simpson</span>
+<span id="cb63-11"><a href="tp3.html#cb63-11" tabindex="-1"></a>sim[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
+</details>
+<hr />
+</div>
+</div>
+<div id="bioregionalisation-à-partir-du-réseau-de-similarité" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Bioregionalisation à partir du réseau de similarité<a href="tp3.html#bioregionalisation-%C3%A0-partir-du-r%C3%A9seau-de-similarit%C3%A9" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La biorégionalisation consiste à identifier des groupes de sites partageant des
+caractéristiques écologiques ou biogéographiques similaires. Nous nous baserons
+ici sur le réseau de similarité calculé avec l’indice de Simpson ci-dessous.</p>
+<p>Pour cela nous pouvons appliquer un algorithme de détection de communautés, ici<br />
+<strong>Louvain</strong> afin d’obtenir des régions biogéographiques cohérentes.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="tp3.html#cb64-1" tabindex="-1"></a><span class="co"># Détection des communautés biogéographiques</span></span>
+<span id="cb64-2"><a href="tp3.html#cb64-2" tabindex="-1"></a>clu <span class="ot">&lt;-</span> <span class="fu">netclu_louvain</span>(sim, <span class="at">cut_weight =</span> <span class="dv">0</span>, <span class="at">seed =</span> <span class="dv">1</span>)</span>
+<span id="cb64-3"><a href="tp3.html#cb64-3" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="tp3.html#cb64-4" tabindex="-1"></a><span class="co"># Effectifs des biorégions obtenues</span></span>
+<span id="cb64-5"><a href="tp3.html#cb64-5" tabindex="-1"></a><span class="fu">table</span>(clu<span class="sc">$</span>clusters[,<span class="dv">2</span>])</span>
+<span id="cb64-6"><a href="tp3.html#cb64-6" tabindex="-1"></a></span>
+<span id="cb64-7"><a href="tp3.html#cb64-7" tabindex="-1"></a><span class="co"># Visualisation cartographique</span></span>
+<span id="cb64-8"><a href="tp3.html#cb64-8" tabindex="-1"></a><span class="fu">map_bioregions</span>(clu, vegesf)</span></code></pre></div>
+<div id="exercice-3" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Exercice<a href="tp3.html#exercice-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Le paramètre <code>cut_weight</code> permet de retirer du réseau les liens (similarités)
+dont la valeur est inférieure à un seuil donné. Plus ce seuil est élevé, plus
+le réseau est “épuré” et plus les communautés détectées sont contrastées (mais
+potentiellement plus nombreuses). Il est important d’expérimenter plusieurs
+valeurs de <code>cut_weight</code> car cela peut fortement influencer la structure du
+réseau et donc la partition obtenue.</p>
+<p>Tester différentes valeurs de <code>cut_weight</code> (0.5, 0.7, 0.8, 0.9) puis visualiser
+la biorégionalisation obtenue.</p>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="tp3.html#cb65-1" tabindex="-1"></a><span class="co"># Détection des communautés biogéographiques avec le seuil 0.9</span></span>
+<span id="cb65-2"><a href="tp3.html#cb65-2" tabindex="-1"></a>clu09 <span class="ot">&lt;-</span> <span class="fu">netclu_louvain</span>(sim, <span class="at">cut_weight =</span> <span class="fl">0.9</span>, <span class="at">seed =</span> <span class="dv">1</span>)</span>
+<span id="cb65-3"><a href="tp3.html#cb65-3" tabindex="-1"></a></span>
+<span id="cb65-4"><a href="tp3.html#cb65-4" tabindex="-1"></a><span class="co"># Effectifs des biorégions obtenues</span></span>
+<span id="cb65-5"><a href="tp3.html#cb65-5" tabindex="-1"></a><span class="fu">table</span>(clu09<span class="sc">$</span>clusters[,<span class="dv">2</span>])</span>
+<span id="cb65-6"><a href="tp3.html#cb65-6" tabindex="-1"></a></span>
+<span id="cb65-7"><a href="tp3.html#cb65-7" tabindex="-1"></a><span class="co"># Visualisation cartographique</span></span>
+<span id="cb65-8"><a href="tp3.html#cb65-8" tabindex="-1"></a><span class="fu">map_bioregions</span>(clu09, vegesf)</span></code></pre></div>
+</details>
+<hr />
+</div>
+</div>
+<div id="application-r-shiny-1" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Application R Shiny<a href="tp3.html#application-r-shiny-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Pour finir, je vais vous montrer un nouvel exemple d’application Shiny sur le
+même format que celle du TP2.</p>
+<p>Les fichiers sources de cette application sont disponibles
+<a href="./data/tp3/Shiny_TP3.zip">ici</a>. Vous pouvez dézipper le dossier dans votre
+répertoire de travail.</p>
+<p>Nous retrouvons la même structure d’application, composée de quatre fichiers
+principaux.</p>
+<p>Comme dans le TP2, prenez le temps de parcourir ces fichiers et d’expérimenter
+en changeant le <strong>titre</strong> de l’application, en renommant l’<strong>onglet</strong> du tableau
+de bord, en modifiant la <strong>palette de couleurs</strong> de la cartes ou encore personnaliser
+les couleurs dans <strong>style.css</strong>.</p>
+<p>Si vous êtes en avance essayez d’ajouter la métrique de similarité <strong>Sorensen</strong>
+dans l’appli en modifiant la ligne 18 de <strong>global.R</strong> et en ajoutant une ligne
+après la ligne 26 de <strong>ui.R</strong>.</p>
 
 </div>
 </div>

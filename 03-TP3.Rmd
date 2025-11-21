@@ -24,7 +24,7 @@ Créez un script **TP3.R** et enregistrez-le dans votre répertoire de travail,
 que vous pouvez également nommer **TP3**.
 
 
-> *Dans ce TP, je m'inspire largement du cours sur la 
+> *Dans ce TP, je m'inspire du cours sur la 
 > [bioregionalisation avec les réseaux](https://github.com/Farewe/Cours_Bioregionalisation)
 > proposé par mon collègue [Boris Leroy](https://farewe.github.io/markdown-cv/)
 > du Muséum national d’Histoire naturelle.*
@@ -119,6 +119,156 @@ hist(sites_per_species, col = "#CC6666")
 
 ---
 
-## Première bioregionalisation
+## Similarité entre sites
+
+Pour comparer les sites entre eux, nous pouvons calculer un **indice de similarité** 
+basé sur la composition en espèces. Par exemple, l’indice de **Simpson** mesure 
+la proportion d’espèces partagées entre deux sites, en donnant un poids plus 
+fort aux espèces présentes dans les deux zones. Il est robuste aux différences 
+de richesse spécifique.
+
+```{r, eval=FALSE}
+sim <- similarity(vegemat, metric = "Simpson")
+sim[1:10,]
+```
+
+Pour mieux comprendre la manière dont cet indice est construit, il est possible 
+de récupérer les trois composantes fondamentales de la comparaison entre deux 
+sites :  
+- **a** : nombre d’espèces partagées (intersection),  
+- **b** : espèces uniques au site 1,  
+- **c** : espèces uniques au site 2.
+
+Ces quantités peuvent être obtenues via :
+
+```{r, eval=FALSE}
+simabc <- similarity(vegemat, metric = "abc")
+simabc[1:10,]
+```
+
+### Exercices
+
+**1.** Tracer l'histogramme des similarités.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Histogramme du nombre d'espèces par site
+hist(sim$Simpson, col = "steelblue3")
+```
+</details>
+
+---
+
+**2.** A partir de la formule de Simpson que vous trouverez [ici](https://biorgeo.github.io/bioregion/reference/similarity.html#details) et de la 
+fonction `pmin()`, reconstruisez l’indice de Simpson à partir des valeurs  
+**a**, **b** et **c** de **simabc**.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Extraire a, b et c
+a <- simabc$a
+b <- simabc$b
+c <- simabc$c
+
+# Reconstruction de Simpson
+simpson <- 1 - pmin(b,c) / (a + pmin(b, c))
+
+# Aperçu
+sim$Simpson2 <- simpson
+sim[1:10,]
+```
+</details>
+
+---
+
+## Bioregionalisation à partir du réseau de similarité
+
+La biorégionalisation consiste à identifier des groupes de sites partageant des 
+caractéristiques écologiques ou biogéographiques similaires. Nous nous baserons
+ici sur le réseau de similarité calculé avec l’indice de Simpson ci-dessous. 
+
+Pour cela nous pouvons appliquer un algorithme de détection de communautés, ici  
+**Louvain** afin d’obtenir des régions biogéographiques cohérentes.  
+
+```{r, eval=FALSE}
+# Détection des communautés biogéographiques
+clu <- netclu_louvain(sim, cut_weight = 0, seed = 1)
+
+# Effectifs des biorégions obtenues
+table(clu$clusters[,2])
+
+# Visualisation cartographique
+map_bioregions(clu, vegesf)
+```
+
+### Exercice
+
+Le paramètre `cut_weight` permet de retirer du réseau les liens (similarités) 
+dont la valeur est inférieure à un seuil donné. Plus ce seuil est élevé, plus 
+le réseau est "épuré" et plus les communautés détectées sont contrastées (mais 
+potentiellement plus nombreuses). Il est important d’expérimenter plusieurs 
+valeurs de `cut_weight` car cela peut fortement influencer la structure du 
+réseau et donc la partition obtenue. 
+
+Tester différentes valeurs de `cut_weight` (0.5, 0.7, 0.8, 0.9) puis visualiser
+la biorégionalisation obtenue.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Détection des communautés biogéographiques avec le seuil 0.9
+clu09 <- netclu_louvain(sim, cut_weight = 0.9, seed = 1)
+
+# Effectifs des biorégions obtenues
+table(clu09$clusters[,2])
+
+# Visualisation cartographique
+map_bioregions(clu09, vegesf)
+```
+</details>
+
+---
+
+## Application R Shiny
+
+Pour finir, je vais vous montrer un nouvel exemple d'application Shiny sur le 
+même format que celle du TP2.
+
+Les fichiers sources de cette application sont disponibles 
+[ici](./data/tp3/Shiny_TP3.zip). Vous pouvez dézipper le dossier dans votre 
+répertoire de travail.
+
+Nous retrouvons la même structure d'application, composée de quatre fichiers 
+principaux. 
+
+Comme dans le TP2, prenez le temps de parcourir ces fichiers et d’expérimenter 
+en changeant le **titre** de l’application, en renommant l'**onglet** du tableau 
+de bord, en modifiant la **palette de couleurs** de la cartes ou encore personnaliser 
+les couleurs dans **style.css**.  
+
+Si vous êtes en avance essayez d'ajouter la métrique de similarité **Sorensen**
+dans l'appli en modifiant la ligne 18 de **global.R** et en ajoutant une ligne 
+après la ligne 26 de **ui.R**.
+
+
+
+
+
+
+
+
+
+
 
 

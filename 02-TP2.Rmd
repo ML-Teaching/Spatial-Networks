@@ -311,7 +311,7 @@ d_mean_obs
 
 Nous avons observé que notre modèle tendait à **surestimer la distance moyenne
 de navettage**. Cela signifie que la valeur du paramètre $\beta$, qui contrôle
-l’effet de la distance dans la loi gravitaire, est probablement **trop faible**.
+l’effet de la distance dans la loi gravitaire est probablement **trop faible**.
 
 Pour améliorer l’ajustement, nous allons tester plusieurs valeurs de $\beta$
 afin d'évaluer la qualité des ajustements via différents indicateurs de
@@ -370,7 +370,7 @@ d_mean_obs
 
 ### Exercices
 
-**1.** Trouver la valeur optimale du paramètre (selon le CPC), arrondie à trois 
+**1.** Trouver la valeur optimale du paramètre (selon le CPC) arrondie à trois 
 chiffres après la virgule.
 
 ---
@@ -609,7 +609,8 @@ ggplot() +
 ## Application R Shiny
 
 Pour finir, je vais vous montrer un exemple d'application plus élaborée que 
-celle du TP1 que nous pouvons développer à partir de l'objet spatial **mtp**.  
+celle du TP1 que nous pouvons développer à partir de l'objet spatial **mtp**. 
+
 Les fichiers sources de cette application sont disponibles 
 [ici](./data/tp2/Shiny_TP2.zip). Vous pouvez dézipper le dossier dans votre 
 répertoire de travail.

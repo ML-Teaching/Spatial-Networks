@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>TP1 Premiers pas avec R | Introduction aux réseaux spatiaux avec R</title>
   <meta name="description" content="Réseaux spatiaux" />
-  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
 
   <meta property="og:title" content="TP1 Premiers pas avec R | Introduction aux réseaux spatiaux avec R" />
   <meta property="og:type" content="book" />
@@ -54,8 +54,9 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -65,7 +66,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -151,26 +152,28 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="1" data-path="tp1.html"><a href="tp1.html"><i class="fa fa-check"></i><b>1</b> Premiers pas avec R</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="tp1.html"><a href="tp1.html#scripts-et-environnement-de-travail"><i class="fa fa-check"></i><b>1.1</b> Scripts et environnement de travail</a></li>
-<li class="chapter" data-level="1.2" data-path="tp1.html"><a href="tp1.html#le-répertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
+<li class="chapter" data-level="1.2" data-path="tp1.html"><a href="tp1.html#le-r%C3%A9pertoire-de-travail"><i class="fa fa-check"></i><b>1.2</b> Le répertoire de travail</a></li>
 <li class="chapter" data-level="1.3" data-path="tp1.html"><a href="tp1.html#les-librairies"><i class="fa fa-check"></i><b>1.3</b> Les librairies</a></li>
 <li class="chapter" data-level="1.4" data-path="tp1.html"><a href="tp1.html#types-et-objets-de-base"><i class="fa fa-check"></i><b>1.4</b> Types et objets de base</a></li>
 <li class="chapter" data-level="1.5" data-path="tp1.html"><a href="tp1.html#manipulation-des-objets"><i class="fa fa-check"></i><b>1.5</b> Manipulation des objets</a></li>
 <li class="chapter" data-level="1.6" data-path="tp1.html"><a href="tp1.html#fonctions-en-r"><i class="fa fa-check"></i><b>1.6</b> Fonctions en R</a></li>
 <li class="chapter" data-level="1.7" data-path="tp1.html"><a href="tp1.html#visualisation-avec-r"><i class="fa fa-check"></i><b>1.7</b> Visualisation avec R</a></li>
 <li class="chapter" data-level="1.8" data-path="tp1.html"><a href="tp1.html#exercice"><i class="fa fa-check"></i><b>1.8</b> Exercice</a></li>
-<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-à-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
+<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="tp2.html"><a href="tp2.html#prise-en-main-des-données"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="2.1" data-path="tp2.html"><a href="tp2.html#prise-en-main-des-donn%C3%A9es"><i class="fa fa-check"></i><b>2.1</b> Prise en main des données</a></li>
 <li class="chapter" data-level="2.2" data-path="tp2.html"><a href="tp2.html#estimation-des-flux-avec-tdlm"><i class="fa fa-check"></i><b>2.2</b> Estimation des flux avec TDLM</a></li>
-<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itinéraires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
+<li class="chapter" data-level="2.3" data-path="tp2.html"><a href="tp2.html#flux-et-itin%C3%A9raires"><i class="fa fa-check"></i><b>2.3</b> Flux et itinéraires</a></li>
 <li class="chapter" data-level="2.4" data-path="tp2.html"><a href="tp2.html#application-r-shiny"><i class="fa fa-check"></i><b>2.4</b> Application R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="tp3.html"><a href="tp3.html"><i class="fa fa-check"></i><b>3</b> Analyse de réseaux biogéographiques</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-données-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
-<li class="chapter" data-level="3.2" data-path="tp3.html"><a href="tp3.html#première-bioregionalisation"><i class="fa fa-check"></i><b>3.2</b> Première bioregionalisation</a></li>
+<li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-donn%C3%A9es-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
+<li class="chapter" data-level="3.2" data-path="tp3.html"><a href="tp3.html#similarit%C3%A9-entre-sites"><i class="fa fa-check"></i><b>3.2</b> Similarité entre sites</a></li>
+<li class="chapter" data-level="3.3" data-path="tp3.html"><a href="tp3.html#bioregionalisation-%C3%A0-partir-du-r%C3%A9seau-de-similarit%C3%A9"><i class="fa fa-check"></i><b>3.3</b> Bioregionalisation à partir du réseau de similarité</a></li>
+<li class="chapter" data-level="3.4" data-path="tp3.html"><a href="tp3.html#application-r-shiny-1"><i class="fa fa-check"></i><b>3.4</b> Application R Shiny</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
@@ -215,7 +218,7 @@ trace de vos commandes et de pouvoir les réutiliser plus tard.</p>
 que vous pouvez nommer <strong>TP1</strong>.</p>
 </div>
 <div id="commande-script-et-exécution" class="section level3 hasAnchor" number="1.1.2">
-<h3><span class="header-section-number">1.1.2</span> Commande, script et exécution<a href="tp1.html#commande-script-et-exécution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">1.1.2</span> Commande, script et exécution<a href="tp1.html#commande-script-et-ex%C3%A9cution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Une <strong>commande</strong> est une instruction unique que vous tapez directement dans
 la console (par exemple <code>2 + 2</code>). Elle est exécutée immédiatement en appuyant
@@ -246,7 +249,7 @@ reproduire vos résultats.</em></p>
 </div>
 </div>
 <div id="le-répertoire-de-travail" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Le répertoire de travail<a href="tp1.html#le-répertoire-de-travail" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.2</span> Le répertoire de travail<a href="tp1.html#le-r%C3%A9pertoire-de-travail" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Le <strong>répertoire de travail</strong> (<em>working directory</em>) est le dossier dans lequel R
 va chercher ou enregistrer vos fichiers par défaut. Il est donc essentiel de
 bien le définir pour éviter les erreurs lors des imports et exports.</p>
@@ -617,7 +620,7 @@ Solution (cliquer pour afficher)
 <hr />
 </div>
 <div id="introduction-à-r-shiny" class="section level2 hasAnchor" number="1.9">
-<h2><span class="header-section-number">1.9</span> Introduction à R Shiny<a href="tp1.html#introduction-à-r-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.9</span> Introduction à R Shiny<a href="tp1.html#introduction-%C3%A0-r-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R Shiny permet de créer des <strong>applications web interactives</strong> directement depuis R.
 Avec Shiny, vous pouvez rendre vos analyses et graphiques interactifs, sans
 avoir besoin de connaissances en HTML, CSS ou JavaScript.</p>
@@ -663,7 +666,7 @@ affichés dans l’UI.</li>
 <span id="cb29-25"><a href="tp1.html#cb29-25" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
 </div>
 <div id="déployer-lapplication" class="section level3 hasAnchor" number="1.9.3">
-<h3><span class="header-section-number">1.9.3</span> Déployer l’application<a href="tp1.html#déployer-lapplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">1.9.3</span> Déployer l’application<a href="tp1.html#d%C3%A9ployer-lapplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Ouvrez le fichier <strong>app.R</strong> dans RStudio.<br />
 </li>

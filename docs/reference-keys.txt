@@ -35,4 +35,8 @@ charger-les-données-1
 taille-et-aperçu-des-objets-1
 les-réseaux-en-biogéographie
 exercice-2
-première-bioregionalisation
+similarité-entre-sites
+exercices-2
+bioregionalisation-à-partir-du-réseau-de-similarité
+exercice-3
+application-r-shiny-1
