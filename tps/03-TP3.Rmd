@@ -1,0 +1,499 @@
+# Analyse de réseaux biogéographiques {#tp3}
+
+Avant de commencer le TP, je vais vous présenter une introduction à la 
+biorégionalisation, ainsi que le contenu du TP. Pour aller plus loin, ce TP et
+le package [bioregion](https://biorgeo.github.io/bioregion/) s’appuient sur les 
+travaux présentés dans [@Lenormand2019](#refs).
+
+<div style="height:10px;">&nbsp;</div>
+
+<iframe src="slides/tp3/Cours_TP3.pdf" width="100%" height="450px"></iframe>
+
+## Prise en main des données
+
+Le package R [bioregion](https://biorgeo.github.io/bioregion/) met à disposition 
+des données d'exemple d'abondance d'espèces végétales dans le sud de la France, 
+fournies par le conservatoire botanique méditerranéen.
+
+- **vegemat** : matrice de co-occurrences sites-espèces.  
+- **vegesf** : données spatiales associées  (nous aurons besoin de **sf** pour 
+les manipuler).   
+
+Nous allons dans un premier temps calculer quelques statistiques de base pour 
+explorer ces données. 
+
+Créez un script **TP3.R** et enregistrez-le dans votre répertoire de travail, 
+que vous pouvez également nommer **TP3**.
+
+> *Dans ce TP, je m'inspire du cours sur la 
+> [bioregionalisation avec les réseaux](https://github.com/Farewe/Cours_Bioregionalisation)
+> proposé par mon collègue [Boris Leroy](https://farewe.github.io/markdown-cv/)
+> du Muséum national d’Histoire naturelle.*
+
+### Charger les données
+
+```{r, eval=FALSE}
+# Charger les packages
+library(bioregion)
+library(TDLM)
+library(sf)
+
+# Définir le répertoire de travail
+setwd("~/Desktop/TP3") # A adapter à votre chemin sur votre ordinateur !
+
+# Charger les données
+data(vegemat)
+data(vegesf)
+```
+
+### Taille et aperçu des objets 
+
+```{r, eval=FALSE}
+dim(vegemat)         # Dimensions et aperçu de la matrice sites-espèces
+vegemat[1:10,1:10]
+
+vegesf               # Aperçu des entités spatiales 
+class(vegesf)        # Objet sf
+plot(vegesf)         # Représentation spatiale de vegesf
+```
+
+### Les réseaux en biogéographie
+
+Dans le TP précédent, nous avons travaillé sur un réseau **dirigé et pondéré**, 
+où chaque lien représentait un **flux** entre deux communes (origine → 
+destination). En biogéographie, nous allons maintenant manipuler un 
+**réseau bipartite**.
+
+Un **réseau bipartite** relie deux ensembles de noeuds distincts,  ici les 
+**sites** (zones géographiques) et les **espèces** (entités biologiques). 
+Autrement dit, un lien existe uniquement **entre un site et une espèce**, jamais 
+entre deux sites ou deux espèces directement. Ce type de réseau peut être 
+**pondéré** (abondance d’espèces) ou **non pondéré** (présence/absence).
+
+Le réseau bipartite sites-espèces que nous considérons dans ce TP est pondéré et
+stocké sous forme matricielle dans l'objet **vegemat**. Nous pouvons ici aussi 
+facilement convertir cette matrice en un format "trois colonnes" à l’aide de la 
+fonction `mat_to_net()`.
+
+```{r, eval=FALSE}
+# Conversion matrice -> "réseau"
+vegenet <- mat_to_net(vegemat, weight = TRUE)
+vegenet[1:10,]
+```
+
+On peut également considérer un réseau non pondéré.
+
+```{r, eval=FALSE}
+# Suppression de la colonne poids
+vegenet_bin <- vegenet[,-3]
+vegenet_bin[1:10,]
+```
+
+Et le reconvertir en matrice avec `net_to_mat()`.
+
+```{r, eval=FALSE}
+# Conversion "réseau" -> matrice  
+vegemat_bin <- net_to_mat(vegenet_bin)
+vegemat_bin[1:10,1:10]
+```
+
+### Exercice
+
+Tracer les histogrammes du nombre moyen d'espèces par site et du nombre moyen 
+de sites par espèce à partir de **vegemat_bin** (à l'aide de la fonction 
+`apply()`). 
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Histogramme du nombre d'espèces par site
+species_per_site <- apply(vegemat_bin,1,sum)
+hist(species_per_site, col = "steelblue3")
+
+# Histogramme du nombre d'espèces par site
+sites_per_species <- apply(vegemat_bin,2,sum)
+hist(sites_per_species, col = "#CC6666")
+```
+</details>
+
+---
+
+## Similarité entre sites
+
+Pour comparer les sites entre eux, nous pouvons calculer un **indice de similarité** 
+basé sur la composition en espèces. Par exemple, l’indice de **Simpson** mesure 
+la proportion d’espèces partagées entre deux sites, en donnant un poids plus 
+fort aux espèces présentes dans les deux zones. Il est robuste aux différences 
+de richesse spécifique.
+
+```{r, eval=FALSE}
+sim <- similarity(vegemat, metric = "Simpson")
+sim[1:10,]
+```
+
+Pour mieux comprendre la manière dont cet indice est construit, il est possible 
+de récupérer les trois composantes fondamentales de la comparaison entre deux 
+sites :  
+
+- **a** : nombre d’espèces partagées (intersection)  
+- **b** : espèces uniques au site 1  
+- **c** : espèces uniques au site 2
+
+Ces quantités peuvent être obtenues via :
+
+```{r, eval=FALSE}
+simabc <- similarity(vegemat, metric = "abc")
+simabc[1:10,]
+```
+
+### Exercices
+
+**1.** Tracer l'histogramme des similarités.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Histogramme du nombre d'espèces par site
+hist(sim$Simpson, col = "steelblue3")
+```
+</details>
+
+---
+
+**2.** A partir de la formule de Simpson que vous trouverez [ici](https://biorgeo.github.io/bioregion/reference/similarity.html#details) et de la 
+fonction `pmin()`, reconstruisez l’indice de Simpson à partir des valeurs  
+**a**, **b** et **c** de **simabc**.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Extraire a, b et c
+a <- simabc$a
+b <- simabc$b
+c <- simabc$c
+
+# Reconstruction de Simpson
+simpson <- 1 - pmin(b,c) / (a + pmin(b, c))
+
+# Aperçu
+sim$Simpson2 <- simpson
+sim[1:10,]
+```
+</details>
+
+---
+
+## Bioregionalisation
+
+La biorégionalisation consiste à identifier des groupes de sites partageant des 
+caractéristiques écologiques ou biogéographiques similaires. Nous nous baserons 
+ici sur le réseau de similarité calculé avec l’indice de Simpson ci-dessous. 
+
+Pour cela nous pouvons appliquer un algorithme de détection de communautés, ici 
+**Louvain** afin d’obtenir des régions biogéographiques cohérentes.  
+
+```{r, eval=FALSE}
+# Détection des communautés biogéographiques
+clu <- netclu_louvain(sim, cut_weight = 0)
+
+# Effectifs des biorégions obtenues
+table(clu$clusters[,2])
+
+# Visualisation cartographique
+map_bioregions(clu, vegesf)
+```
+
+### Exercice
+
+Le paramètre **cut_weight** permet de retirer du réseau les liens (similarités) 
+dont la valeur est inférieure à un seuil donné. Plus ce seuil est élevé, plus 
+le réseau est ***épuré*** et plus les communautés détectées sont contrastées (mais 
+potentiellement plus nombreuses). Il est important d’expérimenter plusieurs 
+valeurs de **cut_weight** car cela peut fortement influencer la structure du 
+réseau et donc la partition obtenue. 
+
+Tester différentes valeurs de **cut_weight** (0.5, 0.7, 0.8, 0.9) puis visualiser
+la biorégionalisation obtenue.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Détection des communautés biogéographiques avec le seuil 0.7
+clu <- netclu_louvain(sim, cut_weight = 0.7, seed = 1)
+
+# Effectifs des biorégions obtenues
+table(clu$clusters[,2])
+
+# Visualisation cartographique
+map_bioregions(clu, 
+               vegesf)
+```
+
+</details>
+
+---
+
+## Analyse biogéographique
+
+### Contributions des espèces aux biorégions
+
+Nous allons conserver la bioregionalisation au seuil 0.7 qui contient 5 
+bioregions. L'objet sf **bioreg** ci-dessous contient une variable **K_5** dans 
+sa table attributaire qui permet d'identifier la bioregion assignée à chacun des 
+sites.
+
+```{r, eval=FALSE}
+# Détection des communautés biogéographiques avec le seuil 0.7
+clu <- netclu_louvain(sim, cut_weight = 0.7, seed = 1)
+
+# Bioregions
+bioreg <- map_bioregions(clu, 
+                         vegesf, 
+                         write_clusters = TRUE,
+                         plot = FALSE)
+```
+
+Nous allons maintenant essayer de comprendre quelles sont les espèces qui
+contribuent le plus aux bioregions. Pour cela, nous allons utiliser la
+fonction `site_species_metrics()` qui va nous permettre, avec le code
+ci-dessous, de calculer le degré de contribution de chaque espèce à chaque
+bioregion.
+
+```{r, eval=FALSE}
+contrib <- site_species_metrics(clu,
+                                bioregion_metrics = "Rho",
+                                bioregionalization_metrics = NULL,
+                                comat = vegemat,
+                                verbose = FALSE)
+
+contrib <- net_to_mat(contrib$species_bioregions, weight = TRUE)
+
+```
+
+Les valeurs de **contrib** sont positives lorsqu'une espèce contribue
+positivement à une bioregion. Cela signifie qu’on la
+retrouve plus fréquemment dans cette bioregion que ce que l’on pourrait
+attendre dans le cas d’une distribution uniforme. A l’inverse, des valeurs 
+négatives indiquent qu’une espèce est sous-représentée dans la bioregion 
+considérée, c’est-à-dire qu’elle y est moins présente que ce que l’on attendrait 
+dans le cas d’une distribution uniforme.
+
+### Exercices
+
+**1.** Utilisez la fonction `order()` pour identifier les espèces contribuant le 
+plus à la première bioregion. 
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+contrib1 <- contrib[order(contrib[,1], decreasing = TRUE),]
+
+contrib1[1:10,]
+```
+
+</details>
+
+---
+
+**2.** Existe-t-il des espèces qui contribuent positivement à la fois à la 
+biorégion 1 à la biorégion 2 ?
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+contrib12 <- contrib[contrib[,1] > 0 & contrib[,2] > 0,]
+
+contrib12[1:10,]
+```
+
+</details>
+
+---
+
+### Relations entre biorégions
+
+Pour analyser les relations entre bioregions, nous allons filtrer dans
+**contrib** les espèces ayant une contribution positive et significative
+(supérieure à 1.96). 
+
+Ensuite, nous normalisons ces valeurs afin que les contributions de chaque
+espèce somment à 1. Cette étape transforme les contributions en proportions
+comparables entre espèces.
+
+```{r, eval=FALSE}
+# Copier la table des contributions
+contrib_sign <- contrib
+
+# Filtrer uniquement les contributions significatives (> 1.96)
+contrib_sign[contrib_sign < 1.96] <- NA
+
+# Normaliser les contributions par ligne (chaque espèce)
+contrib_sign <- contrib_sign / apply(contrib_sign, 1, sum, na.rm = TRUE)
+```
+
+À partir de cette table, nous pouvons calculer la matrice **lambda**, qui
+résume les relations entre bioregions. 
+
+```{r, eval=FALSE}
+K <- ncol(contrib_sign)
+
+lambda <- matrix(0, K, K)
+colnames(lambda) <- colnames(contrib_sign)
+rownames(lambda) <- colnames(contrib_sign)
+
+for(k in 1:k){
+  
+  contrib_sign_k <- contrib_sign[!is.na(contrib_sign[, k]),]
+  contrib_sign_k[is.na(contrib_sign_k )] <- 0
+  lambda[k,] <- apply(contrib_sign_k, 2, mean)
+  
+}
+
+lambda
+```
+
+### Exercices
+
+**1.** Quelle est la biorégion la plus spécialisée (i.e. qui possède des 
+espèces qui contribuent peu aux autres biorégions) ?
+
+**2.** Quelle est la biorégion la plus en relation avec les autres biorégions ?
+
+## Echelle communale
+
+Dans cette section, nous allons travailler à l’échelle communale pour analyser
+la répartition des bioregions au sein des communes. Nous disposons de nos deux
+jeux de données : **mtp** et **bioreg**.
+
+Nous allons commencer par charger **mtp** et modifier sa projection pour qu'elle 
+corresponde à celle de **bioreg**.
+
+```{r, eval=FALSE}
+data(mtp)
+mtp_l <- st_transform(mtp, crs = st_crs(bioreg))
+```
+
+Assurons nous que tout est ok en visualisant les deux couches pour vérifier leur 
+superposition.
+
+```{r, eval=FALSE}
+plot(st_geometry(bioreg), border = "#CC6666")
+plot(st_geometry(mtp_l), border = "steelblue3", add = TRUE)
+```
+
+### Exercice
+
+Calculer la fraction de surface de chaque polygone de **mtp_l** correspondant à 
+chaque bioregion définie dans **bioreg**.
+
+1. Réaliser l’intersection spatiale entre mtp_l et bioreg.
+2. Calculer l’aire de chaque intersection.
+3. Calculer la fraction de surface de chaque polygone correspondant à
+chaque bioregion (aire intersection / aire totale du polygone).
+4. Agréger les fractions si un polygone est découpé en plusieurs parties
+pour la même bioregion.
+5. Organiser le résultat sous forme de matrice contenant les fractions de 
+surface avec en ligne les communes et en colonnes les bioregions.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# -----------------------------------------------
+# 1. Intersection spatiale
+# -----------------------------------------------
+# On calcule la partie de chaque polygone mtp_l qui tombe dans chaque bioregion
+# st_intersection conserve les attributs de mtp_l et de bioreg$K_5
+inter <- st_intersection(mtp_l, bioreg[, "K_5"])
+
+# -----------------------------------------------
+# 2. Calcul de l'aire des intersections
+# -----------------------------------------------
+# st_area retourne la surface (en unités du CRS) de chaque polygone d'intersection
+inter$area_inter <- st_area(inter)
+
+# -----------------------------------------------
+# 3. Calcul des fractions
+# -----------------------------------------------
+# On divise l'aire de l'intersection par l'aire totale du polygone mtp_l
+inter$Frac <- inter$area_inter / (inter$Area * 1e6)
+
+# -----------------------------------------------
+# 4. Sélection des colonnes utiles
+# -----------------------------------------------
+# On ne conserve que l'identifiant du polygone, la bioregion et la fraction
+inter <- inter[, c("ID", "K_5", "Frac"), drop = TRUE]
+
+# -----------------------------------------------
+# 5. Agrégation
+# -----------------------------------------------
+# Si plusieurs intersections existent pour le même polygone et bioregion,
+# on somme les fractions pour obtenir la fraction totale par ID et K_5
+inter <- aggregate(inter$Frac, list(inter$ID, inter$K_5), sum)
+colnames(inter) <- c("ID", "K_5", "Frac")
+
+# -----------------------------------------------
+# 6. Conversion en matrice
+# -----------------------------------------------
+inter <- net_to_mat(inter, weight = TRUE)
+```
+
+</details>
+
+---
+
+## Application R Shiny
+
+Pour finir, je vais vous montrer un nouvel exemple d'application Shiny sur le 
+même format que celle du TP2.
+
+Les fichiers sources de cette application sont disponibles 
+[ici](./data/tp3/Shiny_TP3.zip). Vous pouvez dézipper le dossier dans votre 
+répertoire de travail.
+
+Nous retrouvons la même structure d'application, composée de quatre fichiers 
+principaux. 
+
+Comme dans le TP2, prenez le temps de parcourir ces fichiers et d’expérimenter 
+en changeant le **titre** de l’application, en renommant l'**onglet** du tableau 
+de bord, en modifiant la **palette de couleurs** de la cartes ou encore personnaliser 
+les couleurs dans **style.css**.  
+
+### Exercice 
+
+Si vous êtes en avance essayez d’ajouter la métrique de similarité **Sorensen** 
+dans l’appli.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

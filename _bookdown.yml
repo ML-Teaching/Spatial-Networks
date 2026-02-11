@@ -3,9 +3,10 @@ output_dir: docs
 delete_merged_file: true
 rmd_files:
   - index.Rmd
-  - 01-TP1.Rmd
-  - 02-TP2.Rmd
-  - 03-TP3.Rmd
+  - tps/01-TP1.Rmd
+  - tps/02-TP2.Rmd
+  - tps/03-TP3.Rmd
+  - refs/references.Rmd
 language:
   ui:
     chapter_name: "TP"

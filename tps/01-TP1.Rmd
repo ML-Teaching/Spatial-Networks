@@ -1,0 +1,947 @@
+# Premiers pas avec R {#tp1}
+
+Avant de commencer le TP, nous allons parcourir ensemble le support de 
+présentation ci-dessous afin de nous assurer que tout le monde dispose des mêmes 
+bases. Ce sera l'occasion de prendre en main **RStudio** [[@Posit2025]](#refs) 
+et de découvrir rapidement les notions essentielles du 
+langage **R** [[@R2021]](#refs).
+
+<div style="height:10px;">&nbsp;</div>
+
+<iframe src="slides/tp1/Cours_TP1.pdf" width="100%" height="450px"></iframe>
+
+## Scripts et environnement de travail
+
+### Les scripts  
+
+Il est conseillé de travailler dans un **script (.R)** afin de garder une
+trace de vos commandes et de pouvoir les réutiliser plus tard.  
+
+Pour créer un nouveau script : *File > New File > R Script*.  
+
+Créez un script **TP1.R** et enregistrez-le dans votre répertoire de travail,
+que vous pouvez nommer **TP1**.  
+
+### Commande, script et exécution  
+
+- Une **commande** est une instruction unique que vous tapez directement dans
+  la console (par exemple `2 + 2`). Elle est exécutée immédiatement en appuyant 
+  sur Entrée et son résultat s’affiche dans la **console**.  
+- Un **script** est un fichier texte qui regroupe plusieurs commandes
+  organisées. Il permet de structurer votre travail et d’automatiser vos
+  analyses.  
+- L’**exécution** d’un script correspond au fait de lancer l’ensemble ou une
+  partie du code qu’il contient. Dans RStudio, vous pouvez :  
+  - exécuter la ligne où se trouve le curseur avec **Ctrl + Enter** (ou **Cmd + 
+  Enter** sur Mac),  
+  - exécuter un bloc de code sélectionné, 
+  - ou lancer l’intégralité du script avec le bouton **Source** (en haut à 
+  droite de l’éditeur).  
+
+> *<u>Bonne pratique :</u> redémarrez régulièrement votre session R 
+> (**Session > Restart R** ou **Ctrl + Shift + F10** sous RStudio) afin de 
+> supprimer les objets en mémoire et éviter les conflits. Cela permet de 
+> vérifier que votre script contient bien toutes les étapes nécessaires pour 
+> reproduire vos résultats.*
+
+## Le répertoire de travail
+
+Le **répertoire de travail** (*working directory*) est le dossier dans lequel R
+va chercher ou enregistrer vos fichiers par défaut. Il est donc essentiel de
+bien le définir pour éviter les erreurs lors des imports et exports.
+
+Vérifiez votre répertoire de travail actuel.
+
+```{r, eval=FALSE}
+getwd()
+```
+
+et définissez un nouveau répertoire de travail
+
+```{r, eval=FALSE}
+# Définir le répertoire de travail
+setwd("~/Desktop/TP1") # A adapter à votre chemin sur votre ordinateur !
+```
+
+> *<u>Remarque :</u> utilisez le symbole `#` pour commenter une ligne de votre script.  
+> Tout ce qui suit ce symbole n’est pas exécuté par R.*
+
+Un **chemin absolu** indique l’emplacement exact d’un fichier à partir de la
+racine de l’ordinateur. Il est indépendant du répertoire de travail. Ci-dessous
+un exemple d'import d'un fichier **.csv** à partir d'un chemin absolu.
+
+```{r, eval=FALSE}
+data <- read.csv("C:/Users/Nom/Desktop/TP1/Exemple.csv")
+```
+
+> *<u>Inconvénient :</u> le code n’est pas facilement réutilisable sur un autre
+> ordinateur, car le chemin dépend de la configuration locale.* 
+
+Un **chemin relatif** part du répertoire de travail défini. C’est la méthode
+recommandée car elle rend vos scripts portables et plus faciles à partager. Le 
+même exemple avec un chemin relatif. 
+
+```{r, eval=FALSE}
+data <- read.csv("Exemple.csv")
+```
+
+> *<u>Avantage :</u> si vos fichiers sont organisés dans le même dossier que votre 
+> script, il suffit de partager ce dossier complet, et tout fonctionnera sans 
+> modifier les chemins.*
+
+Dans vos TPs et projets, vous serez amenés à importer et exporter différents
+types de fichiers et objets :
+
+- **Fichiers de données** : csv, txt... avec `read.csv()`, `read.table()`.
+- **Fichiers résultats** : exporter vos données transformées avec `write.csv()`.
+- **Figures et graphiques** : sauvegarder vos graphiques avec `pdf()`, `png()`,
+  ou `ggsave()` pour les partager ou les inclure dans vos rapports.
+- **Objets R complets** : sauvegarder vos objets avec `save()` dans un fichier 
+  **.RData** (ou **.rda**) et les recharger avec `load()`.
+
+Ci-dessous un exemple combinant l’export d’un fichier **.csv**, d’un objet **.rda**, 
+d’un graphique en **.pdf**, puis leur réimportation.
+
+```{r, eval=FALSE}
+# Exemple de données
+df <- data.frame(x = 1:10, y = (1:10)^2)
+
+# Export CSV
+write.csv2(df, "Data.csv", row.names = FALSE)
+
+# Sauvegarde de l'objet R
+save(df, file = "Data.rda")
+
+# Export graphique en PDF
+pdf("Figure1.pdf")
+plot(df$x, df$y,
+     xlab = "x", ylab = "y", col = "steelblue3", pch = 19,
+     main = "Exemple d'export")
+dev.off()
+
+# Import du CSV
+df_csv <- read.csv2("Data.csv")
+
+# Import de l'objet R sauvegardé
+load("Data.rda") # recharge l'objet df
+```
+
+## Les librairies
+
+R propose de nombreuses fonctionnalités de base, mais souvent vous aurez 
+besoin de fonctionnalités supplémentaires pour vos analyses, graphiques, 
+ou manipulations de données. Ces fonctionnalités sont fournies par des 
+**packages** (ou librairies) que vous pouvez installer et utiliser.
+
+L’**installation** d’un package se fait une seule fois sur votre ordinateur dans un 
+dossier dédié. Elle rend le package disponible "définitivement" pour toutes 
+vos futures sessions R. Ci-dessous un exemple d'installation des packages 
+**sf** [[@Pebesma2023]](#refs), 
+**TDLM** [[@Lenormand2023]](#refs) et 
+**bioregion** [[@Denelle2025]](#refs) 
+que nous utiliserons dans les différents TPs.
+
+```{r, eval=FALSE}
+install.packages("sf")
+install.packages("TDLM")
+install.packages("bioregion")
+```
+
+> *<u>Remarque :</u> vous n'avez pas besoin de réinstaller un package à chaque fois 
+> que vous en avez besoin.*
+
+Le **chargement** d’un package se fait à chaque fois que vous voulez utiliser 
+ses fonctions. Le chargement rend le package temporairement disponible dans la 
+session R en cours. Ci-dessous un exemple de chargement des packages dont vous
+avez besoin à mettre en début de script.
+
+```{r, eval=FALSE}
+# Charger les packages
+library(sf)
+library(TDLM)
+library(bioregion)
+```
+
+Pour résumer :
+
+- **Installation** : une seule fois, définit le package sur l’ordinateur.  
+- **Chargement** : à chaque session ou script, rend le package actif.
+
+R dispose d’une aide en ligne très complète pour toutes ses fonctions et packages :
+
+- `help()` ou `?` : affiche la documentation d’une fonction  
+
+```{r, eval=FALSE}
+?mean
+help(plot)
+```
+
+## Types et objets de base
+
+R propose différents types de données et objets pour stocker et manipuler
+vos informations. Comprendre ces types et objets est essentiel pour travailler 
+efficacement et éviter les erreurs dans vos analyses.
+
+Ci-dessous les principaux types de données, stockés dans différentes variables. 
+
+```{r, eval=FALSE}
+# Numérique
+x <- 42
+y <- 3.14
+
+# Caractère
+nom <- "Alice"
+
+# Logique
+test <- TRUE
+```
+
+On assigne une valeur avec `<-` ou `=`.
+
+> *`<-` est l’opérateur standard d’assignation en R,
+>  tandis que `=` fonctionne aussi mais est souvent utilisé dans les arguments
+>  de fonctions. Il est recommandé d’utiliser `<-` pour créer ou modifier des
+>  objets dans vos scripts.*
+
+Ci-dessous les principaux objets.
+
+```{r, eval=FALSE}
+# Vecteurs
+num <- c(1, 2, 3, 4)
+char <- c("A", "B", "C")
+log <- c(TRUE, FALSE, TRUE)
+
+# Matrices
+m <- matrix(1:9, nrow = 3, ncol = 3)
+
+# Liste
+liste <- list(numerique = num, caractere = char, matrice = m)
+
+# Data frame
+df <- data.frame(Nom = c("Alice","Bob"), Age = c(25,30))
+```
+
+Il est important de bien vérifier le type et la structure des objets 
+(`class(obj)` et `str(obj)`) et de nommer clairement vos objets pour savoir 
+ce qu’ils contiennent.
+
+## Manipulation des objets
+
+Une fois vos objets créés, vous allez souvent vouloir les **modifier**, les 
+**enrichir**, les **filtrer** ou bien les **résumer**. R propose différentes 
+méthodes pour y parvenir.
+
+On peut remplacer des éléments dans un vecteur, une matrice ou un data frame.
+
+```{r, eval=FALSE}
+v <- c(1, 2, 3, 4, 5)
+v[2] <- 10        # Remplace le 2ème élément
+v[v > 3] <- 99    # Remplace tous les éléments supérieurs à 3
+v
+```
+
+Pour les matrices, on accède aux lignes et colonnes avec `[ligne, colonne]`.
+On peut aussi utiliser des **conditions logiques** pour sélectionner des
+éléments.
+
+```{r, eval=FALSE}
+m <- matrix(1:9, nrow = 3, ncol = 3)
+m[1, ]               # 1ère ligne
+m[, 2]               # 2ème colonne
+m[m > 5]             # Eléments supérieurs à 5
+m[m %% 2 == 0] <- 0  # Remplace les nombres pairs par 0
+m
+```
+
+On peut également combiner des matrices ou ajouter des lignes/colonnes
+supplémentaires avec `cbind()` et `rbind()`.
+
+```{r, eval=FALSE}
+# Ajouter une colonne ou ligne
+m2 <- cbind(m, nouvelle_colonne = 1:3)
+m3 <- rbind(m2, nouvelle_ligne = c(10, 11, 12, 13))
+m3
+```
+
+
+Avec `apply()`, on applique une fonction sur chaque ligne ou colonne d’une  
+matrice. L’argument `1` signifie ligne et `2` signifie colonne.
+
+```{r, eval=FALSE}
+m <- matrix(1:9, nrow = 3, ncol = 3)
+apply(m, 1, sum)   # Somme par ligne
+apply(m, 2, mean)  # Moyenne par colonne
+```
+
+Les data frames peuvent être manipulés comme les matrices, mais avec des noms
+de colonnes et des types différents.
+
+```{r, eval=FALSE}
+df <- data.frame(Nom = c("Alice", "Bob", "Charlie"),
+                 Age = c(25, 30, 35),
+                 Genre = c("F", "M", "M"))
+df$Age                  # Colonne Age
+df[df$Genre == "M", ]     # Lignes où Genre est "M"
+df[df$Age > 28, "Nom"]  # Noms des personnes de plus de 28 ans
+```
+
+On peut également utiliser `cbind()` et `rbind()` pour ajouter des colonnes
+ou lignes dans un data frame.
+
+```{r, eval=FALSE}
+# Ajouter une colonne ou ligne
+df2 <- cbind(df, Ville = c("Paris", "Lyon", "Marseille"))
+df3 <- rbind(df2, data.frame(Nom = "Diane", 
+                             Age = 40, 
+                             Genre = "F", 
+                             Ville = "Toulouse"))
+df3
+```
+
+Je vous recommande d'utilisez toujours `dim()` pour vérifier la taille d’une 
+matrice ou data frame. Vous pouvez également utiliser  `head()` et `tail()` pour
+avoir un aperçu des données et `summary()` pour 
+résumer vos données rapidement. 
+
+```{r, eval=FALSE}
+head(df, 2)
+tail(df, 2)
+summary(df)
+```
+
+R permet également de **résumer ou agréger** les données par groupes ou conditions.
+
+```{r, eval=FALSE}
+aggregate(Age ~ Genre, data = df, FUN = mean) # Moyenne d'âge par genre
+aggregate(Age ~ Genre, data = df, FUN = sum)  # Somme ou autres fonctions
+```
+
+## Fonctions en R
+
+Les fonctions sont des blocs de code que vous pouvez **réutiliser** avec des
+arguments différents. Elles permettent d’automatiser et d’organiser vos
+calculs.
+
+On peut créer une fonction simple avec `function()`. Voici un exemple pour
+calculer le carré d’un nombre.
+
+```{r, eval=FALSE}
+carre <- function(x) {
+  x2 <- x*x    # Calcul le carré de x
+  return(x2)   # Retourne le carré de x
+}
+
+carre(4)  # 16
+carre(10) # 100
+```
+
+Les fonctions peuvent avoir **plusieurs arguments** avec des valeurs par défaut.
+
+```{r, eval=FALSE}
+addition <- function(a, b = 5) {
+  sumab <-a + b   # Calcul la somme de a et b
+  return(sumab)   # Retourne le résultat
+}
+
+addition(3, 4)  # 7
+addition(3)     # 8, car b=5 par défaut
+```
+
+On peut aussi créer des fonctions qui retournent **plusieurs valeurs** via une
+liste.
+
+```{r, eval=FALSE}
+statistiques <- function(x) {
+  moy <- mean(x)    # Moyenne de x
+  med <- median(x)  # Médiane de x
+  
+  L <- list(moyenne=moy, mediane=med) # Créer une liste avec moy et med
+  
+  return(L) # Retourne L
+}
+
+statistiques(c(1, 2, 3, 4, 5))
+```
+
+Il est souvent utile de combiner les fonctions avec des **conditions** et des
+**boucles** pour automatiser des tâches plus complexes.
+
+```{r, eval=FALSE}
+analyse_vecteur <- function(v) {
+  if (length(v) == 0) {
+    return(NULL)
+  }
+  v[v > mean(v)]  # Retourne les éléments supérieurs à la moyenne
+}
+
+analyse_vecteur(c(1, 2, 3, 4, 5))
+```
+
+Enfin, vous pouvez **enchaîner plusieurs fonctions** pour créer des analyses
+complètes et modulaires.
+
+```{r, eval=FALSE}
+ma_fonction <- function(x) {
+  x2 <- carre(x)     # Carré de x
+  x2p10 <- x2 + 10   # Ajoute 10
+  return(x2p10)      # Retourne le résultat
+}
+
+ma_fonction(3)  # (3^2) + 10 = 19
+```
+
+Pour organiser votre travail, il est souvent 
+pratique de **mettre vos fonctions dans un script séparé**. Vous pouvez ensuite 
+les **charger dans votre session** avec `source()`.
+
+```{r, eval=FALSE}
+source("Mes_fonctions.R")  # Charge toutes les fonctions du script
+
+carre(5)          # Utilise la fonction carre définie dans le script
+addition(2, 3)    # Utilise la fonction addition définie dans le script
+```
+
+## Visualisation avec R
+
+R permet de créer rapidement des graphiques pour explorer vos données.
+Voici quelques fonctions de base pour visualiser vos données.
+
+Avec des graphiques de dispersion
+
+```{r, eval=FALSE}
+x <- 1:10
+y <- x^2
+
+plot(x, y, main = "Graphique de dispersion",
+     xlab = "X", ylab = "Y", col = "steelblue3", pch = 19)
+```
+
+Vous pouvez personnaliser les couleurs, les types de points (`pch`) et ajouter
+un titre (`main`) ainsi que des labels pour les axes (`xlab`, `ylab`). Vous 
+pouvez également utiliser le package **ggplot2** [[@Wickham2016]](#refs), de 
+nombreux exemples et tutos son disponible en ligne.
+
+Pour visualiser la **répartition d’une variable**, on utilise `hist()`.
+
+```{r, eval=FALSE}
+v <- c(2, 3, 3, 5, 7, 8, 8, 8, 9, 10)
+
+hist(v, breaks = 5, col = "orange", border = "black",
+     main = "Histogramme de v", xlab = "Valeurs", ylab = "Fréquence")
+```
+
+Pour visualiser **la médiane et la dispersion**, on utilise `boxplot()`.
+
+```{r, eval=FALSE}
+df <- data.frame(Groupe=c("A", "A", "B", "B", "B", "C", "C", "C", "C"),
+                 Valeur=c(5, 6, 7, 5, 6, 8, 9, 7, 6))
+
+boxplot(Valeur ~ Groupe, data = df, col = "lightblue",
+        main = "Boxplot par groupe", xlab = "Groupe", ylab = "Valeur")
+```
+
+Comment mentionné plus haut R permet d’exporter vos graphiques pour les partager 
+ou les intégrer dans des rapports. Voici comment créer un fichier PDF contenant 
+un graphique.
+
+```{r, eval=FALSE}
+pdf("Figure2.pdf", width=7, height=5)
+
+  plot(x, y, main = "Graphique exporté en PDF",
+       xlab = "X", ylab = "Y", col = "#CC6666", pch = 19)
+  
+dev.off()
+```
+
+Le fichier `Figure2.pdf` sera créé dans le répertoire de travail actuel.
+
+## Exercice
+
+Dans cet exercice, vous allez créer vos propres fonctions dans un script 
+séparé, puis les utiliser pour analyser et visualiser des données.
+
+1. Créez un fichier **Mes_fonctions.R** dans votre répertoire de travail.  
+2. Dans ce fichier, écrivez deux fonctions :  
+   - `resumer_vecteur(x)` : retourne min, max, moyenne, médiane et variance.
+   - `remplacer_vecteur(x)` : remplace les valeurs supérieures à la moyenne par 100.
+3. Dans **TP1.R** :  
+   - Chargez les packages **sf**.
+   - Définissez votre répertoire de travail.
+   - Importez vos fonctions depuis **Mes_fonctions.R** avec `source()`.
+   - Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction `sample()`).
+   - Appliquez les fonctions au vecteur.
+   - Créez un histogramme et un boxplot du vecteur modifié.
+   - Exportez les graphiques dans un fichier **Figure3.pdf**.
+  
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# --------------------------
+# Contenu de Mes_fonctions.R
+# --------------------------
+
+resumer_vecteur <- function(x) {
+  
+  # Création d'une liste nommée contenant plusieurs mesures statistiques
+  L <- list(
+    minimum = min(x),     # Valeur la plus petite du vecteur x
+    maximum = max(x),     # Valeur la plus grande du vecteur x
+    moyenne = mean(x),    # Moyenne arithmétique de x
+    mediane = median(x),  # Médiane de x (milieu de la distribution)
+    variance = var(x)     # Variance de x (dispersion)
+  )
+  
+  return(L)  # Renvoie la liste contenant les résumés statistiques
+}
+
+remplacer_vecteur <- function(x) {
+  
+  # Remplace toutes les valeurs strictement supérieures à la moyenne
+  # du vecteur x par la valeur 100
+  x[x > mean(x)] <- 100
+  
+  return(x)   # Renvoie le vecteur modifié
+}
+
+# --------------------------
+# Contenu de TP1.R
+# --------------------------
+
+# Charger le package
+library(sf)
+
+# Définir le répertoire de travail
+setwd("~/Desktop/TP1")  # Adapter selon votre ordinateur
+
+# Importer les fonctions depuis le script
+source("Mes_fonctions.R")
+
+# Créer un vecteur de 20 nombres aléatoires
+set.seed(123) # Pour la reproductibilité (?set.seed)
+v <- sample(1:100, 20, replace = TRUE)
+
+# Appliquer les fonctions
+resumer_vecteur(v)
+v_modifie <- remplacer_vecteur(v)
+v_modifie
+
+# Graphiques et export PDF
+pdf("Figure3.pdf", width = 8, height = 5)
+
+  par(mfrow = c(1,2))  # Deux graphiques côte à côte
+
+  hist(v_modifie, main = "Histogramme du vecteur modifié", col = "lightgreen",
+       xlab = "Valeurs", ylab = "Fréquence")
+  boxplot(v_modifie, main = "Boxplot du vecteur modifié", col = "lightblue")
+
+dev.off()
+```
+
+</details>
+
+---
+
+Si vous êtes en avance proposez une fonction `resumer_vecteur2()` qui 
+calcule manuellement la moyenne, la médiane et la variance d’un vecteur x 
+(c’est-à-dire sans utiliser les fonctions intégrées de R).
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+resumer_vecteur2 <- function(x) {
+  
+  # Nombre d'élément dans x
+  n <- length(x)
+  
+  # Minimum
+  minimum <- x[1]  # On initialise avec le premier élément
+  for (i in 2:n) {
+    if (x[i] < minimum) {
+      minimum <- x[i]
+    }
+  }
+  
+  # Maximum
+  maximum <- x[1]  # On initialise avec le premier élément
+  for (i in 2:n) {
+    if (x[i] > maximum) {
+      maximum <- x[i]
+    }
+  }
+  
+  # Moyenne
+  moyenne <- sum(x) / n
+  
+  # Médiane
+  x_sorted <- sort(x)
+  if (n %% 2 == 1) {
+    # Si impair : valeur centrale
+    mediane <- x_sorted[(n + 1) / 2]
+  } else {
+    # Si pair : moyenne des deux valeurs centrales
+    mediane <- mean(x_sorted[c(n / 2, n / 2 + 1)])
+  }
+  
+  # Variance
+  variance <- sum((x - moyenne)^2) / (n - 1) 
+  
+  # Résultat
+  L <- list(minimum = minimum,
+            maximum = maximum,
+            moyenne = moyenne,
+            mediane = mediane,
+            variance = variance)
+  return(L)
+}
+
+resumer_vecteur(v)
+
+resumer_vecteur2(v)
+```
+
+</details>
+
+---
+
+## Géomatique avec R
+
+Nous allons à présent nous intéresser plus spécifiquement à la manipulation de 
+données vectorielles avec R en nous appuyant sur le package 
+[sf](https://r-spatial.github.io/sf/index.html).
+
+> *Cette section s'inspire du manuel 
+> [Géomatique et cartographie avec R](https://rgeocarto.github.io/) 
+> [[@Giraud2025]](#refs)
+> proposé par [Timothée Giraud](https://rcarto.github.io/) et
+> [Hugues Pecout](https://orcid.org/0000-0002-0246-0954). N'hésitez pas à 
+> parcourir ce manuel pour aller plus loin.*
+
+### Bars et restaurants à Montpellier
+
+Nous allons commencer par importer le fichier [data.gpkg](./data/tp1/data.gpkg). 
+Ce fichier contient deux couches, **bars** et **quartiers**, que nous allons 
+importer avec la fonction `st_read()` de 
+[sf](https://r-spatial.github.io/sf/index.html). 
+
+```{r, eval=FALSE}
+# Import de la couche bars
+bars <- st_read("data.gpkg", layer = "bars")
+bars
+
+# Import de la couche quartiers
+quartiers <- st_read("data.gpkg", layer = "quartiers")
+quartiers
+
+# Aperçu de la classe
+class(bars)
+
+# Lister les couches avec st_layers
+st_layers("data.gpkg")
+```
+
+> *Le format geopackage permet de stocker plusieurs couches dans un même fichier
+> dont vous pouvez avoir un aperçu avec la fonction `st_layers()`.*
+
+### Exploration et visualisation
+
+Les objets **sf** étant des data.frames nous pouvons utiliser les fonctions 
+`head()` (ou `tail()`) et `summary()` pour les explorer.
+
+```{r, eval=FALSE}
+# Les dix premiers éléments de bars
+head(bars, 10)
+
+# Un résumer des variables de bars
+summary(bars)
+
+# Pareil pour quartiers
+head(quartiers, 10)
+
+summary(quartiers)
+```
+
+Il est également possible de transformer un objet **sf** en simple data.frame 
+en supprimant la gémométrie avec la fonction `st_drop_geometry()`.
+
+```{r, eval=FALSE}
+bars_df <- st_drop_geometry(bars)
+```
+
+La manière la plus simple de visualiser un objet **sf** est d'utiliser la 
+fonction `plot()`,
+
+```{r, eval=FALSE}
+plot(bars)
+```
+
+avec la possiblité d'afficher une seule variable,
+
+```{r, eval=FALSE}
+plot(bars["Type"])
+```
+
+ou bien seulement la géométrie.
+
+```{r, eval=FALSE}
+plot(st_geometry(quartiers), col = "ivory4", border = "ivory")
+```
+
+### Opérations sur les géométries
+
+Il existe de nombreuses opérations pour manipuler les géométries avec le package 
+[sf](https://r-spatial.github.io/sf/index.html). Dans cette section, nous allons 
+découvrir quelques-unes des fonctions les plus utiles.
+
+Commençons par extraire les centroïdes de **quartiers**,
+
+```{r, eval=FALSE}
+quartiers_c <- st_centroid(quartiers)
+```
+
+que nous pouvons ensuite visualiser avec `plot()`.
+
+```{r, eval=FALSE}
+plot(st_geometry(quartiers), col = "ivory4", border = "ivory")
+plot(st_geometry(quartiers_c), col = "steelblue3", pch = 16, add = TRUE)
+```
+
+> * `st_centroid()` calcule le centroïde géométrique qui peut 
+> parfois se situer en dehors du polygone si celui-ci est concave.*
+
+On peut également agréger les quartiers avec la fonction `st_union()`.
+
+```{r, eval=FALSE}
+all <- st_union(quartiers)
+
+plot(st_geometry(quartiers), col = "ivory4", border = "ivory")
+plot(st_geometry(all), col = NA, border = "#CC6666", lwd = 3, add = TRUE)
+```
+
+Il est aussi possible d'utiliser la fonction `st_intersects()` qui nous 
+permet d'identifier les intersections entre quartiers et bars/restaurants.
+
+```{r, eval=FALSE}
+inter <- st_intersects(quartiers, bars, sparse = FALSE)
+```
+
+Finalement, vous pouvez créer une zone tampons autour du premier bar,
+
+```{r, eval=FALSE}
+zone <- st_buffer(st_geometry(bars)[1], 1000)
+```
+
+que vous pouvez visualiser sur la couche **quartiers**,
+
+```{r, eval=FALSE}
+plot(st_geometry(quartiers), col = "ivory4", border = "ivory")
+plot(st_geometry(zone), col = NA, border = "#CC6666", lwd = 3, add = TRUE)
+```
+
+puis réaliser une intersection des deux couches avec la fonction 
+`st_intersection()`.
+
+```{r, eval=FALSE}
+quartiers_z <- st_intersection(quartiers, zone)
+
+plot(st_geometry(quartiers_z), col = "ivory4", border = "ivory")
+```
+
+### Exercices
+
+**1.** Comptez le nombre de bars et restaurants en utilisant la fonction 
+`table()`.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+table(bars$Type)
+```
+
+</details>
+
+---
+
+**2.** Afficher les quartiers et les bars/restaurants sur une même carte.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+plot(st_geometry(quartiers), col = "ivory4", border = "ivory")
+plot(st_geometry(bars), col = "steelblue3", pch = 16, add = TRUE)
+```
+
+</details>
+
+---
+
+**3.** Utiliser les fonctions `st_intersects()` et `apply()` pour compter le 
+nombre de bars/restaurants par quartier. Ajouter cette variable à l'objet 
+**quartiers** et visualiser le résulat avec `plot()`.
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+# Calcul des intersections entre les polygones (quartiers) et les points (bars). 
+inter <- st_intersects(quartiers, bars, sparse = FALSE)
+
+# Pour chaque quartier, on compte le nombre de bars grâce à apply().
+quartiers$Counts <- apply(inter, 1, sum)
+
+# Plot
+plot(quartiers["Counts"])
+```
+
+</details>
+
+## Introduction à R Shiny
+
+R Shiny permet de créer des **applications web interactives** directement depuis R. 
+Avec Shiny, vous pouvez rendre vos analyses et graphiques interactifs, sans 
+avoir besoin de connaissances en HTML, CSS ou JavaScript.
+
+Vous pouvez explorer quelques exemples avec différents rendus [ici](https://forge.inrae.fr/sk8/sk8-apps/mathnum/tetis/).
+
+### Structure d’une application Shiny
+
+Une application Shiny se compose généralement de deux parties principales :
+
+1. **UI (User Interface)** : définit l’apparence de l’application (boutons, 
+   graphiques, champs de saisie...).  
+2. **Server** : contient la logique et les calculs qui génèrent les résultats 
+   affichés dans l’UI.
+
+### Exemple minimal
+
+Installez le package **shiny**, créez un fichier **app.R** dans votre dossier 
+**TP1** et copiez-collez le code suivant :
+
+```{r, eval=FALSE}
+# Charger le package Shiny
+library(shiny)
+
+# Définir l'interface utilisateur (UI)
+ui <- fluidPage(
+  
+  # Titre affiché en haut de l'application
+  titlePanel("Mon premier Shiny"),
+  
+  # Mise en page avec une barre latérale + un panneau principal
+  sidebarLayout(
+    
+    # Barre latérale contenant les éléments d'entrée
+    sidebarPanel(
+      
+      # Curseur permettant de choisir un nombre entre 1 et 100
+      sliderInput(
+        inputId = "nombre",        # Nom de l'objet côté serveur
+        label = "Choisir un nombre :", 
+        min = 1, 
+        max = 100, 
+        value = 50                 # Valeur par défaut
+      )
+    ),
+    
+    # Zone principale où s'affiche le résultat
+    mainPanel(
+      # Sortie textuelle
+      textOutput("affichage")
+    )
+  )
+)
+
+# Définir la partie serveur : ce qui se passe quand l'utilisateur interagit
+server <- function(input, output) {
+  
+  # Création d'un texte dynamique en fonction de l'entrée "nombre"
+  output$affichage <- renderText({
+    paste("Le nombre choisi est :", input$nombre)
+  })
+}
+
+# Lancer l'application Shiny
+shinyApp(ui, server)
+```
+
+### Déployer l’application
+
+1. Ouvrez le fichier **app.R** dans RStudio.  
+2. Cliquez sur **Run App** en haut à droite de l’éditeur.  
+3. L’application s’ouvre dans le Viewer de RStudio ou dans votre navigateur.  
+
+> *Pour déployer votre application en ligne, vous pouvez utiliser 
+> [shinyapps.io](https://www.shinyapps.io/) ou un serveur Shiny propre. L’exemple 
+> ci-dessus fonctionne localement sur votre machine.*
+
+### Exercice
+
+Modifiez l’application existante pour qu’elle affiche un histogramme (avec 
+`renderPlot()`) basé sur un échantillon aléatoire (avec `sample()`) dont la 
+taille est déterminée par le slider.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+library(shiny)
+
+# Interface utilisateur
+ui <- fluidPage(
+  titlePanel("Histogramme"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("nombre",
+                  "Taille de l'échantillon :",
+                  min = 10, max = 1000, value = 100)
+    ),
+    
+    mainPanel(
+      textOutput("affichage"),
+      plotOutput("histo")   # Ajout de la zone pour le graphique
+    )
+  )
+)
+
+# Serveur
+server <- function(input, output) {
+  
+  # Affichage de la taille de l'échantillon
+  output$affichage <- renderText({
+    paste("Taille de l'échantillon :", input$nombre)
+  })
+  
+  # Histogramme 
+  output$histo <- renderPlot({
+    
+    x <- sample(1:10, input$nombre, replace = TRUE)
+    
+    hist(x,
+         breaks = seq(0.5, 10.5, by = 1),  # Barres centrées sur les entiers
+         main = "Histogramme",
+         xlab = "Valeurs de 1 à 10")
+  })
+}
+
+# Lancer l'application
+shinyApp(ui, server)
+
+```
+
+</details>
+
+---

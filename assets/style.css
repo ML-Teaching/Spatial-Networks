@@ -20,11 +20,23 @@ h1.title {
   margin-bottom: 1px;
 }
 
+/*
 p.author {
   font-size: 20px !important;
+  font-style: normal !important;
   #font-weight: bold;
   #text-align: center;
   margin-bottom: 1px;
+}
+*/
+
+/* Supprime l'italique sur le nom de l'auteur, quelle que soit la structure */
+p.author,
+p.author em,
+p.author span {
+  font-size: 20px !important;
+  font-style: normal !important;
+  font-weight: bold !important; 
 }
 
 .logo-link {
@@ -44,3 +56,4 @@ p.author {
   font-size: 1.2em;
   font-weight: bold;
 }
+

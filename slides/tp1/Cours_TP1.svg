@@ -4,7 +4,7 @@
 <svg
    id="svg2"
    version="1.1"
-   inkscape:version="1.4.2 (1:1.4.2+202505120737+ebf0e940d0)"
+   inkscape:version="1.4.3 (1:1.4.3+202512261035+0d15f75042)"
    xml:space="preserve"
    width="453.60001"
    height="340.20001"
@@ -629,12 +629,12 @@
      id="namedview4"
      showgrid="false"
      inkscape:zoom="1.6141471"
-     inkscape:cx="158.28793"
-     inkscape:cy="188.02499"
+     inkscape:cx="162.31482"
+     inkscape:cy="178.73216"
      inkscape:window-x="0"
      inkscape:window-y="32"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g5807"
+     inkscape:current-layer="g10"
      showborder="true"
      inkscape:showpageshadow="false"
      borderlayer="true"
@@ -645,6 +645,10 @@
        position="481.36877,311.08247"
        orientation="0,1"
        id="guide1728"
+       inkscape:locked="false" /><sodipodi:guide
+       position="240.6994,212.21454"
+       orientation="0,-1"
+       id="guide1"
        inkscape:locked="false" /></sodipodi:namedview><g
      id="g10"
      inkscape:groupmode="layer"
@@ -880,11 +884,11 @@
              id="g2-2"
              style="fill:#00a3a6;stroke:none"><polygon
                class="cls-19"
-               points="405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 "
+               points="292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 "
                id="polygon1"
                style="fill:#00a3a6;stroke:none" /><polygon
                class="cls-6"
-               points="292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 180.23,266.21 180.23,135.86 "
+               points="180.23,266.21 180.23,135.86 292.64,70.68 405.07,135.86 405.07,266.21 293.14,331.9 "
                id="polygon2"
                style="fill:#00a3a6;stroke:none;stroke-miterlimit:10" /></g></g><g
            id="g34"
@@ -1583,7 +1587,7 @@
          style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:22.2452px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Ultra-Bold';text-align:start;text-anchor:start;fill:#808080"
          id="flowPara64196-5">Rappel des concepts de base</flowPara></flowRoot><g
        id="g64188"
-       transform="matrix(0.8,0,0,-0.8,7.5978659,946.98369)"><path
+       transform="matrix(0.8,0,0,-0.8,7.5978659,924.58369)"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
          id="path4-5"
@@ -1612,7 +1616,7 @@
            y="943.34277"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.123px;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;stroke-width:0.917301">Les scripts (rédaction et compilation)</tspan></text></g><g
        id="g64188-2"
-       transform="matrix(0.8,0,0,-0.8,7.5978659,915.97493)"
+       transform="matrix(0.8,0,0,-0.8,7.5978659,893.57493)"
        style="display:inline"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
@@ -1642,7 +1646,7 @@
            y="943.34277"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.123px;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;stroke-width:0.917301">Les librairies (installation et importation)</tspan></text></g><g
        id="g64188-2-0"
-       transform="matrix(0.8,0,0,-0.8,7.5978659,886.18369)"
+       transform="matrix(0.8,0,0,-0.8,7.5978659,863.78369)"
        style="display:inline"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
@@ -1689,7 +1693,7 @@
          style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:22.2452px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Ultra-Bold';text-align:start;text-anchor:start;fill:#808080"
          id="flowPara64196-5-0">Objets dans R</flowPara></flowRoot><g
        id="g64188-6"
-       transform="translate(9.4973323,-843.5296)"
+       transform="translate(9.4973323,-815.5296)"
        style="display:inline"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
@@ -1719,7 +1723,7 @@
            y="943.34277"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.123px;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;stroke-width:0.917301">Les différents types d'objets</tspan></text></g><g
        id="g64188-2-4"
-       transform="translate(9.4973323,-804.76865)"
+       transform="translate(9.4973323,-776.76865)"
        style="display:inline"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
@@ -1749,7 +1753,7 @@
            y="943.34277"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.123px;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;stroke-width:0.917301">Comportements des objets</tspan></text></g><g
        id="g64188-2-0-6"
-       transform="translate(9.4973323,-767.5296)"
+       transform="translate(9.4973323,-739.5296)"
        style="display:inline"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
@@ -1796,7 +1800,7 @@
          style="font-style:normal;font-variant:normal;font-weight:800;font-stretch:normal;font-size:22.2452px;line-height:1.25;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Ultra-Bold';text-align:start;text-anchor:start;fill:#808080"
          id="flowPara1">Brève initiation à R Shiny</flowPara></flowRoot><g
        id="g2"
-       transform="translate(9.4973323,-843.5296)"
+       transform="translate(9.4973323,-815.5296)"
        style="display:inline"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
@@ -1826,7 +1830,7 @@
            y="943.34277"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.123px;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;stroke-width:0.917301">Les applications web interactives</tspan></text></g><g
        id="g3"
-       transform="translate(9.4973323,-804.76865)"
+       transform="translate(9.4973323,-776.76865)"
        style="display:inline"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
@@ -1856,7 +1860,7 @@
            y="943.34277"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.123px;font-family:'Futura LT';-inkscape-font-specification:'Futura LT';fill:#000000;stroke-width:0.917301">Structure et fonctionnement</tspan></text></g><g
        id="g4"
-       transform="translate(9.4973323,-767.5296)"
+       transform="translate(9.4973323,-739.5296)"
        style="display:inline"><path
          sodipodi:type="star"
          style="display:inline;fill:#00a3a6"
@@ -1930,7 +1934,7 @@
            id="path7-237"
            style="fill:#0078be" /><polygon
            class="st3"
-           points="2384.3,732.4 2287.7,676.6 1431.2,182 "
+           points="1431.2,182 2384.3,732.4 2287.7,676.6 "
            id="polygon7"
            style="fill:none" /></g></g><a
        id="a1-0"

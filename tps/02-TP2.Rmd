@@ -2,7 +2,9 @@
 
 Avant de commencer le TP, je vais vous présenter une introduction à la 
 modélisation des flux domicile-travail à l’aide des modèles d’interactions 
-spatiales, ainsi que le contenu du TP.
+spatiales, ainsi que le contenu du TP. Pour aller plus loin, ce TP et
+le package [TDLM](https://rtdlm.github.io/TDLM/) s’appuient sur les travaux 
+présentés dans [@Lenormand2016](#refs).
 
 <div style="height:10px;">&nbsp;</div>
 
@@ -76,10 +78,10 @@ dirigé et pondéré comme celui que nous étudions ici.
 
 Ce second format est souvent appelé **edge list** (*liste d'arêtes*). Il est 
 très pratique pour l'analyse de réseaux, car il permet d'intégrer les flux dans 
-d'autres outils spécialisé dans l'analyse de graphe (comme **igraph** par 
-exemple).
+d'autres outils spécialisé dans l'analyse de graphe (comme le package **igraph**
+[[@Csardi2025]](#refs) par exemple).
 
-> *Particularité importante : les liens inexistants 
+> *<u>Particularité importante :</u> les liens inexistants 
 > (ou les flux nuls) ne sont généralement pas représentés. Autrement dit, 
 > seules les paires origine–destination où le flux est strictement positif 
 > apparaissent.*
@@ -101,14 +103,16 @@ Et inversement avec la fonction `net_to_mat()`.
 
 ```{r, eval=FALSE}
 # Conversion "réseau" -> matrice  
-mat_mtp2 <- net_to_mat(net_mtp, weight = TRUE, square = TRUE)
+mat_mtp <- net_to_mat(net_mtp, weight = TRUE, square = TRUE)
 
-mat_mtp2[1:10,1:10]
 mat_mtp[1:10,1:10]
+od_mtp[1:10,1:10]
 
-# Nombre total de paires et nombre de paires "nulles"
+# Nombre total de paires 
 length(mat_mtp)
-sum(mat_mtp==0)
+
+# Nombre de paires "non nulles"
+length(mat_mtp) - sum(mat_mtp==0)
 ```
 
 ### Statistiques de base
@@ -136,8 +140,8 @@ plot(mass_mtp$Population, mass_mtp$Out_Commuters,
      main="Population vs Flux sortants")
 
 # Vérifier que les flux sont cohérents
-sum(mass_mtp$Out_Commuters==apply(od_mtp, 1, sum))
-sum(mass_mtp$In_Commuters==apply(od_mtp, 2, sum))
+sum(mass_mtp$Out_Commuters == apply(od_mtp, 1, sum))
+sum(mass_mtp$In_Commuters == apply(od_mtp, 2, sum))
 ```
 
 ### Exercices
@@ -225,13 +229,12 @@ plot(mtp["ratio"], main="Ratio")
 
 ## Estimation des flux avec TDLM
 
-### Familiarisation avec TDLM
+### Préparation de données
 
 Nous allons commencer par préparer les données en formatant les masses 
 ($m_i$ et $m_j$) et les marges ($D_i$ et $D_j$).
 
 ```{r, eval=FALSE}
-# Préparons les données d'entrées
 mi <- mass_mtp$Population
 names(mi) <- rownames(mass_mtp)
 
@@ -245,133 +248,170 @@ Dj <- mass_mtp$In_Commuters
 names(Dj) <- rownames(mass_mtp)
 ```
 
-Nous allons ensuite estimer les flux à l'aide d'une loi gravitaire 
-exponentielle (`law = "NGravExp"`) avec un modèle doublement contraint 
+**mi** et **mj** vont nous permettre d’estimer les probabilités de déplacement 
+à partir d’une loi (de **gravité** ou de **radiation**), tandis que **Oi** et 
+**Dj** vont nous permettre de générer les flux à partir de cette loi à l’aide 
+d’un **modèle doublement contraint**.
+
+La loi de **gravité** ou loi **gravitaire** se base sur la distance entre deux 
+communes (**distance_mtp**) pour estimer le coût de déplacement, contrairement 
+à la loi de **radiation**, qui se base sur le nombre d’opportunités entre 
+celles-ci (**opportunity_mtp**, que nous calculerons plus tard). Dans les deux 
+cas, il y a un paramètre à calibrer pour ajuster l’effet du coût. 
+
+> *Dans ce TP, les paramètres ont déjà été calibrés, mais vous pourrez
+> tester différentes valeurs si vous êtes en avance.*
+
+Le **modèle doublement contraint** a été choisi pour comparer les lois de 
+manière transparente. Ce modèle permet de générer les flux à partir d'une loi en 
+respectant les marges (**Oi** et **Dj**). 
+
+> *Il s'agit du modèle le plus performant car il contraint les deux types de 
+> marge en même temps, mais n'hésitez pas à tester d'autres modèles si vous êtes 
+> en avance.*
+
+Il est important de noter que lee processus de génération des flux est 
+stochastique (i.e. tirage aléatoire).
+
+> *Dans ce TP, nous générerons qu'une seule matrice mais vous pouvez comparer 
+> plusieurs tirages aléatoires si vous êtes en avance.*
+
+### La loi gravitaire
+
+Nous allons ici utiliser la loi **gravitaire 
+exponentielle** (`law = "NGravExp"`) avec un **modèle doublement contraint** 
 (`model = "DCM"`). 
 
+> *Il existe plusieurs types de lois gravitaires implémentées dans TDLM, 
+> nous ne rentrerons pas dans le détail ici mais n'hésitez pas à jouer avec les 
+> différentes lois et modèles.*
+
+La fonction `run_law_model()` ci-dessous permet de générer une matrice 
+**od_grav**. 
+
 ```{r, eval=FALSE}
-# Loi gravitaire exponentielle avec un modèle doublement contraint
-od_sim <- run_law_model(law = "NGravExp", 
-                        mass_origin = mi, 
-                        mass_destination = mj, 
-                        distance = distance_mtp, 
-                        opportunity = NULL,
-                        param = 0.01,
-                        write_proba = TRUE,
+od_grav <- run_law_model(law = "NGravExp", 
+                             mass_origin = mi, 
+                             mass_destination = mj, 
+                             distance = distance_mtp, 
+                             opportunity = NULL,
+                             param = 0.126,
                         
-                        model = "DCM", 
-                        nb_trips = NULL, 
-                        out_trips = Oi, 
-                        in_trips = Dj,
-                        average = FALSE, 
-                        nbrep = 3,
-                        
-                        check_names = TRUE)
+                             model = "DCM", 
+                             out_trips = Oi, 
+                             in_trips = Dj,
+                             nbrep = 1,
+                         
+                             check_names = TRUE)
+
+od_grav <- od_grav$replication_1
 ```
 
-Nous pouvons faire une comparaison rapide pour comprendre les résultats.
+Nous pouvons faire une comparaison rapide entre la matrice observée **od_mtp** 
+et la matrice simulée **od_grav** pour comprendre les résultats.
 
 ```{r, eval=FALSE}
-# Comparaison rapide des flux simulés et observés
-od_sim$replication_1[1:10,1:10]
-od_sim$replication_2[1:10,1:10]
-od_sim$replication_3[1:10,1:10]
+od_grav[1:10,1:10]
 od_mtp[1:10,1:10]
 ```
 
 Pour aller plus loin, la fonction `gof()` (*goodness-of-fit*) permet de 
-calculer plusieurs indicateurs pour comparer les matrices simulées à la 
-matrice observée.
+calculer plusieurs indicateurs pour comparer la matrice simulée à la 
+matrice observée. Nous nous concentrerons ici sur le proportion de navetteurs
+en commun (`measures = "CPC"`), calculant comme son nom l'indique la proportion
+d'information en commun entre la matrice observée et la matrice simulée. Cet
+indicateur est compris entre 0 et 1. Une valeur de 0 signifie qu'il n'y a aucun
+navetteur en commun entre les deux matrices. Une valeur de 1 siginifie que les
+deux matrices sont identiques.
 
 ```{r, eval=FALSE}
-# Goodness-of-fit entre flux simulés et observés
-gof(od_sim, od_mtp,
-    measures = "all",
-    distance = distance_mtp)
+gof(od_grav, od_mtp,
+    measures = "CPC")
 ```
 
 Vous pouvez également comparer les distances moyennes simulées à la distance 
 moyenne observée à l'aide de votre fonction ou du code ci-dessous.
 
 ```{r, eval=FALSE}
-d_mean_1 <- sum(od_sim$replication_1 * distance_mtp) / sum(od_sim$replication_1)
-d_mean_1
-
-d_mean_2 <- sum(od_sim$replication_2 * distance_mtp) / sum(od_sim$replication_1)
-d_mean_2
-
-d_mean_3 <- sum(od_sim$replication_3 * distance_mtp) / sum(od_sim$replication_1)
-d_mean_3
+d_mean_grav <- sum(od_grav * distance_mtp) / sum(od_grav)
+d_mean_grav
 
 d_mean_obs <- sum(od_mtp * distance_mtp) / sum(od_mtp)
 d_mean_obs
 ```
 
-### Calibration de paramètre
+### La loi de radiation
 
-Nous avons observé que notre modèle tendait à **surestimer la distance moyenne
-de navettage**. Cela signifie que la valeur du paramètre $\beta$, qui contrôle
-l’effet de la distance dans la loi gravitaire est probablement **trop faible**.
+Nous allons utiliser maintenant la loi de **radiation étendue** 
+(`law = "RadExt"`) avec un **modèle doublement contraint** (`model = "DCM"`). 
 
-Pour améliorer l’ajustement, nous allons tester plusieurs valeurs de $\beta$
-afin d'évaluer la qualité des ajustements via différents indicateurs de
-*goodness-of-fit* et de comparer la distance moyenne simulée avec celle
-observée.
+> *Il existe plusieurs types de lois de radiation implémentées dans TDLM, nous 
+> ne rentrerons pas dans le détail ici mais n'hésitez pas à jouer avec les 
+> différentes lois et modèles.*
+
+Nous allons avoir besoin ici du nombre d'opportunités entre les origines et
+destinations pour estimer la matrice de coût utilisée dans les lois de radiation. 
+Nous nous baserons sur la population (i.e. $m_i$) en utilisant la fonction 
+`extract_opportunities()`.
 
 ```{r, eval=FALSE}
-# Loi gravitaire exponentielle avec un modèle doublement contraint
-od_sim <- run_law_model(law = "NGravExp", 
+opportunity_mtp <- extract_opportunities(opportunity = mi,
+                                         distance = distance_mtp,
+                                         check_names = TRUE)
+```
+
+La fonction `run_law_model()` ci-dessous permet de générer une matrice 
+**od_rad**. 
+
+```{r, eval=FALSE}
+od_rad <- run_law_model(law = "RadExt", 
                         mass_origin = mi, 
                         mass_destination = mj, 
-                        distance = distance_mtp, 
-                        opportunity = NULL,
-                        param = c(0.01, 0.05, 0.1, 0.2),  # Valeurs testées pour β
-                        write_proba = TRUE,
-                        
+                        distance = NULL, 
+                        opportunity = opportunity_mtp,
+                        param = 0.127,
+                            
                         model = "DCM", 
-                        nb_trips = NULL, 
                         out_trips = Oi, 
                         in_trips = Dj,
-                        average = FALSE, 
                         nbrep = 1,
-                        
+                         
                         check_names = TRUE)
+
+od_rad <- od_rad$replication_1
 ```
 
+Nous pouvons faire une comparaison rapide pour comprendre les résultats.
+
 ```{r, eval=FALSE}
-# Comparaison entre flux simulés et flux observés
-gof(od_sim, od_mtp,
-    measures = "all",
-    distance = distance_mtp)
+od_rad[1:10,1:10]
+od_mtp[1:10,1:10]
 ```
 
+Ici aussi, vous pouvez utiliser la fonction `gof()` (*goodness-of-fit*) pour 
+comparer la matrice simulée et la matrice observée.
+
 ```{r, eval=FALSE}
-# Calcul de la distance moyenne pour chaque paramètre β testé
-d_mean_1 <- sum(od_sim$parameter_1$replication_1 * distance_mtp) / 
-            sum(od_sim$parameter_1$replication_1)
-d_mean_1
+gof(od_rad, od_mtp,
+    measures = "CPC")
+```
 
-d_mean_2 <- sum(od_sim$parameter_2$replication_1 * distance_mtp) / 
-            sum(od_sim$parameter_2$replication_1)
-d_mean_2
+Vous pouvez également comparer les distances moyennes simulées à la distance 
+moyenne observée à l'aide de votre fonction ou du code ci-dessous.
 
-d_mean_3 <- sum(od_sim$parameter_3$replication_1 * distance_mtp) / 
-            sum(od_sim$parameter_3$replication_1)
-d_mean_3
+```{r, eval=FALSE}
+d_mean_rad <- sum(od_rad * distance_mtp) / sum(od_rad)
+d_mean_rad
 
-d_mean_4 <- sum(od_sim$parameter_4$replication_1 * distance_mtp) / 
-            sum(od_sim$parameter_4$replication_1)
-d_mean_4
-
-# Distance observée
 d_mean_obs <- sum(od_mtp * distance_mtp) / sum(od_mtp)
 d_mean_obs
 ```
 
 ### Exercices
 
-**1.** Trouver la valeur optimale du paramètre (selon le CPC) arrondie à trois 
-chiffres après la virgule.
+**1.** Utilisez la fonction `cor()` pour calculer le coefficient de corrélation 
+de Pearson entre les distances et nombres d'opportunités entre origines et 
+destination. Visualisez le nuage de points avec la fonction `plot()`
 
 ---
 
@@ -379,36 +419,19 @@ chiffres après la virgule.
 <summary>Solution (cliquer pour afficher)</summary>
 
 ```{r, eval=FALSE}
-# Loi gravitaire exponentielle avec un modèle doublement contraint
-od_sim <- run_law_model(law = "NGravExp", 
-                        mass_origin = mi, 
-                        mass_destination = mj, 
-                        distance = distance_mtp, 
-                        opportunity = NULL,
-                        param = c(0.124, 0.125, 0.126, 0.127, 0.128, 0.129),
-                        write_proba = TRUE,
-                        
-                        model = "DCM", 
-                        nb_trips = NULL, 
-                        out_trips = Oi, 
-                        in_trips = Dj,
-                        average = FALSE, 
-                        nbrep = 1,
-                        
-                        check_names = TRUE)
+dist <- as.numeric(distance_mtp)
+opp <- as.numeric(opportunity_mtp)
+cor(dist, opp)
 
-gof(od_sim, od_mtp,
-    measures = "all",
-    distance = distance_mtp)
+plot(dist, opp, pch=16, col="steelblue3", cex=0.1)
 ```
 
 </details>
 
 ---
 
-**2.** Utiliser la fonction `extract_opportunities()` pour calculer le nombre 
-d'opportunités entre les origines et destinations en vous basant sur la 
-population (i.e. $m_i$).
+**2.** Utiliser la fonction `run_law_model()` avec la loi uniforme 
+(`law = "Unif"`) pour générer une matrice de référence.
 
 ---
 
@@ -416,53 +439,43 @@ population (i.e. $m_i$).
 <summary>Solution (cliquer pour afficher)</summary>
 
 ```{r, eval=FALSE}
-# Calcule du nombre d'opportunités
-opportunity_mtp <- extract_opportunities(opportunity = mi,
-                                         distance = distance_mtp,
-                                         check_names = TRUE)
-```
-
-</details>
-
----
-
-**3.** Chercher le paramètre optimal (selon le CPC) de la loi radiative 
-(`law = "RadExt"`).
-
----
-
-<details>
-<summary>Solution (cliquer pour afficher)</summary>
-
-```{r, eval=FALSE}
-# Loi radiative avec un modèle doublement contraint
-od_sim_rad <- run_law_model(law = "RadExt", 
-                            mass_origin = mi, 
-                            mass_destination = mj, 
-                            distance = NULL, 
-                            opportunity = opportunity_mtp,
-                            param = c(0.126, 0.127, 0.128, 0.129),  
-                            write_proba = TRUE,
+od_unif <- run_law_model(law = "Unif",
+                         mass_origin = mi, 
                             
-                            model = "DCM", 
-                            nb_trips = NULL, 
-                            out_trips = Oi, 
-                            in_trips = Dj,
-                            average = FALSE, 
-                            nbrep = 1,
-                            
-                            check_names = TRUE)
+                         model = "DCM", 
+                         out_trips = Oi, 
+                         in_trips = Dj,
+                         nbrep = 1,
+                         
+                         check_names = TRUE)
 
-gof(od_sim_rad, od_mtp,
-    measures = "all",
-    distance = distance_mtp)
+od_unif <- od_unif$replication_1
 ```
 
 </details>
 
 ---
 
-**4.** Quelle est la meilleure loi sur ce cas d'étude : gravitaire ou radiative ?
+**3.** Utiliser la fonction `gof()` avec une `list()` pour comparer le CPC 
+entre **od_grav**, **od_rad** et **od_unif** (calculer précédemment) et 
+**od_mtp**.
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+```{r, eval=FALSE}
+gof(list(od_grav = od_grav, od_rad = od_rad, od_unif = od_unif), 
+    od_mtp,
+    measures = "CPC")
+```
+
+</details>
+
+---
+
+**4.** Quelle est la meilleure loi sur ce cas d'étude : gravitaire ou radiation ?
 
 ## Flux et itinéraires
 
@@ -471,14 +484,13 @@ et je vais vous proposer une façon simple de calculer rapidement des itinérair
 
 ### Identifier les flux
 
-Commençons par mettre nos matrices origine-destination observées et simulées
-sous un format "réseaux" (i.e. trois colonnes) à l'aide de la fonction 
-`mat_to_net()` du package **bioregion**.
+Commençons par mettre nos matrices origine-destination observée et simulée 
+(la meilleure des trois) sous un format "réseaux" (i.e. trois colonnes) à l'aide 
+de la fonction `mat_to_net()` du package **bioregion**.
 
 ```{r, eval=FALSE}
-# Conversion des matrices en format "réseau"
 net_obs <- mat_to_net(od_mtp, weight=TRUE)
-net_sim <- mat_to_net(od_sim$parameter_2$replication_1, weight=TRUE)
+net_sim <- mat_to_net(od_grav, weight=TRUE)
 ```
 
 Nous pouvons ensuite les trier par ordre décroissant de taille de flux et 
@@ -509,7 +521,8 @@ pouvez placer dans votre répertoire de travail et importer avec la commande
 `load()` comme vu lors du premier TP.  
 
 Si cela vous intéresse, voici le bout de code que j'ai utilisé pour obtenir 
-**road** à l'aide des packages **dodgr** et **osmdata** :
+**road** à l'aide des packages **dodgr** [[@Padgham2019]](#refs) et 
+**osmdata** [[@Padgham2019]](#refs):
 
 ```{r, eval=FALSE}
 # Charger les packages
@@ -518,8 +531,8 @@ library(osmdata)
 
 # Charger, filtrer, pondérer et simplifier le réseau routier
 road_dl <- dodgr_streetnet(getbb("Montpellier, France"), quiet = TRUE)
-road <- road_dl[road_dl$highway %in% c("motorway","trunk","primary",
-                                       "secondary","tertiary","residential"), ]
+road <- road_dl[road_dl$highway %in% c("motorway", "trunk", "primary",
+                                       "secondary", "tertiary", "residential"),]
 road <- weight_streetnet(road, wt_profile = "motorcar")
 road <- dodgr_contract_graph(road)
 
@@ -646,3 +659,23 @@ les couleurs dans **style.css**.
 Ces ajustements simples vous aideront à mieux comprendre l’articulation des 
 différents fichiers et à prendre en main la structure d’une application Shiny 
 plus avancée.
+
+### Exercice 
+
+Si vous êtes en avance essayez d'ajouter la variable 
+[**Ratio**](https://ml-teaching.github.io/Spatial-Networks/tp2.html#exercices)
+dans la table attributaire et dans le menu déroulant et afficher les valeurs 
+associées sur la carte.  
+
+---
+
+<details>
+<summary>Solution (cliquer pour afficher)</summary>
+
+<div style="height:15px;">&nbsp;</div>
+
+[Correction](./data/tp2/Shiny_TP2_Correction.zip)
+
+</details>
+
+---

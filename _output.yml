@@ -1,8 +1,5 @@
 bookdown::gitbook:
   css: assets/style.css
-  #includes:
-  #  before_body: assets/banner.html
-  #  after_body: assets/footer.html
   highlight: kate
   toc_depth: 2
   config:
@@ -18,19 +15,11 @@ bookdown::gitbook:
       after: |
         <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
         <li><a href="https://bookdown.org/" target="blank">Publié avec bookdown</a></li>
-    #download: ["pdf"]
+        <li><a href="https://www.maximelenormand.com/" target="blank">Proposé par <strong>Maxime Lenormand</strong></a></li>
     info: no  
     sharing: no
     fontsettings: yes
     search: yes
-    #view: https://github.com/ML-Teaching/Spatial-Networks/blob/master/%s  
-
-#bookdown::pdf_book:
-  #includes:
-  #  in_header: preamble.tex
-  #latex_engine: pdflatex
-  #citation_package: natbib
-  #keep_tex: yes
 
 
   

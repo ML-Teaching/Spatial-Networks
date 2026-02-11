@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>TP1 Premiers pas avec R | Introduction aux réseaux spatiaux avec R</title>
   <meta name="description" content="Réseaux spatiaux" />
-  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.46 and GitBook 2.6.7" />
 
   <meta property="og:title" content="TP1 Premiers pas avec R | Introduction aux réseaux spatiaux avec R" />
   <meta property="og:type" content="book" />
@@ -20,7 +20,6 @@
   <meta name="twitter:description" content="Réseaux spatiaux" />
   
 
-<meta name="author" content="Maxime Lenormand" />
 
 
 
@@ -126,6 +125,29 @@ code span.wa { color: #bf0303; } /* Warning */
   
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 </style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="assets/style.css" type="text/css" />
 </head>
@@ -159,7 +181,8 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="1.6" data-path="tp1.html"><a href="tp1.html#fonctions-en-r"><i class="fa fa-check"></i><b>1.6</b> Fonctions en R</a></li>
 <li class="chapter" data-level="1.7" data-path="tp1.html"><a href="tp1.html#visualisation-avec-r"><i class="fa fa-check"></i><b>1.7</b> Visualisation avec R</a></li>
 <li class="chapter" data-level="1.8" data-path="tp1.html"><a href="tp1.html#exercice"><i class="fa fa-check"></i><b>1.8</b> Exercice</a></li>
-<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.9</b> Introduction à R Shiny</a></li>
+<li class="chapter" data-level="1.9" data-path="tp1.html"><a href="tp1.html#g%C3%A9omatique-avec-r"><i class="fa fa-check"></i><b>1.9</b> Géomatique avec R</a></li>
+<li class="chapter" data-level="1.10" data-path="tp1.html"><a href="tp1.html#introduction-%C3%A0-r-shiny"><i class="fa fa-check"></i><b>1.10</b> Introduction à R Shiny</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="tp2.html"><a href="tp2.html"><i class="fa fa-check"></i><b>2</b> Estimation des flux domicile-travail</a>
 <ul>
@@ -173,11 +196,15 @@ code span.wa { color: #bf0303; } /* Warning */
 <li class="chapter" data-level="3.1" data-path="tp3.html"><a href="tp3.html#prise-en-main-des-donn%C3%A9es-1"><i class="fa fa-check"></i><b>3.1</b> Prise en main des données</a></li>
 <li class="chapter" data-level="3.2" data-path="tp3.html"><a href="tp3.html#similarit%C3%A9-entre-sites"><i class="fa fa-check"></i><b>3.2</b> Similarité entre sites</a></li>
 <li class="chapter" data-level="3.3" data-path="tp3.html"><a href="tp3.html#bioregionalisation"><i class="fa fa-check"></i><b>3.3</b> Bioregionalisation</a></li>
-<li class="chapter" data-level="3.4" data-path="tp3.html"><a href="tp3.html#application-r-shiny-1"><i class="fa fa-check"></i><b>3.4</b> Application R Shiny</a></li>
+<li class="chapter" data-level="3.4" data-path="tp3.html"><a href="tp3.html#analyse-biog%C3%A9ographique"><i class="fa fa-check"></i><b>3.4</b> Analyse biogéographique</a></li>
+<li class="chapter" data-level="3.5" data-path="tp3.html"><a href="tp3.html#echelle-communale"><i class="fa fa-check"></i><b>3.5</b> Echelle communale</a></li>
+<li class="chapter" data-level="3.6" data-path="tp3.html"><a href="tp3.html#application-r-shiny-1"><i class="fa fa-check"></i><b>3.6</b> Application R Shiny</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="refs.html"><a href="refs.html"><i class="fa fa-check"></i>Références</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/ML-Teaching/Spatial-Networks" target="blank">Code source</a></li>
 <li><a href="https://bookdown.org/" target="blank">Publié avec bookdown</a></li>
+<li><a href="https://www.maximelenormand.com/" target="blank">Proposé par <strong>Maxime Lenormand</strong></a></li>
 
 </ul>
 
@@ -200,8 +227,9 @@ code span.wa { color: #bf0303; } /* Warning */
 <h1><span class="header-section-number">TP1</span> Premiers pas avec R<a href="tp1.html#tp1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Avant de commencer le TP, nous allons parcourir ensemble le support de
 présentation ci-dessous afin de nous assurer que tout le monde dispose des mêmes
-bases. Ce sera l’occasion de prendre en main RStudio et de découvrir rapidement
-les notions essentielles du langage R.</p>
+bases. Ce sera l’occasion de prendre en main <strong>RStudio</strong> <a href="refs.html#refs"><span class="citation">(Posit team, 2025)</span></a>
+et de découvrir rapidement les notions essentielles du
+langage <strong>R</strong> <a href="refs.html#refs"><span class="citation">(R Core Team, 2021)</span></a>.</p>
 <div style="height:10px;">
  
 </div>
@@ -231,8 +259,8 @@ analyses.<br />
 <li>L’<strong>exécution</strong> d’un script correspond au fait de lancer l’ensemble ou une
 partie du code qu’il contient. Dans RStudio, vous pouvez :
 <ul>
-<li>exécuter la ligne où se trouve le curseur avec <strong>Ctrl + Enter</strong><br />
-(ou <strong>Cmd + Enter</strong> sur Mac),<br />
+<li>exécuter la ligne où se trouve le curseur avec <strong>Ctrl + Enter</strong> (ou <strong>Cmd +
+Enter</strong> sur Mac),<br />
 </li>
 <li>exécuter un bloc de code sélectionné,</li>
 <li>ou lancer l’intégralité du script avec le bouton <strong>Source</strong> (en haut à
@@ -240,7 +268,7 @@ droite de l’éditeur).</li>
 </ul></li>
 </ul>
 <blockquote>
-<p><em>Bonne pratique : redémarrez régulièrement votre session R
+<p><em><u>Bonne pratique :</u> redémarrez régulièrement votre session R
 (<strong>Session &gt; Restart R</strong> ou <strong>Ctrl + Shift + F10</strong> sous RStudio) afin de
 supprimer les objets en mémoire et éviter les conflits. Cela permet de
 vérifier que votre script contient bien toutes les étapes nécessaires pour
@@ -259,7 +287,7 @@ bien le définir pour éviter les erreurs lors des imports et exports.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="tp1.html#cb2-1" tabindex="-1"></a><span class="co"># Définir le répertoire de travail</span></span>
 <span id="cb2-2"><a href="tp1.html#cb2-2" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/TP1&quot;</span>) <span class="co"># A adapter à votre chemin sur votre ordinateur !</span></span></code></pre></div>
 <blockquote>
-<p><em>Remarque : utilisez le symbole <code>#</code> pour commenter une ligne de votre script.<br />
+<p><em><u>Remarque :</u> utilisez le symbole <code>#</code> pour commenter une ligne de votre script.<br />
 Tout ce qui suit ce symbole n’est pas exécuté par R.</em></p>
 </blockquote>
 <p>Un <strong>chemin absolu</strong> indique l’emplacement exact d’un fichier à partir de la
@@ -267,7 +295,7 @@ racine de l’ordinateur. Il est indépendant du répertoire de travail. Ci-dess
 un exemple d’import d’un fichier <strong>.csv</strong> à partir d’un chemin absolu.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="tp1.html#cb3-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;C:/Users/Nom/Desktop/TP1/Exemple.csv&quot;</span>)</span></code></pre></div>
 <blockquote>
-<p><em>Inconvénient : le code n’est pas facilement réutilisable sur un autre
+<p><em><u>Inconvénient :</u> le code n’est pas facilement réutilisable sur un autre
 ordinateur, car le chemin dépend de la configuration locale.</em></p>
 </blockquote>
 <p>Un <strong>chemin relatif</strong> part du répertoire de travail défini. C’est la méthode
@@ -275,14 +303,14 @@ recommandée car elle rend vos scripts portables et plus faciles à partager. Le
 même exemple avec un chemin relatif.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="tp1.html#cb4-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Exemple.csv&quot;</span>)</span></code></pre></div>
 <blockquote>
-<p><em>Avantage : si vos fichiers sont organisés dans le même dossier que votre
+<p><em><u>Avantage :</u> si vos fichiers sont organisés dans le même dossier que votre
 script, il suffit de partager ce dossier complet, et tout fonctionnera sans
 modifier les chemins.</em></p>
 </blockquote>
 <p>Dans vos TPs et projets, vous serez amenés à importer et exporter différents
 types de fichiers et objets :</p>
 <ul>
-<li><strong>Fichiers de données</strong> : .csv, .txt, Excel… avec <code>read.csv()</code>, <code>read.table()</code>.</li>
+<li><strong>Fichiers de données</strong> : csv, txt… avec <code>read.csv()</code>, <code>read.table()</code>.</li>
 <li><strong>Fichiers résultats</strong> : exporter vos données transformées avec <code>write.csv()</code>.</li>
 <li><strong>Figures et graphiques</strong> : sauvegarder vos graphiques avec <code>pdf()</code>, <code>png()</code>,
 ou <code>ggsave()</code> pour les partager ou les inclure dans vos rapports.</li>
@@ -292,25 +320,26 @@ ou <code>ggsave()</code> pour les partager ou les inclure dans vos rapports.</li
 <p>Ci-dessous un exemple combinant l’export d’un fichier <strong>.csv</strong>, d’un objet <strong>.rda</strong>,
 d’un graphique en <strong>.pdf</strong>, puis leur réimportation.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="tp1.html#cb5-1" tabindex="-1"></a><span class="co"># Exemple de données</span></span>
-<span id="cb5-2"><a href="tp1.html#cb5-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">y=</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-2"><a href="tp1.html#cb5-2" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">y =</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)<span class="sc">^</span><span class="dv">2</span>)</span>
 <span id="cb5-3"><a href="tp1.html#cb5-3" tabindex="-1"></a></span>
 <span id="cb5-4"><a href="tp1.html#cb5-4" tabindex="-1"></a><span class="co"># Export CSV</span></span>
-<span id="cb5-5"><a href="tp1.html#cb5-5" tabindex="-1"></a><span class="fu">write.csv2</span>(df, <span class="st">&quot;Data.csv&quot;</span>, <span class="at">row.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb5-5"><a href="tp1.html#cb5-5" tabindex="-1"></a><span class="fu">write.csv2</span>(df, <span class="st">&quot;Data.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb5-6"><a href="tp1.html#cb5-6" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="tp1.html#cb5-7" tabindex="-1"></a><span class="co"># Sauvegarde de l&#39;objet R</span></span>
-<span id="cb5-8"><a href="tp1.html#cb5-8" tabindex="-1"></a><span class="fu">save</span>(df, <span class="at">file=</span><span class="st">&quot;Data.rda&quot;</span>)</span>
+<span id="cb5-8"><a href="tp1.html#cb5-8" tabindex="-1"></a><span class="fu">save</span>(df, <span class="at">file =</span> <span class="st">&quot;Data.rda&quot;</span>)</span>
 <span id="cb5-9"><a href="tp1.html#cb5-9" tabindex="-1"></a></span>
 <span id="cb5-10"><a href="tp1.html#cb5-10" tabindex="-1"></a><span class="co"># Export graphique en PDF</span></span>
 <span id="cb5-11"><a href="tp1.html#cb5-11" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;Figure1.pdf&quot;</span>)</span>
-<span id="cb5-12"><a href="tp1.html#cb5-12" tabindex="-1"></a>  <span class="fu">plot</span>(df<span class="sc">$</span>x, df<span class="sc">$</span>y, <span class="at">main=</span><span class="st">&quot;Exemple d&#39;export&quot;</span>,</span>
-<span id="cb5-13"><a href="tp1.html#cb5-13" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;x&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;y&quot;</span>, <span class="at">col=</span><span class="st">&quot;steelblue3&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>)</span>
-<span id="cb5-14"><a href="tp1.html#cb5-14" tabindex="-1"></a><span class="fu">dev.off</span>()</span>
-<span id="cb5-15"><a href="tp1.html#cb5-15" tabindex="-1"></a></span>
-<span id="cb5-16"><a href="tp1.html#cb5-16" tabindex="-1"></a><span class="co"># Import du CSV</span></span>
-<span id="cb5-17"><a href="tp1.html#cb5-17" tabindex="-1"></a>df_csv <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;Data.csv&quot;</span>)</span>
-<span id="cb5-18"><a href="tp1.html#cb5-18" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="tp1.html#cb5-19" tabindex="-1"></a><span class="co"># Import de l&#39;objet R sauvegardé</span></span>
-<span id="cb5-20"><a href="tp1.html#cb5-20" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;Data.rda&quot;</span>)  <span class="co"># recharge l&#39;objet df</span></span></code></pre></div>
+<span id="cb5-12"><a href="tp1.html#cb5-12" tabindex="-1"></a><span class="fu">plot</span>(df<span class="sc">$</span>x, df<span class="sc">$</span>y,</span>
+<span id="cb5-13"><a href="tp1.html#cb5-13" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;x&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;y&quot;</span>, <span class="at">col =</span> <span class="st">&quot;steelblue3&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>,</span>
+<span id="cb5-14"><a href="tp1.html#cb5-14" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Exemple d&#39;export&quot;</span>)</span>
+<span id="cb5-15"><a href="tp1.html#cb5-15" tabindex="-1"></a><span class="fu">dev.off</span>()</span>
+<span id="cb5-16"><a href="tp1.html#cb5-16" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="tp1.html#cb5-17" tabindex="-1"></a><span class="co"># Import du CSV</span></span>
+<span id="cb5-18"><a href="tp1.html#cb5-18" tabindex="-1"></a>df_csv <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;Data.csv&quot;</span>)</span>
+<span id="cb5-19"><a href="tp1.html#cb5-19" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="tp1.html#cb5-20" tabindex="-1"></a><span class="co"># Import de l&#39;objet R sauvegardé</span></span>
+<span id="cb5-21"><a href="tp1.html#cb5-21" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;Data.rda&quot;</span>) <span class="co"># recharge l&#39;objet df</span></span></code></pre></div>
 </div>
 <div id="les-librairies" class="section level2 hasAnchor" number="1.3">
 <h2><span class="header-section-number">1.3</span> Les librairies<a href="tp1.html#les-librairies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -321,12 +350,15 @@ ou manipulations de données. Ces fonctionnalités sont fournies par des
 <p>L’<strong>installation</strong> d’un package se fait une seule fois sur votre ordinateur dans un
 dossier dédié. Elle rend le package disponible “définitivement” pour toutes
 vos futures sessions R. Ci-dessous un exemple d’installation des packages
-<strong>sf</strong>, <strong>TDLM</strong> et <strong>bioregion</strong> que nous utiliserons dans les TP2 et TP3.</p>
+<strong>sf</strong> <a href="refs.html#refs"><span class="citation">(Pebesma &amp; Bivand, 2023)</span></a>,
+<strong>TDLM</strong> <a href="refs.html#refs"><span class="citation">(Lenormand, 2023)</span></a> et
+<strong>bioregion</strong> <a href="refs.html#refs"><span class="citation">(Denelle <em>et al.</em>, 2025)</span></a>
+que nous utiliserons dans les différents TPs.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="tp1.html#cb6-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;sf&quot;</span>)</span>
 <span id="cb6-2"><a href="tp1.html#cb6-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;TDLM&quot;</span>)</span>
 <span id="cb6-3"><a href="tp1.html#cb6-3" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;bioregion&quot;</span>)</span></code></pre></div>
 <blockquote>
-<p><em>Remarque : vous n’avez pas besoin de réinstaller un package à chaque fois
+<p><em><u>Remarque :</u> vous n’avez pas besoin de réinstaller un package à chaque fois
 que vous en avez besoin.</em></p>
 </blockquote>
 <p>Le <strong>chargement</strong> d’un package se fait à chaque fois que vous voulez utiliser
@@ -379,13 +411,13 @@ objets dans vos scripts.</em></p>
 <span id="cb10-4"><a href="tp1.html#cb10-4" tabindex="-1"></a>log <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>)</span>
 <span id="cb10-5"><a href="tp1.html#cb10-5" tabindex="-1"></a></span>
 <span id="cb10-6"><a href="tp1.html#cb10-6" tabindex="-1"></a><span class="co"># Matrices</span></span>
-<span id="cb10-7"><a href="tp1.html#cb10-7" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span>
+<span id="cb10-7"><a href="tp1.html#cb10-7" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span>
 <span id="cb10-8"><a href="tp1.html#cb10-8" tabindex="-1"></a></span>
 <span id="cb10-9"><a href="tp1.html#cb10-9" tabindex="-1"></a><span class="co"># Liste</span></span>
-<span id="cb10-10"><a href="tp1.html#cb10-10" tabindex="-1"></a>liste <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">numerique=</span>num, <span class="at">caractere=</span>char, <span class="at">matrice=</span>m)</span>
+<span id="cb10-10"><a href="tp1.html#cb10-10" tabindex="-1"></a>liste <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">numerique =</span> num, <span class="at">caractere =</span> char, <span class="at">matrice =</span> m)</span>
 <span id="cb10-11"><a href="tp1.html#cb10-11" tabindex="-1"></a></span>
 <span id="cb10-12"><a href="tp1.html#cb10-12" tabindex="-1"></a><span class="co"># Data frame</span></span>
-<span id="cb10-13"><a href="tp1.html#cb10-13" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Nom=</span><span class="fu">c</span>(<span class="st">&quot;Alice&quot;</span>,<span class="st">&quot;Bob&quot;</span>), <span class="at">Age=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">30</span>))</span></code></pre></div>
+<span id="cb10-13"><a href="tp1.html#cb10-13" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Nom =</span> <span class="fu">c</span>(<span class="st">&quot;Alice&quot;</span>,<span class="st">&quot;Bob&quot;</span>), <span class="at">Age =</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">30</span>))</span></code></pre></div>
 <p>Il est important de bien vérifier le type et la structure des objets
 (<code>class(obj)</code> et <code>str(obj)</code>) et de nommer clairement vos objets pour savoir
 ce qu’ils contiennent.</p>
@@ -396,14 +428,14 @@ ce qu’ils contiennent.</p>
 <strong>enrichir</strong>, les <strong>filtrer</strong> ou bien les <strong>résumer</strong>. R propose différentes
 méthodes pour y parvenir.</p>
 <p>On peut remplacer des éléments dans un vecteur, une matrice ou un data frame.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="tp1.html#cb11-1" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="tp1.html#cb11-1" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
 <span id="cb11-2"><a href="tp1.html#cb11-2" tabindex="-1"></a>v[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">10</span>        <span class="co"># Remplace le 2ème élément</span></span>
 <span id="cb11-3"><a href="tp1.html#cb11-3" tabindex="-1"></a>v[v <span class="sc">&gt;</span> <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">99</span>    <span class="co"># Remplace tous les éléments supérieurs à 3</span></span>
 <span id="cb11-4"><a href="tp1.html#cb11-4" tabindex="-1"></a>v</span></code></pre></div>
 <p>Pour les matrices, on accède aux lignes et colonnes avec <code>[ligne, colonne]</code>.
 On peut aussi utiliser des <strong>conditions logiques</strong> pour sélectionner des
 éléments.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="tp1.html#cb12-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="tp1.html#cb12-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span>
 <span id="cb12-2"><a href="tp1.html#cb12-2" tabindex="-1"></a>m[<span class="dv">1</span>, ]               <span class="co"># 1ère ligne</span></span>
 <span id="cb12-3"><a href="tp1.html#cb12-3" tabindex="-1"></a>m[, <span class="dv">2</span>]               <span class="co"># 2ème colonne</span></span>
 <span id="cb12-4"><a href="tp1.html#cb12-4" tabindex="-1"></a>m[m <span class="sc">&gt;</span> <span class="dv">5</span>]             <span class="co"># Eléments supérieurs à 5</span></span>
@@ -413,33 +445,40 @@ On peut aussi utiliser des <strong>conditions logiques</strong> pour sélectionn
 supplémentaires avec <code>cbind()</code> et <code>rbind()</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="tp1.html#cb13-1" tabindex="-1"></a><span class="co"># Ajouter une colonne ou ligne</span></span>
 <span id="cb13-2"><a href="tp1.html#cb13-2" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(m, <span class="at">nouvelle_colonne =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb13-3"><a href="tp1.html#cb13-3" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(m2, <span class="at">nouvelle_ligne =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>))</span>
+<span id="cb13-3"><a href="tp1.html#cb13-3" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(m2, <span class="at">nouvelle_ligne =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">13</span>))</span>
 <span id="cb13-4"><a href="tp1.html#cb13-4" tabindex="-1"></a>m3</span></code></pre></div>
 <p>Avec <code>apply()</code>, on applique une fonction sur chaque ligne ou colonne d’une<br />
 matrice. L’argument <code>1</code> signifie ligne et <code>2</code> signifie colonne.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="tp1.html#cb14-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow=</span><span class="dv">3</span>, <span class="at">ncol=</span><span class="dv">3</span>)</span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="tp1.html#cb14-1" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">3</span>)</span>
 <span id="cb14-2"><a href="tp1.html#cb14-2" tabindex="-1"></a><span class="fu">apply</span>(m, <span class="dv">1</span>, sum)   <span class="co"># Somme par ligne</span></span>
 <span id="cb14-3"><a href="tp1.html#cb14-3" tabindex="-1"></a><span class="fu">apply</span>(m, <span class="dv">2</span>, mean)  <span class="co"># Moyenne par colonne</span></span></code></pre></div>
 <p>Les data frames peuvent être manipulés comme les matrices, mais avec des noms
 de colonnes et des types différents.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="tp1.html#cb15-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Nom=</span><span class="fu">c</span>(<span class="st">&quot;Alice&quot;</span>,<span class="st">&quot;Bob&quot;</span>,<span class="st">&quot;Charlie&quot;</span>),</span>
-<span id="cb15-2"><a href="tp1.html#cb15-2" tabindex="-1"></a>                 <span class="at">Age=</span><span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">30</span>,<span class="dv">35</span>),</span>
-<span id="cb15-3"><a href="tp1.html#cb15-3" tabindex="-1"></a>                 <span class="at">Genre=</span><span class="fu">c</span>(<span class="st">&quot;F&quot;</span>,<span class="st">&quot;M&quot;</span>,<span class="st">&quot;M&quot;</span>))</span>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="tp1.html#cb15-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Nom =</span> <span class="fu">c</span>(<span class="st">&quot;Alice&quot;</span>, <span class="st">&quot;Bob&quot;</span>, <span class="st">&quot;Charlie&quot;</span>),</span>
+<span id="cb15-2"><a href="tp1.html#cb15-2" tabindex="-1"></a>                 <span class="at">Age =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>),</span>
+<span id="cb15-3"><a href="tp1.html#cb15-3" tabindex="-1"></a>                 <span class="at">Genre =</span> <span class="fu">c</span>(<span class="st">&quot;F&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;M&quot;</span>))</span>
 <span id="cb15-4"><a href="tp1.html#cb15-4" tabindex="-1"></a>df<span class="sc">$</span>Age                  <span class="co"># Colonne Age</span></span>
-<span id="cb15-5"><a href="tp1.html#cb15-5" tabindex="-1"></a>df[df<span class="sc">$</span>Genre<span class="sc">==</span><span class="st">&quot;M&quot;</span>, ]     <span class="co"># Lignes où Genre est &quot;M&quot;</span></span>
+<span id="cb15-5"><a href="tp1.html#cb15-5" tabindex="-1"></a>df[df<span class="sc">$</span>Genre <span class="sc">==</span> <span class="st">&quot;M&quot;</span>, ]     <span class="co"># Lignes où Genre est &quot;M&quot;</span></span>
 <span id="cb15-6"><a href="tp1.html#cb15-6" tabindex="-1"></a>df[df<span class="sc">$</span>Age <span class="sc">&gt;</span> <span class="dv">28</span>, <span class="st">&quot;Nom&quot;</span>]  <span class="co"># Noms des personnes de plus de 28 ans</span></span></code></pre></div>
 <p>On peut également utiliser <code>cbind()</code> et <code>rbind()</code> pour ajouter des colonnes
 ou lignes dans un data frame.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="tp1.html#cb16-1" tabindex="-1"></a><span class="co"># Ajouter une colonne ou ligne</span></span>
-<span id="cb16-2"><a href="tp1.html#cb16-2" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(df, <span class="at">Ville=</span><span class="fu">c</span>(<span class="st">&quot;Paris&quot;</span>,<span class="st">&quot;Lyon&quot;</span>,<span class="st">&quot;Marseille&quot;</span>))</span>
-<span id="cb16-3"><a href="tp1.html#cb16-3" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">Nom=</span><span class="st">&quot;Diane&quot;</span>, <span class="at">Age=</span><span class="dv">40</span>, <span class="at">Genre=</span><span class="st">&quot;F&quot;</span>, <span class="at">Ville=</span><span class="st">&quot;Toulouse&quot;</span>))</span>
-<span id="cb16-4"><a href="tp1.html#cb16-4" tabindex="-1"></a>df3</span></code></pre></div>
+<span id="cb16-2"><a href="tp1.html#cb16-2" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(df, <span class="at">Ville =</span> <span class="fu">c</span>(<span class="st">&quot;Paris&quot;</span>, <span class="st">&quot;Lyon&quot;</span>, <span class="st">&quot;Marseille&quot;</span>))</span>
+<span id="cb16-3"><a href="tp1.html#cb16-3" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(df2, <span class="fu">data.frame</span>(<span class="at">Nom =</span> <span class="st">&quot;Diane&quot;</span>, </span>
+<span id="cb16-4"><a href="tp1.html#cb16-4" tabindex="-1"></a>                             <span class="at">Age =</span> <span class="dv">40</span>, </span>
+<span id="cb16-5"><a href="tp1.html#cb16-5" tabindex="-1"></a>                             <span class="at">Genre =</span> <span class="st">&quot;F&quot;</span>, </span>
+<span id="cb16-6"><a href="tp1.html#cb16-6" tabindex="-1"></a>                             <span class="at">Ville =</span> <span class="st">&quot;Toulouse&quot;</span>))</span>
+<span id="cb16-7"><a href="tp1.html#cb16-7" tabindex="-1"></a>df3</span></code></pre></div>
 <p>Je vous recommande d’utilisez toujours <code>dim()</code> pour vérifier la taille d’une
-matrice ou data frame. Vous pouvez également utiliser <code>summary()</code> pour
+matrice ou data frame. Vous pouvez également utiliser <code>head()</code> et <code>tail()</code> pour
+avoir un aperçu des données et <code>summary()</code> pour
 résumer vos données rapidement.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="tp1.html#cb17-1" tabindex="-1"></a><span class="fu">head</span>(df, <span class="dv">2</span>)</span>
+<span id="cb17-2"><a href="tp1.html#cb17-2" tabindex="-1"></a><span class="fu">tail</span>(df, <span class="dv">2</span>)</span>
+<span id="cb17-3"><a href="tp1.html#cb17-3" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code></pre></div>
 <p>R permet également de <strong>résumer ou agréger</strong> les données par groupes ou conditions.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="tp1.html#cb17-1" tabindex="-1"></a><span class="fu">aggregate</span>(Age <span class="sc">~</span> Genre, <span class="at">data=</span>df, <span class="at">FUN=</span>mean) <span class="co"># Moyenne d&#39;âge par genre</span></span>
-<span id="cb17-2"><a href="tp1.html#cb17-2" tabindex="-1"></a><span class="fu">aggregate</span>(Age <span class="sc">~</span> Genre, <span class="at">data=</span>df, <span class="at">FUN=</span>sum)  <span class="co"># Somme ou autres fonctions</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="tp1.html#cb18-1" tabindex="-1"></a><span class="fu">aggregate</span>(Age <span class="sc">~</span> Genre, <span class="at">data =</span> df, <span class="at">FUN =</span> mean) <span class="co"># Moyenne d&#39;âge par genre</span></span>
+<span id="cb18-2"><a href="tp1.html#cb18-2" tabindex="-1"></a><span class="fu">aggregate</span>(Age <span class="sc">~</span> Genre, <span class="at">data =</span> df, <span class="at">FUN =</span> sum)  <span class="co"># Somme ou autres fonctions</span></span></code></pre></div>
 </div>
 <div id="fonctions-en-r" class="section level2 hasAnchor" number="1.6">
 <h2><span class="header-section-number">1.6</span> Fonctions en R<a href="tp1.html#fonctions-en-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -448,88 +487,94 @@ arguments différents. Elles permettent d’automatiser et d’organiser vos
 calculs.</p>
 <p>On peut créer une fonction simple avec <code>function()</code>. Voici un exemple pour
 calculer le carré d’un nombre.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="tp1.html#cb18-1" tabindex="-1"></a>carre <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb18-2"><a href="tp1.html#cb18-2" tabindex="-1"></a>  x<span class="sc">^</span><span class="dv">2</span>    <span class="co"># Retourne le carré de x</span></span>
-<span id="cb18-3"><a href="tp1.html#cb18-3" tabindex="-1"></a>}</span>
-<span id="cb18-4"><a href="tp1.html#cb18-4" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="tp1.html#cb18-5" tabindex="-1"></a><span class="fu">carre</span>(<span class="dv">4</span>)  <span class="co"># 16</span></span>
-<span id="cb18-6"><a href="tp1.html#cb18-6" tabindex="-1"></a><span class="fu">carre</span>(<span class="dv">10</span>) <span class="co"># 100</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="tp1.html#cb19-1" tabindex="-1"></a>carre <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb19-2"><a href="tp1.html#cb19-2" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> x<span class="sc">*</span>x    <span class="co"># Calcul le carré de x</span></span>
+<span id="cb19-3"><a href="tp1.html#cb19-3" tabindex="-1"></a>  <span class="fu">return</span>(x2)   <span class="co"># Retourne le carré de x</span></span>
+<span id="cb19-4"><a href="tp1.html#cb19-4" tabindex="-1"></a>}</span>
+<span id="cb19-5"><a href="tp1.html#cb19-5" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="tp1.html#cb19-6" tabindex="-1"></a><span class="fu">carre</span>(<span class="dv">4</span>)  <span class="co"># 16</span></span>
+<span id="cb19-7"><a href="tp1.html#cb19-7" tabindex="-1"></a><span class="fu">carre</span>(<span class="dv">10</span>) <span class="co"># 100</span></span></code></pre></div>
 <p>Les fonctions peuvent avoir <strong>plusieurs arguments</strong> avec des valeurs par défaut.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="tp1.html#cb19-1" tabindex="-1"></a>addition <span class="ot">&lt;-</span> <span class="cf">function</span>(a, <span class="at">b=</span><span class="dv">5</span>) {</span>
-<span id="cb19-2"><a href="tp1.html#cb19-2" tabindex="-1"></a>  a <span class="sc">+</span> b</span>
-<span id="cb19-3"><a href="tp1.html#cb19-3" tabindex="-1"></a>}</span>
-<span id="cb19-4"><a href="tp1.html#cb19-4" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="tp1.html#cb19-5" tabindex="-1"></a><span class="fu">addition</span>(<span class="dv">3</span>, <span class="dv">4</span>)  <span class="co"># 7</span></span>
-<span id="cb19-6"><a href="tp1.html#cb19-6" tabindex="-1"></a><span class="fu">addition</span>(<span class="dv">3</span>)     <span class="co"># 8, car b=5 par défaut</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="tp1.html#cb20-1" tabindex="-1"></a>addition <span class="ot">&lt;-</span> <span class="cf">function</span>(a, <span class="at">b =</span> <span class="dv">5</span>) {</span>
+<span id="cb20-2"><a href="tp1.html#cb20-2" tabindex="-1"></a>  sumab <span class="ot">&lt;-</span>a <span class="sc">+</span> b   <span class="co"># Calcul la somme de a et b</span></span>
+<span id="cb20-3"><a href="tp1.html#cb20-3" tabindex="-1"></a>  <span class="fu">return</span>(sumab)   <span class="co"># Retourne le résultat</span></span>
+<span id="cb20-4"><a href="tp1.html#cb20-4" tabindex="-1"></a>}</span>
+<span id="cb20-5"><a href="tp1.html#cb20-5" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="tp1.html#cb20-6" tabindex="-1"></a><span class="fu">addition</span>(<span class="dv">3</span>, <span class="dv">4</span>)  <span class="co"># 7</span></span>
+<span id="cb20-7"><a href="tp1.html#cb20-7" tabindex="-1"></a><span class="fu">addition</span>(<span class="dv">3</span>)     <span class="co"># 8, car b=5 par défaut</span></span></code></pre></div>
 <p>On peut aussi créer des fonctions qui retournent <strong>plusieurs valeurs</strong> via une
 liste.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="tp1.html#cb20-1" tabindex="-1"></a>statistiques <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb20-2"><a href="tp1.html#cb20-2" tabindex="-1"></a>  moy <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
-<span id="cb20-3"><a href="tp1.html#cb20-3" tabindex="-1"></a>  med <span class="ot">&lt;-</span> <span class="fu">median</span>(x)</span>
-<span id="cb20-4"><a href="tp1.html#cb20-4" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">moyenne=</span>moy, <span class="at">mediane=</span>med)</span>
-<span id="cb20-5"><a href="tp1.html#cb20-5" tabindex="-1"></a>}</span>
-<span id="cb20-6"><a href="tp1.html#cb20-6" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="tp1.html#cb20-7" tabindex="-1"></a><span class="fu">statistiques</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="tp1.html#cb21-1" tabindex="-1"></a>statistiques <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb21-2"><a href="tp1.html#cb21-2" tabindex="-1"></a>  moy <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)    <span class="co"># Moyenne de x</span></span>
+<span id="cb21-3"><a href="tp1.html#cb21-3" tabindex="-1"></a>  med <span class="ot">&lt;-</span> <span class="fu">median</span>(x)  <span class="co"># Médiane de x</span></span>
+<span id="cb21-4"><a href="tp1.html#cb21-4" tabindex="-1"></a>  </span>
+<span id="cb21-5"><a href="tp1.html#cb21-5" tabindex="-1"></a>  L <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">moyenne=</span>moy, <span class="at">mediane=</span>med) <span class="co"># Créer une liste avec moy et med</span></span>
+<span id="cb21-6"><a href="tp1.html#cb21-6" tabindex="-1"></a>  </span>
+<span id="cb21-7"><a href="tp1.html#cb21-7" tabindex="-1"></a>  <span class="fu">return</span>(L) <span class="co"># Retourne L</span></span>
+<span id="cb21-8"><a href="tp1.html#cb21-8" tabindex="-1"></a>}</span>
+<span id="cb21-9"><a href="tp1.html#cb21-9" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="tp1.html#cb21-10" tabindex="-1"></a><span class="fu">statistiques</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))</span></code></pre></div>
 <p>Il est souvent utile de combiner les fonctions avec des <strong>conditions</strong> et des
 <strong>boucles</strong> pour automatiser des tâches plus complexes.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="tp1.html#cb21-1" tabindex="-1"></a>analyse_vecteur <span class="ot">&lt;-</span> <span class="cf">function</span>(v) {</span>
-<span id="cb21-2"><a href="tp1.html#cb21-2" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(v) <span class="sc">==</span> <span class="dv">0</span>) {</span>
-<span id="cb21-3"><a href="tp1.html#cb21-3" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb21-4"><a href="tp1.html#cb21-4" tabindex="-1"></a>  }</span>
-<span id="cb21-5"><a href="tp1.html#cb21-5" tabindex="-1"></a>  v[v <span class="sc">&gt;</span> <span class="fu">mean</span>(v)]  <span class="co"># Retourne les éléments supérieurs à la moyenne</span></span>
-<span id="cb21-6"><a href="tp1.html#cb21-6" tabindex="-1"></a>}</span>
-<span id="cb21-7"><a href="tp1.html#cb21-7" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="tp1.html#cb21-8" tabindex="-1"></a><span class="fu">analyse_vecteur</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="tp1.html#cb22-1" tabindex="-1"></a>analyse_vecteur <span class="ot">&lt;-</span> <span class="cf">function</span>(v) {</span>
+<span id="cb22-2"><a href="tp1.html#cb22-2" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(v) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb22-3"><a href="tp1.html#cb22-3" tabindex="-1"></a>    <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb22-4"><a href="tp1.html#cb22-4" tabindex="-1"></a>  }</span>
+<span id="cb22-5"><a href="tp1.html#cb22-5" tabindex="-1"></a>  v[v <span class="sc">&gt;</span> <span class="fu">mean</span>(v)]  <span class="co"># Retourne les éléments supérieurs à la moyenne</span></span>
+<span id="cb22-6"><a href="tp1.html#cb22-6" tabindex="-1"></a>}</span>
+<span id="cb22-7"><a href="tp1.html#cb22-7" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="tp1.html#cb22-8" tabindex="-1"></a><span class="fu">analyse_vecteur</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>))</span></code></pre></div>
 <p>Enfin, vous pouvez <strong>enchaîner plusieurs fonctions</strong> pour créer des analyses
 complètes et modulaires.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="tp1.html#cb22-1" tabindex="-1"></a>ma_fonction <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb22-2"><a href="tp1.html#cb22-2" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">carre</span>(x)</span>
-<span id="cb22-3"><a href="tp1.html#cb22-3" tabindex="-1"></a>  x2 <span class="sc">+</span> <span class="dv">10</span></span>
-<span id="cb22-4"><a href="tp1.html#cb22-4" tabindex="-1"></a>}</span>
-<span id="cb22-5"><a href="tp1.html#cb22-5" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="tp1.html#cb22-6" tabindex="-1"></a><span class="fu">ma_fonction</span>(<span class="dv">3</span>)  <span class="co"># (3^2)+10 = 19</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tp1.html#cb23-1" tabindex="-1"></a>ma_fonction <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb23-2"><a href="tp1.html#cb23-2" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">carre</span>(x)     <span class="co"># Carré de x</span></span>
+<span id="cb23-3"><a href="tp1.html#cb23-3" tabindex="-1"></a>  x2p10 <span class="ot">&lt;-</span> x2 <span class="sc">+</span> <span class="dv">10</span>   <span class="co"># Ajoute 10</span></span>
+<span id="cb23-4"><a href="tp1.html#cb23-4" tabindex="-1"></a>  <span class="fu">return</span>(x2p10)      <span class="co"># Retourne le résultat</span></span>
+<span id="cb23-5"><a href="tp1.html#cb23-5" tabindex="-1"></a>}</span>
+<span id="cb23-6"><a href="tp1.html#cb23-6" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="tp1.html#cb23-7" tabindex="-1"></a><span class="fu">ma_fonction</span>(<span class="dv">3</span>)  <span class="co"># (3^2) + 10 = 19</span></span></code></pre></div>
 <p>Pour organiser votre travail, il est souvent
 pratique de <strong>mettre vos fonctions dans un script séparé</strong>. Vous pouvez ensuite
 les <strong>charger dans votre session</strong> avec <code>source()</code>.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="tp1.html#cb23-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;Mes_fonctions.R&quot;</span>)  <span class="co"># Charge toutes les fonctions du script</span></span>
-<span id="cb23-2"><a href="tp1.html#cb23-2" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="tp1.html#cb23-3" tabindex="-1"></a><span class="fu">carre</span>(<span class="dv">5</span>)          <span class="co"># Utilise la fonction carre définie dans le script</span></span>
-<span id="cb23-4"><a href="tp1.html#cb23-4" tabindex="-1"></a><span class="fu">addition</span>(<span class="dv">2</span>, <span class="dv">3</span>)    <span class="co"># Utilise la fonction addition définie dans le script</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="tp1.html#cb24-1" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;Mes_fonctions.R&quot;</span>)  <span class="co"># Charge toutes les fonctions du script</span></span>
+<span id="cb24-2"><a href="tp1.html#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="tp1.html#cb24-3" tabindex="-1"></a><span class="fu">carre</span>(<span class="dv">5</span>)          <span class="co"># Utilise la fonction carre définie dans le script</span></span>
+<span id="cb24-4"><a href="tp1.html#cb24-4" tabindex="-1"></a><span class="fu">addition</span>(<span class="dv">2</span>, <span class="dv">3</span>)    <span class="co"># Utilise la fonction addition définie dans le script</span></span></code></pre></div>
 </div>
 <div id="visualisation-avec-r" class="section level2 hasAnchor" number="1.7">
 <h2><span class="header-section-number">1.7</span> Visualisation avec R<a href="tp1.html#visualisation-avec-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R permet de créer rapidement des graphiques pour explorer vos données.
 Voici quelques fonctions de base pour visualiser vos données.</p>
 <p>Avec des graphiques de dispersion</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="tp1.html#cb24-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb24-2"><a href="tp1.html#cb24-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb24-3"><a href="tp1.html#cb24-3" tabindex="-1"></a></span>
-<span id="cb24-4"><a href="tp1.html#cb24-4" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">main=</span><span class="st">&quot;Graphique de dispersion&quot;</span>,</span>
-<span id="cb24-5"><a href="tp1.html#cb24-5" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;X&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>, <span class="at">col=</span><span class="st">&quot;steelblue3&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tp1.html#cb25-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb25-2"><a href="tp1.html#cb25-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb25-3"><a href="tp1.html#cb25-3" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="tp1.html#cb25-4" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">main =</span> <span class="st">&quot;Graphique de dispersion&quot;</span>,</span>
+<span id="cb25-5"><a href="tp1.html#cb25-5" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;X&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Y&quot;</span>, <span class="at">col =</span> <span class="st">&quot;steelblue3&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
 <p>Vous pouvez personnaliser les couleurs, les types de points (<code>pch</code>) et ajouter
 un titre (<code>main</code>) ainsi que des labels pour les axes (<code>xlab</code>, <code>ylab</code>). Vous
-pouvez également utiliser le package <strong>ggplot2</strong>, de nombreux exemples et tutos
-son disponible en ligne.</p>
+pouvez également utiliser le package <strong>ggplot2</strong> <a href="refs.html#refs"><span class="citation">(Wickham, 2016)</span></a>, de
+nombreux exemples et tutos son disponible en ligne.</p>
 <p>Pour visualiser la <strong>répartition d’une variable</strong>, on utilise <code>hist()</code>.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="tp1.html#cb25-1" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>)</span>
-<span id="cb25-2"><a href="tp1.html#cb25-2" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="tp1.html#cb25-3" tabindex="-1"></a><span class="fu">hist</span>(v, <span class="at">breaks=</span><span class="dv">5</span>, <span class="at">col=</span><span class="st">&quot;orange&quot;</span>, <span class="at">border=</span><span class="st">&quot;black&quot;</span>,</span>
-<span id="cb25-4"><a href="tp1.html#cb25-4" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Histogramme de v&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Valeurs&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Fréquence&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="tp1.html#cb26-1" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
+<span id="cb26-2"><a href="tp1.html#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="tp1.html#cb26-3" tabindex="-1"></a><span class="fu">hist</span>(v, <span class="at">breaks =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>, <span class="at">border =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb26-4"><a href="tp1.html#cb26-4" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Histogramme de v&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Valeurs&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Fréquence&quot;</span>)</span></code></pre></div>
 <p>Pour visualiser <strong>la médiane et la dispersion</strong>, on utilise <code>boxplot()</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="tp1.html#cb26-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Groupe=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>,<span class="st">&quot;A&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;B&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;C&quot;</span>,<span class="st">&quot;C&quot;</span>),</span>
-<span id="cb26-2"><a href="tp1.html#cb26-2" tabindex="-1"></a>                 <span class="at">Valeur=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">7</span>,<span class="dv">6</span>))</span>
-<span id="cb26-3"><a href="tp1.html#cb26-3" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="tp1.html#cb26-4" tabindex="-1"></a><span class="fu">boxplot</span>(Valeur <span class="sc">~</span> Groupe, <span class="at">data=</span>df, <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>,</span>
-<span id="cb26-5"><a href="tp1.html#cb26-5" tabindex="-1"></a>        <span class="at">main=</span><span class="st">&quot;Boxplot par groupe&quot;</span>, <span class="at">xlab=</span><span class="st">&quot;Groupe&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Valeur&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tp1.html#cb27-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Groupe=</span><span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;C&quot;</span>),</span>
+<span id="cb27-2"><a href="tp1.html#cb27-2" tabindex="-1"></a>                 <span class="at">Valeur=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">7</span>, <span class="dv">6</span>))</span>
+<span id="cb27-3"><a href="tp1.html#cb27-3" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="tp1.html#cb27-4" tabindex="-1"></a><span class="fu">boxplot</span>(Valeur <span class="sc">~</span> Groupe, <span class="at">data =</span> df, <span class="at">col =</span> <span class="st">&quot;lightblue&quot;</span>,</span>
+<span id="cb27-5"><a href="tp1.html#cb27-5" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">&quot;Boxplot par groupe&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Groupe&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Valeur&quot;</span>)</span></code></pre></div>
 <p>Comment mentionné plus haut R permet d’exporter vos graphiques pour les partager
 ou les intégrer dans des rapports. Voici comment créer un fichier PDF contenant
 un graphique.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="tp1.html#cb27-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;Figure2.pdf&quot;</span>, <span class="at">width=</span><span class="dv">7</span>, <span class="at">height=</span><span class="dv">5</span>)</span>
-<span id="cb27-2"><a href="tp1.html#cb27-2" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="tp1.html#cb27-3" tabindex="-1"></a>  <span class="fu">plot</span>(x, y, <span class="at">main=</span><span class="st">&quot;Graphique exporté en PDF&quot;</span>,</span>
-<span id="cb27-4"><a href="tp1.html#cb27-4" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;X&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Y&quot;</span>, <span class="at">col=</span><span class="st">&quot;#CC6666&quot;</span>, <span class="at">pch=</span><span class="dv">19</span>)</span>
-<span id="cb27-5"><a href="tp1.html#cb27-5" tabindex="-1"></a>  </span>
-<span id="cb27-6"><a href="tp1.html#cb27-6" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="tp1.html#cb28-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;Figure2.pdf&quot;</span>, <span class="at">width=</span><span class="dv">7</span>, <span class="at">height=</span><span class="dv">5</span>)</span>
+<span id="cb28-2"><a href="tp1.html#cb28-2" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="tp1.html#cb28-3" tabindex="-1"></a>  <span class="fu">plot</span>(x, y, <span class="at">main =</span> <span class="st">&quot;Graphique exporté en PDF&quot;</span>,</span>
+<span id="cb28-4"><a href="tp1.html#cb28-4" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;X&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Y&quot;</span>, <span class="at">col =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb28-5"><a href="tp1.html#cb28-5" tabindex="-1"></a>  </span>
+<span id="cb28-6"><a href="tp1.html#cb28-6" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
 <p>Le fichier <code>Figure2.pdf</code> sera créé dans le répertoire de travail actuel.</p>
 </div>
 <div id="exercice" class="section level2 hasAnchor" number="1.8">
@@ -537,25 +582,22 @@ un graphique.</p>
 <p>Dans cet exercice, vous allez créer vos propres fonctions dans un script
 séparé, puis les utiliser pour analyser et visualiser des données.</p>
 <ol style="list-style-type: decimal">
-<li>Créez un fichier <strong>Mes_fonctions.R</strong> dans votre répertoire de travail.</li>
+<li>Créez un fichier <strong>Mes_fonctions.R</strong> dans votre répertoire de travail.<br />
+</li>
 <li>Dans ce fichier, écrivez deux fonctions :
 <ul>
-<li><code>resumer_vecteur(x)</code> : retourne la moyenne, médiane, min, max, variance<br />
-</li>
-<li><code>remplacer_grand(x)</code> : remplace les valeurs supérieures à la moyenne par 100</li>
+<li><code>resumer_vecteur(x)</code> : retourne min, max, moyenne, médiane et variance.</li>
+<li><code>remplacer_vecteur(x)</code> : remplace les valeurs supérieures à la moyenne par 100.</li>
 </ul></li>
 <li>Dans <strong>TP1.R</strong> :
 <ul>
-<li>Chargez les packages <strong>sf</strong>, <strong>TDLM</strong> et <strong>bioregion</strong></li>
-<li>Définissez votre répertoire de travail</li>
-<li>Importez vos fonctions depuis <strong>Mes_fonctions.R</strong> avec <code>source()</code><br />
-</li>
-<li>Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction <code>sample()</code>)</li>
-<li>Appliquez les fonctions au vecteur<br />
-</li>
-<li>Créez un histogramme et un boxplot du vecteur modifié<br />
-</li>
-<li>Exportez les graphiques dans un fichier <strong>Figure3.pdf</strong></li>
+<li>Chargez les packages <strong>sf</strong>.</li>
+<li>Définissez votre répertoire de travail.</li>
+<li>Importez vos fonctions depuis <strong>Mes_fonctions.R</strong> avec <code>source()</code>.</li>
+<li>Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction <code>sample()</code>).</li>
+<li>Appliquez les fonctions au vecteur.</li>
+<li>Créez un histogramme et un boxplot du vecteur modifié.</li>
+<li>Exportez les graphiques dans un fichier <strong>Figure3.pdf</strong>.</li>
 </ul></li>
 </ol>
 <hr />
@@ -563,69 +605,272 @@ séparé, puis les utiliser pour analyser et visualiser des données.</p>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="tp1.html#cb28-1" tabindex="-1"></a><span class="co"># --------------------------</span></span>
-<span id="cb28-2"><a href="tp1.html#cb28-2" tabindex="-1"></a><span class="co"># Contenu de Mes_fonctions.R</span></span>
-<span id="cb28-3"><a href="tp1.html#cb28-3" tabindex="-1"></a><span class="co"># --------------------------</span></span>
-<span id="cb28-4"><a href="tp1.html#cb28-4" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="tp1.html#cb28-5" tabindex="-1"></a>resumer_vecteur <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb28-6"><a href="tp1.html#cb28-6" tabindex="-1"></a>  <span class="fu">list</span>(</span>
-<span id="cb28-7"><a href="tp1.html#cb28-7" tabindex="-1"></a>    <span class="at">moyenne =</span> <span class="fu">mean</span>(x),</span>
-<span id="cb28-8"><a href="tp1.html#cb28-8" tabindex="-1"></a>    <span class="at">mediane =</span> <span class="fu">median</span>(x),</span>
-<span id="cb28-9"><a href="tp1.html#cb28-9" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(x),</span>
-<span id="cb28-10"><a href="tp1.html#cb28-10" tabindex="-1"></a>    <span class="at">maximum =</span> <span class="fu">max</span>(x),</span>
-<span id="cb28-11"><a href="tp1.html#cb28-11" tabindex="-1"></a>    <span class="at">variance =</span> <span class="fu">var</span>(x)</span>
-<span id="cb28-12"><a href="tp1.html#cb28-12" tabindex="-1"></a>  )</span>
-<span id="cb28-13"><a href="tp1.html#cb28-13" tabindex="-1"></a>}</span>
-<span id="cb28-14"><a href="tp1.html#cb28-14" tabindex="-1"></a></span>
-<span id="cb28-15"><a href="tp1.html#cb28-15" tabindex="-1"></a>remplacer_grand <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb28-16"><a href="tp1.html#cb28-16" tabindex="-1"></a>  x[x <span class="sc">&gt;</span> <span class="fu">mean</span>(x)] <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb28-17"><a href="tp1.html#cb28-17" tabindex="-1"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb28-18"><a href="tp1.html#cb28-18" tabindex="-1"></a>}</span>
-<span id="cb28-19"><a href="tp1.html#cb28-19" tabindex="-1"></a></span>
-<span id="cb28-20"><a href="tp1.html#cb28-20" tabindex="-1"></a><span class="co"># --------------------------</span></span>
-<span id="cb28-21"><a href="tp1.html#cb28-21" tabindex="-1"></a><span class="co"># Contenu de TP1.R</span></span>
-<span id="cb28-22"><a href="tp1.html#cb28-22" tabindex="-1"></a><span class="co"># --------------------------</span></span>
-<span id="cb28-23"><a href="tp1.html#cb28-23" tabindex="-1"></a></span>
-<span id="cb28-24"><a href="tp1.html#cb28-24" tabindex="-1"></a><span class="co"># Charger les packages</span></span>
-<span id="cb28-25"><a href="tp1.html#cb28-25" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb28-26"><a href="tp1.html#cb28-26" tabindex="-1"></a><span class="fu">library</span>(TDLM)</span>
-<span id="cb28-27"><a href="tp1.html#cb28-27" tabindex="-1"></a><span class="fu">library</span>(bioregion)</span>
-<span id="cb28-28"><a href="tp1.html#cb28-28" tabindex="-1"></a></span>
-<span id="cb28-29"><a href="tp1.html#cb28-29" tabindex="-1"></a><span class="co"># Définir le répertoire de travail</span></span>
-<span id="cb28-30"><a href="tp1.html#cb28-30" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/TP1&quot;</span>)  <span class="co"># Adapter selon votre ordinateur</span></span>
-<span id="cb28-31"><a href="tp1.html#cb28-31" tabindex="-1"></a></span>
-<span id="cb28-32"><a href="tp1.html#cb28-32" tabindex="-1"></a><span class="co"># Importer les fonctions depuis le script</span></span>
-<span id="cb28-33"><a href="tp1.html#cb28-33" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;Mes_fonctions.R&quot;</span>)</span>
-<span id="cb28-34"><a href="tp1.html#cb28-34" tabindex="-1"></a></span>
-<span id="cb28-35"><a href="tp1.html#cb28-35" tabindex="-1"></a><span class="co"># Créer un vecteur de 20 nombres aléatoires</span></span>
-<span id="cb28-36"><a href="tp1.html#cb28-36" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Pour la reproductibilité (?set.seed)</span></span>
-<span id="cb28-37"><a href="tp1.html#cb28-37" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
-<span id="cb28-38"><a href="tp1.html#cb28-38" tabindex="-1"></a></span>
-<span id="cb28-39"><a href="tp1.html#cb28-39" tabindex="-1"></a><span class="co"># Appliquer les fonctions</span></span>
-<span id="cb28-40"><a href="tp1.html#cb28-40" tabindex="-1"></a><span class="fu">resumer_vecteur</span>(v)</span>
-<span id="cb28-41"><a href="tp1.html#cb28-41" tabindex="-1"></a>v_modifie <span class="ot">&lt;-</span> <span class="fu">remplacer_grand</span>(v)</span>
-<span id="cb28-42"><a href="tp1.html#cb28-42" tabindex="-1"></a>v_modifie</span>
-<span id="cb28-43"><a href="tp1.html#cb28-43" tabindex="-1"></a></span>
-<span id="cb28-44"><a href="tp1.html#cb28-44" tabindex="-1"></a><span class="co"># Graphiques et export PDF</span></span>
-<span id="cb28-45"><a href="tp1.html#cb28-45" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;Figure3.pdf&quot;</span>, <span class="at">width=</span><span class="dv">8</span>, <span class="at">height=</span><span class="dv">5</span>)</span>
-<span id="cb28-46"><a href="tp1.html#cb28-46" tabindex="-1"></a></span>
-<span id="cb28-47"><a href="tp1.html#cb28-47" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))  <span class="co"># Deux graphiques côte à côte</span></span>
-<span id="cb28-48"><a href="tp1.html#cb28-48" tabindex="-1"></a></span>
-<span id="cb28-49"><a href="tp1.html#cb28-49" tabindex="-1"></a>  <span class="fu">hist</span>(v_modifie, <span class="at">main=</span><span class="st">&quot;Histogramme du vecteur modifié&quot;</span>, <span class="at">col=</span><span class="st">&quot;lightgreen&quot;</span>,</span>
-<span id="cb28-50"><a href="tp1.html#cb28-50" tabindex="-1"></a>       <span class="at">xlab=</span><span class="st">&quot;Valeurs&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Fréquence&quot;</span>)</span>
-<span id="cb28-51"><a href="tp1.html#cb28-51" tabindex="-1"></a>  <span class="fu">boxplot</span>(v_modifie, <span class="at">main=</span><span class="st">&quot;Boxplot du vecteur modifié&quot;</span>, <span class="at">col=</span><span class="st">&quot;lightblue&quot;</span>)</span>
-<span id="cb28-52"><a href="tp1.html#cb28-52" tabindex="-1"></a></span>
-<span id="cb28-53"><a href="tp1.html#cb28-53" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tp1.html#cb29-1" tabindex="-1"></a><span class="co"># --------------------------</span></span>
+<span id="cb29-2"><a href="tp1.html#cb29-2" tabindex="-1"></a><span class="co"># Contenu de Mes_fonctions.R</span></span>
+<span id="cb29-3"><a href="tp1.html#cb29-3" tabindex="-1"></a><span class="co"># --------------------------</span></span>
+<span id="cb29-4"><a href="tp1.html#cb29-4" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="tp1.html#cb29-5" tabindex="-1"></a>resumer_vecteur <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb29-6"><a href="tp1.html#cb29-6" tabindex="-1"></a>  </span>
+<span id="cb29-7"><a href="tp1.html#cb29-7" tabindex="-1"></a>  <span class="co"># Création d&#39;une liste nommée contenant plusieurs mesures statistiques</span></span>
+<span id="cb29-8"><a href="tp1.html#cb29-8" tabindex="-1"></a>  L <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb29-9"><a href="tp1.html#cb29-9" tabindex="-1"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(x),     <span class="co"># Valeur la plus petite du vecteur x</span></span>
+<span id="cb29-10"><a href="tp1.html#cb29-10" tabindex="-1"></a>    <span class="at">maximum =</span> <span class="fu">max</span>(x),     <span class="co"># Valeur la plus grande du vecteur x</span></span>
+<span id="cb29-11"><a href="tp1.html#cb29-11" tabindex="-1"></a>    <span class="at">moyenne =</span> <span class="fu">mean</span>(x),    <span class="co"># Moyenne arithmétique de x</span></span>
+<span id="cb29-12"><a href="tp1.html#cb29-12" tabindex="-1"></a>    <span class="at">mediane =</span> <span class="fu">median</span>(x),  <span class="co"># Médiane de x (milieu de la distribution)</span></span>
+<span id="cb29-13"><a href="tp1.html#cb29-13" tabindex="-1"></a>    <span class="at">variance =</span> <span class="fu">var</span>(x)     <span class="co"># Variance de x (dispersion)</span></span>
+<span id="cb29-14"><a href="tp1.html#cb29-14" tabindex="-1"></a>  )</span>
+<span id="cb29-15"><a href="tp1.html#cb29-15" tabindex="-1"></a>  </span>
+<span id="cb29-16"><a href="tp1.html#cb29-16" tabindex="-1"></a>  <span class="fu">return</span>(L)  <span class="co"># Renvoie la liste contenant les résumés statistiques</span></span>
+<span id="cb29-17"><a href="tp1.html#cb29-17" tabindex="-1"></a>}</span>
+<span id="cb29-18"><a href="tp1.html#cb29-18" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="tp1.html#cb29-19" tabindex="-1"></a>remplacer_vecteur <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb29-20"><a href="tp1.html#cb29-20" tabindex="-1"></a>  </span>
+<span id="cb29-21"><a href="tp1.html#cb29-21" tabindex="-1"></a>  <span class="co"># Remplace toutes les valeurs strictement supérieures à la moyenne</span></span>
+<span id="cb29-22"><a href="tp1.html#cb29-22" tabindex="-1"></a>  <span class="co"># du vecteur x par la valeur 100</span></span>
+<span id="cb29-23"><a href="tp1.html#cb29-23" tabindex="-1"></a>  x[x <span class="sc">&gt;</span> <span class="fu">mean</span>(x)] <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb29-24"><a href="tp1.html#cb29-24" tabindex="-1"></a>  </span>
+<span id="cb29-25"><a href="tp1.html#cb29-25" tabindex="-1"></a>  <span class="fu">return</span>(x)   <span class="co"># Renvoie le vecteur modifié</span></span>
+<span id="cb29-26"><a href="tp1.html#cb29-26" tabindex="-1"></a>}</span>
+<span id="cb29-27"><a href="tp1.html#cb29-27" tabindex="-1"></a></span>
+<span id="cb29-28"><a href="tp1.html#cb29-28" tabindex="-1"></a><span class="co"># --------------------------</span></span>
+<span id="cb29-29"><a href="tp1.html#cb29-29" tabindex="-1"></a><span class="co"># Contenu de TP1.R</span></span>
+<span id="cb29-30"><a href="tp1.html#cb29-30" tabindex="-1"></a><span class="co"># --------------------------</span></span>
+<span id="cb29-31"><a href="tp1.html#cb29-31" tabindex="-1"></a></span>
+<span id="cb29-32"><a href="tp1.html#cb29-32" tabindex="-1"></a><span class="co"># Charger le package</span></span>
+<span id="cb29-33"><a href="tp1.html#cb29-33" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb29-34"><a href="tp1.html#cb29-34" tabindex="-1"></a></span>
+<span id="cb29-35"><a href="tp1.html#cb29-35" tabindex="-1"></a><span class="co"># Définir le répertoire de travail</span></span>
+<span id="cb29-36"><a href="tp1.html#cb29-36" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;~/Desktop/TP1&quot;</span>)  <span class="co"># Adapter selon votre ordinateur</span></span>
+<span id="cb29-37"><a href="tp1.html#cb29-37" tabindex="-1"></a></span>
+<span id="cb29-38"><a href="tp1.html#cb29-38" tabindex="-1"></a><span class="co"># Importer les fonctions depuis le script</span></span>
+<span id="cb29-39"><a href="tp1.html#cb29-39" tabindex="-1"></a><span class="fu">source</span>(<span class="st">&quot;Mes_fonctions.R&quot;</span>)</span>
+<span id="cb29-40"><a href="tp1.html#cb29-40" tabindex="-1"></a></span>
+<span id="cb29-41"><a href="tp1.html#cb29-41" tabindex="-1"></a><span class="co"># Créer un vecteur de 20 nombres aléatoires</span></span>
+<span id="cb29-42"><a href="tp1.html#cb29-42" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># Pour la reproductibilité (?set.seed)</span></span>
+<span id="cb29-43"><a href="tp1.html#cb29-43" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-44"><a href="tp1.html#cb29-44" tabindex="-1"></a></span>
+<span id="cb29-45"><a href="tp1.html#cb29-45" tabindex="-1"></a><span class="co"># Appliquer les fonctions</span></span>
+<span id="cb29-46"><a href="tp1.html#cb29-46" tabindex="-1"></a><span class="fu">resumer_vecteur</span>(v)</span>
+<span id="cb29-47"><a href="tp1.html#cb29-47" tabindex="-1"></a>v_modifie <span class="ot">&lt;-</span> <span class="fu">remplacer_vecteur</span>(v)</span>
+<span id="cb29-48"><a href="tp1.html#cb29-48" tabindex="-1"></a>v_modifie</span>
+<span id="cb29-49"><a href="tp1.html#cb29-49" tabindex="-1"></a></span>
+<span id="cb29-50"><a href="tp1.html#cb29-50" tabindex="-1"></a><span class="co"># Graphiques et export PDF</span></span>
+<span id="cb29-51"><a href="tp1.html#cb29-51" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;Figure3.pdf&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">5</span>)</span>
+<span id="cb29-52"><a href="tp1.html#cb29-52" tabindex="-1"></a></span>
+<span id="cb29-53"><a href="tp1.html#cb29-53" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))  <span class="co"># Deux graphiques côte à côte</span></span>
+<span id="cb29-54"><a href="tp1.html#cb29-54" tabindex="-1"></a></span>
+<span id="cb29-55"><a href="tp1.html#cb29-55" tabindex="-1"></a>  <span class="fu">hist</span>(v_modifie, <span class="at">main =</span> <span class="st">&quot;Histogramme du vecteur modifié&quot;</span>, <span class="at">col =</span> <span class="st">&quot;lightgreen&quot;</span>,</span>
+<span id="cb29-56"><a href="tp1.html#cb29-56" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">&quot;Valeurs&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Fréquence&quot;</span>)</span>
+<span id="cb29-57"><a href="tp1.html#cb29-57" tabindex="-1"></a>  <span class="fu">boxplot</span>(v_modifie, <span class="at">main =</span> <span class="st">&quot;Boxplot du vecteur modifié&quot;</span>, <span class="at">col =</span> <span class="st">&quot;lightblue&quot;</span>)</span>
+<span id="cb29-58"><a href="tp1.html#cb29-58" tabindex="-1"></a></span>
+<span id="cb29-59"><a href="tp1.html#cb29-59" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+</details>
+<hr />
+<p>Si vous êtes en avance proposez une fonction <code>resumer_vecteur2()</code> qui
+calcule manuellement la moyenne, la médiane et la variance d’un vecteur x
+(c’est-à-dire sans utiliser les fonctions intégrées de R).</p>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="tp1.html#cb30-1" tabindex="-1"></a>resumer_vecteur2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb30-2"><a href="tp1.html#cb30-2" tabindex="-1"></a>  </span>
+<span id="cb30-3"><a href="tp1.html#cb30-3" tabindex="-1"></a>  <span class="co"># Nombre d&#39;élément dans x</span></span>
+<span id="cb30-4"><a href="tp1.html#cb30-4" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb30-5"><a href="tp1.html#cb30-5" tabindex="-1"></a>  </span>
+<span id="cb30-6"><a href="tp1.html#cb30-6" tabindex="-1"></a>  <span class="co"># Minimum</span></span>
+<span id="cb30-7"><a href="tp1.html#cb30-7" tabindex="-1"></a>  minimum <span class="ot">&lt;-</span> x[<span class="dv">1</span>]  <span class="co"># On initialise avec le premier élément</span></span>
+<span id="cb30-8"><a href="tp1.html#cb30-8" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) {</span>
+<span id="cb30-9"><a href="tp1.html#cb30-9" tabindex="-1"></a>    <span class="cf">if</span> (x[i] <span class="sc">&lt;</span> minimum) {</span>
+<span id="cb30-10"><a href="tp1.html#cb30-10" tabindex="-1"></a>      minimum <span class="ot">&lt;-</span> x[i]</span>
+<span id="cb30-11"><a href="tp1.html#cb30-11" tabindex="-1"></a>    }</span>
+<span id="cb30-12"><a href="tp1.html#cb30-12" tabindex="-1"></a>  }</span>
+<span id="cb30-13"><a href="tp1.html#cb30-13" tabindex="-1"></a>  </span>
+<span id="cb30-14"><a href="tp1.html#cb30-14" tabindex="-1"></a>  <span class="co"># Maximum</span></span>
+<span id="cb30-15"><a href="tp1.html#cb30-15" tabindex="-1"></a>  maximum <span class="ot">&lt;-</span> x[<span class="dv">1</span>]  <span class="co"># On initialise avec le premier élément</span></span>
+<span id="cb30-16"><a href="tp1.html#cb30-16" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>n) {</span>
+<span id="cb30-17"><a href="tp1.html#cb30-17" tabindex="-1"></a>    <span class="cf">if</span> (x[i] <span class="sc">&gt;</span> maximum) {</span>
+<span id="cb30-18"><a href="tp1.html#cb30-18" tabindex="-1"></a>      maximum <span class="ot">&lt;-</span> x[i]</span>
+<span id="cb30-19"><a href="tp1.html#cb30-19" tabindex="-1"></a>    }</span>
+<span id="cb30-20"><a href="tp1.html#cb30-20" tabindex="-1"></a>  }</span>
+<span id="cb30-21"><a href="tp1.html#cb30-21" tabindex="-1"></a>  </span>
+<span id="cb30-22"><a href="tp1.html#cb30-22" tabindex="-1"></a>  <span class="co"># Moyenne</span></span>
+<span id="cb30-23"><a href="tp1.html#cb30-23" tabindex="-1"></a>  moyenne <span class="ot">&lt;-</span> <span class="fu">sum</span>(x) <span class="sc">/</span> n</span>
+<span id="cb30-24"><a href="tp1.html#cb30-24" tabindex="-1"></a>  </span>
+<span id="cb30-25"><a href="tp1.html#cb30-25" tabindex="-1"></a>  <span class="co"># Médiane</span></span>
+<span id="cb30-26"><a href="tp1.html#cb30-26" tabindex="-1"></a>  x_sorted <span class="ot">&lt;-</span> <span class="fu">sort</span>(x)</span>
+<span id="cb30-27"><a href="tp1.html#cb30-27" tabindex="-1"></a>  <span class="cf">if</span> (n <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">1</span>) {</span>
+<span id="cb30-28"><a href="tp1.html#cb30-28" tabindex="-1"></a>    <span class="co"># Si impair : valeur centrale</span></span>
+<span id="cb30-29"><a href="tp1.html#cb30-29" tabindex="-1"></a>    mediane <span class="ot">&lt;-</span> x_sorted[(n <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">2</span>]</span>
+<span id="cb30-30"><a href="tp1.html#cb30-30" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb30-31"><a href="tp1.html#cb30-31" tabindex="-1"></a>    <span class="co"># Si pair : moyenne des deux valeurs centrales</span></span>
+<span id="cb30-32"><a href="tp1.html#cb30-32" tabindex="-1"></a>    mediane <span class="ot">&lt;-</span> <span class="fu">mean</span>(x_sorted[<span class="fu">c</span>(n <span class="sc">/</span> <span class="dv">2</span>, n <span class="sc">/</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span>)])</span>
+<span id="cb30-33"><a href="tp1.html#cb30-33" tabindex="-1"></a>  }</span>
+<span id="cb30-34"><a href="tp1.html#cb30-34" tabindex="-1"></a>  </span>
+<span id="cb30-35"><a href="tp1.html#cb30-35" tabindex="-1"></a>  <span class="co"># Variance</span></span>
+<span id="cb30-36"><a href="tp1.html#cb30-36" tabindex="-1"></a>  variance <span class="ot">&lt;-</span> <span class="fu">sum</span>((x <span class="sc">-</span> moyenne)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">1</span>) </span>
+<span id="cb30-37"><a href="tp1.html#cb30-37" tabindex="-1"></a>  </span>
+<span id="cb30-38"><a href="tp1.html#cb30-38" tabindex="-1"></a>  <span class="co"># Résultat</span></span>
+<span id="cb30-39"><a href="tp1.html#cb30-39" tabindex="-1"></a>  L <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">minimum =</span> minimum,</span>
+<span id="cb30-40"><a href="tp1.html#cb30-40" tabindex="-1"></a>            <span class="at">maximum =</span> maximum,</span>
+<span id="cb30-41"><a href="tp1.html#cb30-41" tabindex="-1"></a>            <span class="at">moyenne =</span> moyenne,</span>
+<span id="cb30-42"><a href="tp1.html#cb30-42" tabindex="-1"></a>            <span class="at">mediane =</span> mediane,</span>
+<span id="cb30-43"><a href="tp1.html#cb30-43" tabindex="-1"></a>            <span class="at">variance =</span> variance)</span>
+<span id="cb30-44"><a href="tp1.html#cb30-44" tabindex="-1"></a>  <span class="fu">return</span>(L)</span>
+<span id="cb30-45"><a href="tp1.html#cb30-45" tabindex="-1"></a>}</span>
+<span id="cb30-46"><a href="tp1.html#cb30-46" tabindex="-1"></a></span>
+<span id="cb30-47"><a href="tp1.html#cb30-47" tabindex="-1"></a><span class="fu">resumer_vecteur</span>(v)</span>
+<span id="cb30-48"><a href="tp1.html#cb30-48" tabindex="-1"></a></span>
+<span id="cb30-49"><a href="tp1.html#cb30-49" tabindex="-1"></a><span class="fu">resumer_vecteur2</span>(v)</span></code></pre></div>
 </details>
 <hr />
 </div>
-<div id="introduction-à-r-shiny" class="section level2 hasAnchor" number="1.9">
-<h2><span class="header-section-number">1.9</span> Introduction à R Shiny<a href="tp1.html#introduction-%C3%A0-r-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="géomatique-avec-r" class="section level2 hasAnchor" number="1.9">
+<h2><span class="header-section-number">1.9</span> Géomatique avec R<a href="tp1.html#g%C3%A9omatique-avec-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Nous allons à présent nous intéresser plus spécifiquement à la manipulation de
+données vectorielles avec R en nous appuyant sur le package
+<a href="https://r-spatial.github.io/sf/index.html">sf</a>.</p>
+<blockquote>
+<p><em>Cette section s’inspire du manuel
+<a href="https://rgeocarto.github.io/">Géomatique et cartographie avec R</a>
+<a href="refs.html#refs"><span class="citation">(Giraud &amp; Pecout, 2025)</span></a>
+proposé par <a href="https://rcarto.github.io/">Timothée Giraud</a> et
+<a href="https://orcid.org/0000-0002-0246-0954">Hugues Pecout</a>. N’hésitez pas à
+parcourir ce manuel pour aller plus loin.</em></p>
+</blockquote>
+<div id="bars-et-restaurants-à-montpellier" class="section level3 hasAnchor" number="1.9.1">
+<h3><span class="header-section-number">1.9.1</span> Bars et restaurants à Montpellier<a href="tp1.html#bars-et-restaurants-%C3%A0-montpellier" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Nous allons commencer par importer le fichier <a href="./data/tp1/data.gpkg">data.gpkg</a>.
+Ce fichier contient deux couches, <strong>bars</strong> et <strong>quartiers</strong>, que nous allons
+importer avec la fonction <code>st_read()</code> de
+<a href="https://r-spatial.github.io/sf/index.html">sf</a>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="tp1.html#cb31-1" tabindex="-1"></a><span class="co"># Import de la couche bars</span></span>
+<span id="cb31-2"><a href="tp1.html#cb31-2" tabindex="-1"></a>bars <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data.gpkg&quot;</span>, <span class="at">layer =</span> <span class="st">&quot;bars&quot;</span>)</span>
+<span id="cb31-3"><a href="tp1.html#cb31-3" tabindex="-1"></a>bars</span>
+<span id="cb31-4"><a href="tp1.html#cb31-4" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="tp1.html#cb31-5" tabindex="-1"></a><span class="co"># Import de la couche quartiers</span></span>
+<span id="cb31-6"><a href="tp1.html#cb31-6" tabindex="-1"></a>quartiers <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">&quot;data.gpkg&quot;</span>, <span class="at">layer =</span> <span class="st">&quot;quartiers&quot;</span>)</span>
+<span id="cb31-7"><a href="tp1.html#cb31-7" tabindex="-1"></a>quartiers</span>
+<span id="cb31-8"><a href="tp1.html#cb31-8" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="tp1.html#cb31-9" tabindex="-1"></a><span class="co"># Aperçu de la classe</span></span>
+<span id="cb31-10"><a href="tp1.html#cb31-10" tabindex="-1"></a><span class="fu">class</span>(bars)</span>
+<span id="cb31-11"><a href="tp1.html#cb31-11" tabindex="-1"></a></span>
+<span id="cb31-12"><a href="tp1.html#cb31-12" tabindex="-1"></a><span class="co"># Lister les couches avec st_layers</span></span>
+<span id="cb31-13"><a href="tp1.html#cb31-13" tabindex="-1"></a><span class="fu">st_layers</span>(<span class="st">&quot;data.gpkg&quot;</span>)</span></code></pre></div>
+<blockquote>
+<p><em>Le format geopackage permet de stocker plusieurs couches dans un même fichier
+dont vous pouvez avoir un aperçu avec la fonction <code>st_layers()</code>.</em></p>
+</blockquote>
+</div>
+<div id="exploration-et-visualisation" class="section level3 hasAnchor" number="1.9.2">
+<h3><span class="header-section-number">1.9.2</span> Exploration et visualisation<a href="tp1.html#exploration-et-visualisation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Les objets <strong>sf</strong> étant des data.frames nous pouvons utiliser les fonctions
+<code>head()</code> (ou <code>tail()</code>) et <code>summary()</code> pour les explorer.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="tp1.html#cb32-1" tabindex="-1"></a><span class="co"># Les dix premiers éléments de bars</span></span>
+<span id="cb32-2"><a href="tp1.html#cb32-2" tabindex="-1"></a><span class="fu">head</span>(bars, <span class="dv">10</span>)</span>
+<span id="cb32-3"><a href="tp1.html#cb32-3" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="tp1.html#cb32-4" tabindex="-1"></a><span class="co"># Un résumer des variables de bars</span></span>
+<span id="cb32-5"><a href="tp1.html#cb32-5" tabindex="-1"></a><span class="fu">summary</span>(bars)</span>
+<span id="cb32-6"><a href="tp1.html#cb32-6" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="tp1.html#cb32-7" tabindex="-1"></a><span class="co"># Pareil pour quartiers</span></span>
+<span id="cb32-8"><a href="tp1.html#cb32-8" tabindex="-1"></a><span class="fu">head</span>(quartiers, <span class="dv">10</span>)</span>
+<span id="cb32-9"><a href="tp1.html#cb32-9" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="tp1.html#cb32-10" tabindex="-1"></a><span class="fu">summary</span>(quartiers)</span></code></pre></div>
+<p>Il est également possible de transformer un objet <strong>sf</strong> en simple data.frame
+en supprimant la gémométrie avec la fonction <code>st_drop_geometry()</code>.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="tp1.html#cb33-1" tabindex="-1"></a>bars_df <span class="ot">&lt;-</span> <span class="fu">st_drop_geometry</span>(bars)</span></code></pre></div>
+<p>La manière la plus simple de visualiser un objet <strong>sf</strong> est d’utiliser la
+fonction <code>plot()</code>,</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="tp1.html#cb34-1" tabindex="-1"></a><span class="fu">plot</span>(bars)</span></code></pre></div>
+<p>avec la possiblité d’afficher une seule variable,</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="tp1.html#cb35-1" tabindex="-1"></a><span class="fu">plot</span>(bars[<span class="st">&quot;Type&quot;</span>])</span></code></pre></div>
+<p>ou bien seulement la géométrie.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="tp1.html#cb36-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(quartiers), <span class="at">col =</span> <span class="st">&quot;ivory4&quot;</span>, <span class="at">border =</span> <span class="st">&quot;ivory&quot;</span>)</span></code></pre></div>
+</div>
+<div id="opérations-sur-les-géométries" class="section level3 hasAnchor" number="1.9.3">
+<h3><span class="header-section-number">1.9.3</span> Opérations sur les géométries<a href="tp1.html#op%C3%A9rations-sur-les-g%C3%A9om%C3%A9tries" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Il existe de nombreuses opérations pour manipuler les géométries avec le package
+<a href="https://r-spatial.github.io/sf/index.html">sf</a>. Dans cette section, nous allons
+découvrir quelques-unes des fonctions les plus utiles.</p>
+<p>Commençons par extraire les centroïdes de <strong>quartiers</strong>,</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="tp1.html#cb37-1" tabindex="-1"></a>quartiers_c <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(quartiers)</span></code></pre></div>
+<p>que nous pouvons ensuite visualiser avec <code>plot()</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="tp1.html#cb38-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(quartiers), <span class="at">col =</span> <span class="st">&quot;ivory4&quot;</span>, <span class="at">border =</span> <span class="st">&quot;ivory&quot;</span>)</span>
+<span id="cb38-2"><a href="tp1.html#cb38-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(quartiers_c), <span class="at">col =</span> <span class="st">&quot;steelblue3&quot;</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<blockquote>
+<ul>
+<li><code>st_centroid()</code> calcule le centroïde géométrique qui peut
+parfois se situer en dehors du polygone si celui-ci est concave.*</li>
+</ul>
+</blockquote>
+<p>On peut également agréger les quartiers avec la fonction <code>st_union()</code>.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="tp1.html#cb39-1" tabindex="-1"></a>all <span class="ot">&lt;-</span> <span class="fu">st_union</span>(quartiers)</span>
+<span id="cb39-2"><a href="tp1.html#cb39-2" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="tp1.html#cb39-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(quartiers), <span class="at">col =</span> <span class="st">&quot;ivory4&quot;</span>, <span class="at">border =</span> <span class="st">&quot;ivory&quot;</span>)</span>
+<span id="cb39-4"><a href="tp1.html#cb39-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(all), <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">border =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Il est aussi possible d’utiliser la fonction <code>st_intersects()</code> qui nous
+permet d’identifier les intersections entre quartiers et bars/restaurants.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="tp1.html#cb40-1" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">st_intersects</span>(quartiers, bars, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p>Finalement, vous pouvez créer une zone tampons autour du premier bar,</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="tp1.html#cb41-1" tabindex="-1"></a>zone <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(<span class="fu">st_geometry</span>(bars)[<span class="dv">1</span>], <span class="dv">1000</span>)</span></code></pre></div>
+<p>que vous pouvez visualiser sur la couche <strong>quartiers</strong>,</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="tp1.html#cb42-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(quartiers), <span class="at">col =</span> <span class="st">&quot;ivory4&quot;</span>, <span class="at">border =</span> <span class="st">&quot;ivory&quot;</span>)</span>
+<span id="cb42-2"><a href="tp1.html#cb42-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(zone), <span class="at">col =</span> <span class="cn">NA</span>, <span class="at">border =</span> <span class="st">&quot;#CC6666&quot;</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>puis réaliser une intersection des deux couches avec la fonction
+<code>st_intersection()</code>.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="tp1.html#cb43-1" tabindex="-1"></a>quartiers_z <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(quartiers, zone)</span>
+<span id="cb43-2"><a href="tp1.html#cb43-2" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="tp1.html#cb43-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(quartiers_z), <span class="at">col =</span> <span class="st">&quot;ivory4&quot;</span>, <span class="at">border =</span> <span class="st">&quot;ivory&quot;</span>)</span></code></pre></div>
+</div>
+<div id="exercices" class="section level3 hasAnchor" number="1.9.4">
+<h3><span class="header-section-number">1.9.4</span> Exercices<a href="tp1.html#exercices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>1.</strong> Comptez le nombre de bars et restaurants en utilisant la fonction
+<code>table()</code>.</p>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="tp1.html#cb44-1" tabindex="-1"></a><span class="fu">table</span>(bars<span class="sc">$</span>Type)</span></code></pre></div>
+</details>
+<hr />
+<p><strong>2.</strong> Afficher les quartiers et les bars/restaurants sur une même carte.</p>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="tp1.html#cb45-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(quartiers), <span class="at">col =</span> <span class="st">&quot;ivory4&quot;</span>, <span class="at">border =</span> <span class="st">&quot;ivory&quot;</span>)</span>
+<span id="cb45-2"><a href="tp1.html#cb45-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bars), <span class="at">col =</span> <span class="st">&quot;steelblue3&quot;</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</details>
+<hr />
+<p><strong>3.</strong> Utiliser les fonctions <code>st_intersects()</code> et <code>apply()</code> pour compter le
+nombre de bars/restaurants par quartier. Ajouter cette variable à l’objet
+<strong>quartiers</strong> et visualiser le résulat avec <code>plot()</code>.</p>
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="tp1.html#cb46-1" tabindex="-1"></a><span class="co"># Calcul des intersections entre les polygones (quartiers) et les points (bars). </span></span>
+<span id="cb46-2"><a href="tp1.html#cb46-2" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">st_intersects</span>(quartiers, bars, <span class="at">sparse =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb46-3"><a href="tp1.html#cb46-3" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="tp1.html#cb46-4" tabindex="-1"></a><span class="co"># Pour chaque quartier, on compte le nombre de bars grâce à apply().</span></span>
+<span id="cb46-5"><a href="tp1.html#cb46-5" tabindex="-1"></a>quartiers<span class="sc">$</span>Counts <span class="ot">&lt;-</span> <span class="fu">apply</span>(inter, <span class="dv">1</span>, sum)</span>
+<span id="cb46-6"><a href="tp1.html#cb46-6" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="tp1.html#cb46-7" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb46-8"><a href="tp1.html#cb46-8" tabindex="-1"></a><span class="fu">plot</span>(quartiers[<span class="st">&quot;Counts&quot;</span>])</span></code></pre></div>
+</details>
+</div>
+</div>
+<div id="introduction-à-r-shiny" class="section level2 hasAnchor" number="1.10">
+<h2><span class="header-section-number">1.10</span> Introduction à R Shiny<a href="tp1.html#introduction-%C3%A0-r-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>R Shiny permet de créer des <strong>applications web interactives</strong> directement depuis R.
 Avec Shiny, vous pouvez rendre vos analyses et graphiques interactifs, sans
 avoir besoin de connaissances en HTML, CSS ou JavaScript.</p>
-<div id="structure-dune-application-shiny" class="section level3 hasAnchor" number="1.9.1">
-<h3><span class="header-section-number">1.9.1</span> Structure d’une application Shiny<a href="tp1.html#structure-dune-application-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vous pouvez explorer quelques exemples avec différents rendus <a href="https://forge.inrae.fr/sk8/sk8-apps/mathnum/tetis/">ici</a>.</p>
+<div id="structure-dune-application-shiny" class="section level3 hasAnchor" number="1.10.1">
+<h3><span class="header-section-number">1.10.1</span> Structure d’une application Shiny<a href="tp1.html#structure-dune-application-shiny" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Une application Shiny se compose généralement de deux parties principales :</p>
 <ol style="list-style-type: decimal">
 <li><strong>UI (User Interface)</strong> : définit l’apparence de l’application (boutons,
@@ -635,38 +880,57 @@ graphiques, champs de saisie…).<br />
 affichés dans l’UI.</li>
 </ol>
 </div>
-<div id="exemple-minimal" class="section level3 hasAnchor" number="1.9.2">
-<h3><span class="header-section-number">1.9.2</span> Exemple minimal<a href="tp1.html#exemple-minimal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="exemple-minimal" class="section level3 hasAnchor" number="1.10.2">
+<h3><span class="header-section-number">1.10.2</span> Exemple minimal<a href="tp1.html#exemple-minimal" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Installez le package <strong>shiny</strong>, créez un fichier <strong>app.R</strong> dans votre dossier
 <strong>TP1</strong> et copiez-collez le code suivant :</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="tp1.html#cb29-1" tabindex="-1"></a><span class="co"># Charger le package Shiny</span></span>
-<span id="cb29-2"><a href="tp1.html#cb29-2" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
-<span id="cb29-3"><a href="tp1.html#cb29-3" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="tp1.html#cb29-4" tabindex="-1"></a><span class="co"># Définir l&#39;interface utilisateur</span></span>
-<span id="cb29-5"><a href="tp1.html#cb29-5" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
-<span id="cb29-6"><a href="tp1.html#cb29-6" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Mon premier Shiny&quot;</span>),</span>
-<span id="cb29-7"><a href="tp1.html#cb29-7" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
-<span id="cb29-8"><a href="tp1.html#cb29-8" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
-<span id="cb29-9"><a href="tp1.html#cb29-9" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">&quot;nombre&quot;</span>, <span class="st">&quot;Choisir un nombre :&quot;</span>, <span class="at">min=</span><span class="dv">1</span>, <span class="at">max=</span><span class="dv">100</span>, <span class="at">value=</span><span class="dv">50</span>)</span>
-<span id="cb29-10"><a href="tp1.html#cb29-10" tabindex="-1"></a>    ),</span>
-<span id="cb29-11"><a href="tp1.html#cb29-11" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
-<span id="cb29-12"><a href="tp1.html#cb29-12" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">&quot;affichage&quot;</span>)</span>
-<span id="cb29-13"><a href="tp1.html#cb29-13" tabindex="-1"></a>    )</span>
-<span id="cb29-14"><a href="tp1.html#cb29-14" tabindex="-1"></a>  )</span>
-<span id="cb29-15"><a href="tp1.html#cb29-15" tabindex="-1"></a>)</span>
-<span id="cb29-16"><a href="tp1.html#cb29-16" tabindex="-1"></a></span>
-<span id="cb29-17"><a href="tp1.html#cb29-17" tabindex="-1"></a><span class="co"># Définir le serveur</span></span>
-<span id="cb29-18"><a href="tp1.html#cb29-18" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
-<span id="cb29-19"><a href="tp1.html#cb29-19" tabindex="-1"></a>  output<span class="sc">$</span>affichage <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
-<span id="cb29-20"><a href="tp1.html#cb29-20" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;Le nombre choisi est :&quot;</span>, input<span class="sc">$</span>nombre)</span>
-<span id="cb29-21"><a href="tp1.html#cb29-21" tabindex="-1"></a>  })</span>
-<span id="cb29-22"><a href="tp1.html#cb29-22" tabindex="-1"></a>}</span>
-<span id="cb29-23"><a href="tp1.html#cb29-23" tabindex="-1"></a></span>
-<span id="cb29-24"><a href="tp1.html#cb29-24" tabindex="-1"></a><span class="co"># Lancer l&#39;application</span></span>
-<span id="cb29-25"><a href="tp1.html#cb29-25" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="tp1.html#cb47-1" tabindex="-1"></a><span class="co"># Charger le package Shiny</span></span>
+<span id="cb47-2"><a href="tp1.html#cb47-2" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb47-3"><a href="tp1.html#cb47-3" tabindex="-1"></a></span>
+<span id="cb47-4"><a href="tp1.html#cb47-4" tabindex="-1"></a><span class="co"># Définir l&#39;interface utilisateur (UI)</span></span>
+<span id="cb47-5"><a href="tp1.html#cb47-5" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb47-6"><a href="tp1.html#cb47-6" tabindex="-1"></a>  </span>
+<span id="cb47-7"><a href="tp1.html#cb47-7" tabindex="-1"></a>  <span class="co"># Titre affiché en haut de l&#39;application</span></span>
+<span id="cb47-8"><a href="tp1.html#cb47-8" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Mon premier Shiny&quot;</span>),</span>
+<span id="cb47-9"><a href="tp1.html#cb47-9" tabindex="-1"></a>  </span>
+<span id="cb47-10"><a href="tp1.html#cb47-10" tabindex="-1"></a>  <span class="co"># Mise en page avec une barre latérale + un panneau principal</span></span>
+<span id="cb47-11"><a href="tp1.html#cb47-11" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb47-12"><a href="tp1.html#cb47-12" tabindex="-1"></a>    </span>
+<span id="cb47-13"><a href="tp1.html#cb47-13" tabindex="-1"></a>    <span class="co"># Barre latérale contenant les éléments d&#39;entrée</span></span>
+<span id="cb47-14"><a href="tp1.html#cb47-14" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb47-15"><a href="tp1.html#cb47-15" tabindex="-1"></a>      </span>
+<span id="cb47-16"><a href="tp1.html#cb47-16" tabindex="-1"></a>      <span class="co"># Curseur permettant de choisir un nombre entre 1 et 100</span></span>
+<span id="cb47-17"><a href="tp1.html#cb47-17" tabindex="-1"></a>      <span class="fu">sliderInput</span>(</span>
+<span id="cb47-18"><a href="tp1.html#cb47-18" tabindex="-1"></a>        <span class="at">inputId =</span> <span class="st">&quot;nombre&quot;</span>,        <span class="co"># Nom de l&#39;objet côté serveur</span></span>
+<span id="cb47-19"><a href="tp1.html#cb47-19" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">&quot;Choisir un nombre :&quot;</span>, </span>
+<span id="cb47-20"><a href="tp1.html#cb47-20" tabindex="-1"></a>        <span class="at">min =</span> <span class="dv">1</span>, </span>
+<span id="cb47-21"><a href="tp1.html#cb47-21" tabindex="-1"></a>        <span class="at">max =</span> <span class="dv">100</span>, </span>
+<span id="cb47-22"><a href="tp1.html#cb47-22" tabindex="-1"></a>        <span class="at">value =</span> <span class="dv">50</span>                 <span class="co"># Valeur par défaut</span></span>
+<span id="cb47-23"><a href="tp1.html#cb47-23" tabindex="-1"></a>      )</span>
+<span id="cb47-24"><a href="tp1.html#cb47-24" tabindex="-1"></a>    ),</span>
+<span id="cb47-25"><a href="tp1.html#cb47-25" tabindex="-1"></a>    </span>
+<span id="cb47-26"><a href="tp1.html#cb47-26" tabindex="-1"></a>    <span class="co"># Zone principale où s&#39;affiche le résultat</span></span>
+<span id="cb47-27"><a href="tp1.html#cb47-27" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb47-28"><a href="tp1.html#cb47-28" tabindex="-1"></a>      <span class="co"># Sortie textuelle</span></span>
+<span id="cb47-29"><a href="tp1.html#cb47-29" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">&quot;affichage&quot;</span>)</span>
+<span id="cb47-30"><a href="tp1.html#cb47-30" tabindex="-1"></a>    )</span>
+<span id="cb47-31"><a href="tp1.html#cb47-31" tabindex="-1"></a>  )</span>
+<span id="cb47-32"><a href="tp1.html#cb47-32" tabindex="-1"></a>)</span>
+<span id="cb47-33"><a href="tp1.html#cb47-33" tabindex="-1"></a></span>
+<span id="cb47-34"><a href="tp1.html#cb47-34" tabindex="-1"></a><span class="co"># Définir la partie serveur : ce qui se passe quand l&#39;utilisateur interagit</span></span>
+<span id="cb47-35"><a href="tp1.html#cb47-35" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb47-36"><a href="tp1.html#cb47-36" tabindex="-1"></a>  </span>
+<span id="cb47-37"><a href="tp1.html#cb47-37" tabindex="-1"></a>  <span class="co"># Création d&#39;un texte dynamique en fonction de l&#39;entrée &quot;nombre&quot;</span></span>
+<span id="cb47-38"><a href="tp1.html#cb47-38" tabindex="-1"></a>  output<span class="sc">$</span>affichage <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb47-39"><a href="tp1.html#cb47-39" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;Le nombre choisi est :&quot;</span>, input<span class="sc">$</span>nombre)</span>
+<span id="cb47-40"><a href="tp1.html#cb47-40" tabindex="-1"></a>  })</span>
+<span id="cb47-41"><a href="tp1.html#cb47-41" tabindex="-1"></a>}</span>
+<span id="cb47-42"><a href="tp1.html#cb47-42" tabindex="-1"></a></span>
+<span id="cb47-43"><a href="tp1.html#cb47-43" tabindex="-1"></a><span class="co"># Lancer l&#39;application Shiny</span></span>
+<span id="cb47-44"><a href="tp1.html#cb47-44" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
 </div>
-<div id="déployer-lapplication" class="section level3 hasAnchor" number="1.9.3">
-<h3><span class="header-section-number">1.9.3</span> Déployer l’application<a href="tp1.html#d%C3%A9ployer-lapplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="déployer-lapplication" class="section level3 hasAnchor" number="1.10.3">
+<h3><span class="header-section-number">1.10.3</span> Déployer l’application<a href="tp1.html#d%C3%A9ployer-lapplication" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
 <li>Ouvrez le fichier <strong>app.R</strong> dans RStudio.<br />
 </li>
@@ -679,6 +943,61 @@ affichés dans l’UI.</li>
 <a href="https://www.shinyapps.io/">shinyapps.io</a> ou un serveur Shiny propre. L’exemple
 ci-dessus fonctionne localement sur votre machine.</em></p>
 </blockquote>
+</div>
+<div id="exercice-1" class="section level3 hasAnchor" number="1.10.4">
+<h3><span class="header-section-number">1.10.4</span> Exercice<a href="tp1.html#exercice-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Modifiez l’application existante pour qu’elle affiche un histogramme (avec
+<code>renderPlot()</code>) basé sur un échantillon aléatoire (avec <code>sample()</code>) dont la
+taille est déterminée par le slider.</p>
+<hr />
+<details>
+<summary>
+Solution (cliquer pour afficher)
+</summary>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="tp1.html#cb48-1" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb48-2"><a href="tp1.html#cb48-2" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="tp1.html#cb48-3" tabindex="-1"></a><span class="co"># Interface utilisateur</span></span>
+<span id="cb48-4"><a href="tp1.html#cb48-4" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb48-5"><a href="tp1.html#cb48-5" tabindex="-1"></a>  <span class="fu">titlePanel</span>(<span class="st">&quot;Histogramme&quot;</span>),</span>
+<span id="cb48-6"><a href="tp1.html#cb48-6" tabindex="-1"></a>  </span>
+<span id="cb48-7"><a href="tp1.html#cb48-7" tabindex="-1"></a>  <span class="fu">sidebarLayout</span>(</span>
+<span id="cb48-8"><a href="tp1.html#cb48-8" tabindex="-1"></a>    <span class="fu">sidebarPanel</span>(</span>
+<span id="cb48-9"><a href="tp1.html#cb48-9" tabindex="-1"></a>      <span class="fu">sliderInput</span>(<span class="st">&quot;nombre&quot;</span>,</span>
+<span id="cb48-10"><a href="tp1.html#cb48-10" tabindex="-1"></a>                  <span class="st">&quot;Taille de l&#39;échantillon :&quot;</span>,</span>
+<span id="cb48-11"><a href="tp1.html#cb48-11" tabindex="-1"></a>                  <span class="at">min =</span> <span class="dv">10</span>, <span class="at">max =</span> <span class="dv">1000</span>, <span class="at">value =</span> <span class="dv">100</span>)</span>
+<span id="cb48-12"><a href="tp1.html#cb48-12" tabindex="-1"></a>    ),</span>
+<span id="cb48-13"><a href="tp1.html#cb48-13" tabindex="-1"></a>    </span>
+<span id="cb48-14"><a href="tp1.html#cb48-14" tabindex="-1"></a>    <span class="fu">mainPanel</span>(</span>
+<span id="cb48-15"><a href="tp1.html#cb48-15" tabindex="-1"></a>      <span class="fu">textOutput</span>(<span class="st">&quot;affichage&quot;</span>),</span>
+<span id="cb48-16"><a href="tp1.html#cb48-16" tabindex="-1"></a>      <span class="fu">plotOutput</span>(<span class="st">&quot;histo&quot;</span>)   <span class="co"># Ajout de la zone pour le graphique</span></span>
+<span id="cb48-17"><a href="tp1.html#cb48-17" tabindex="-1"></a>    )</span>
+<span id="cb48-18"><a href="tp1.html#cb48-18" tabindex="-1"></a>  )</span>
+<span id="cb48-19"><a href="tp1.html#cb48-19" tabindex="-1"></a>)</span>
+<span id="cb48-20"><a href="tp1.html#cb48-20" tabindex="-1"></a></span>
+<span id="cb48-21"><a href="tp1.html#cb48-21" tabindex="-1"></a><span class="co"># Serveur</span></span>
+<span id="cb48-22"><a href="tp1.html#cb48-22" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb48-23"><a href="tp1.html#cb48-23" tabindex="-1"></a>  </span>
+<span id="cb48-24"><a href="tp1.html#cb48-24" tabindex="-1"></a>  <span class="co"># Affichage de la taille de l&#39;échantillon</span></span>
+<span id="cb48-25"><a href="tp1.html#cb48-25" tabindex="-1"></a>  output<span class="sc">$</span>affichage <span class="ot">&lt;-</span> <span class="fu">renderText</span>({</span>
+<span id="cb48-26"><a href="tp1.html#cb48-26" tabindex="-1"></a>    <span class="fu">paste</span>(<span class="st">&quot;Taille de l&#39;échantillon :&quot;</span>, input<span class="sc">$</span>nombre)</span>
+<span id="cb48-27"><a href="tp1.html#cb48-27" tabindex="-1"></a>  })</span>
+<span id="cb48-28"><a href="tp1.html#cb48-28" tabindex="-1"></a>  </span>
+<span id="cb48-29"><a href="tp1.html#cb48-29" tabindex="-1"></a>  <span class="co"># Histogramme </span></span>
+<span id="cb48-30"><a href="tp1.html#cb48-30" tabindex="-1"></a>  output<span class="sc">$</span>histo <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb48-31"><a href="tp1.html#cb48-31" tabindex="-1"></a>    </span>
+<span id="cb48-32"><a href="tp1.html#cb48-32" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, input<span class="sc">$</span>nombre, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb48-33"><a href="tp1.html#cb48-33" tabindex="-1"></a>    </span>
+<span id="cb48-34"><a href="tp1.html#cb48-34" tabindex="-1"></a>    <span class="fu">hist</span>(x,</span>
+<span id="cb48-35"><a href="tp1.html#cb48-35" tabindex="-1"></a>         <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">10.5</span>, <span class="at">by =</span> <span class="dv">1</span>),  <span class="co"># Barres centrées sur les entiers</span></span>
+<span id="cb48-36"><a href="tp1.html#cb48-36" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Histogramme&quot;</span>,</span>
+<span id="cb48-37"><a href="tp1.html#cb48-37" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;Valeurs de 1 à 10&quot;</span>)</span>
+<span id="cb48-38"><a href="tp1.html#cb48-38" tabindex="-1"></a>  })</span>
+<span id="cb48-39"><a href="tp1.html#cb48-39" tabindex="-1"></a>}</span>
+<span id="cb48-40"><a href="tp1.html#cb48-40" tabindex="-1"></a></span>
+<span id="cb48-41"><a href="tp1.html#cb48-41" tabindex="-1"></a><span class="co"># Lancer l&#39;application</span></span>
+<span id="cb48-42"><a href="tp1.html#cb48-42" tabindex="-1"></a><span class="fu">shinyApp</span>(ui, server)</span></code></pre></div>
+</details>
+<hr />
 
 </div>
 </div>
