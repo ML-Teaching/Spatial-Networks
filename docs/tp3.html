@@ -420,8 +420,7 @@ Solution (cliquer pour afficher)
 <span id="cb86-5"><a href="tp3.html#cb86-5" tabindex="-1"></a><span class="fu">table</span>(clu<span class="sc">$</span>clusters[,<span class="dv">2</span>])</span>
 <span id="cb86-6"><a href="tp3.html#cb86-6" tabindex="-1"></a></span>
 <span id="cb86-7"><a href="tp3.html#cb86-7" tabindex="-1"></a><span class="co"># Visualisation cartographique</span></span>
-<span id="cb86-8"><a href="tp3.html#cb86-8" tabindex="-1"></a><span class="fu">map_bioregions</span>(clu, </span>
-<span id="cb86-9"><a href="tp3.html#cb86-9" tabindex="-1"></a>               vegesf)</span></code></pre></div>
+<span id="cb86-8"><a href="tp3.html#cb86-8" tabindex="-1"></a><span class="fu">map_bioregions</span>(clu, vegesf)</span></code></pre></div>
 </details>
 <hr />
 </div>
@@ -453,7 +452,9 @@ bioregion.</p>
 <span id="cb88-4"><a href="tp3.html#cb88-4" tabindex="-1"></a>                                <span class="at">comat =</span> vegemat,</span>
 <span id="cb88-5"><a href="tp3.html#cb88-5" tabindex="-1"></a>                                <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb88-6"><a href="tp3.html#cb88-6" tabindex="-1"></a></span>
-<span id="cb88-7"><a href="tp3.html#cb88-7" tabindex="-1"></a>contrib <span class="ot">&lt;-</span> <span class="fu">net_to_mat</span>(contrib<span class="sc">$</span>species_bioregions, <span class="at">weight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb88-7"><a href="tp3.html#cb88-7" tabindex="-1"></a>contrib <span class="ot">&lt;-</span> <span class="fu">net_to_mat</span>(contrib<span class="sc">$</span>species_bioregions, <span class="at">weight =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb88-8"><a href="tp3.html#cb88-8" tabindex="-1"></a></span>
+<span id="cb88-9"><a href="tp3.html#cb88-9" tabindex="-1"></a>contrib[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
 <p>Les valeurs de <strong>contrib</strong> sont positives lorsqu’une espèce contribue
 positivement à une bioregion. Cela signifie qu’on la
 retrouve plus fréquemment dans cette bioregion que ce que l’on pourrait
@@ -498,30 +499,32 @@ Solution (cliquer pour afficher)
 espèce somment à 1. Cette étape transforme les contributions en proportions
 comparables entre espèces.</p>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="tp3.html#cb91-1" tabindex="-1"></a><span class="co"># Copier la table des contributions</span></span>
-<span id="cb91-2"><a href="tp3.html#cb91-2" tabindex="-1"></a>contrib_sign <span class="ot">&lt;-</span> contrib</span>
+<span id="cb91-2"><a href="tp3.html#cb91-2" tabindex="-1"></a>contrib_196 <span class="ot">&lt;-</span> contrib</span>
 <span id="cb91-3"><a href="tp3.html#cb91-3" tabindex="-1"></a></span>
 <span id="cb91-4"><a href="tp3.html#cb91-4" tabindex="-1"></a><span class="co"># Filtrer uniquement les contributions significatives (&gt; 1.96)</span></span>
-<span id="cb91-5"><a href="tp3.html#cb91-5" tabindex="-1"></a>contrib_sign[contrib_sign <span class="sc">&lt;</span> <span class="fl">1.96</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb91-5"><a href="tp3.html#cb91-5" tabindex="-1"></a>contrib_196[contrib_196 <span class="sc">&lt;</span> <span class="fl">1.96</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb91-6"><a href="tp3.html#cb91-6" tabindex="-1"></a></span>
 <span id="cb91-7"><a href="tp3.html#cb91-7" tabindex="-1"></a><span class="co"># Normaliser les contributions par ligne (chaque espèce)</span></span>
-<span id="cb91-8"><a href="tp3.html#cb91-8" tabindex="-1"></a>contrib_sign <span class="ot">&lt;-</span> contrib_sign <span class="sc">/</span> <span class="fu">apply</span>(contrib_sign, <span class="dv">1</span>, sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb91-8"><a href="tp3.html#cb91-8" tabindex="-1"></a>contrib_196 <span class="ot">&lt;-</span> contrib_196 <span class="sc">/</span> <span class="fu">apply</span>(contrib_196, <span class="dv">1</span>, sum)</span>
+<span id="cb91-9"><a href="tp3.html#cb91-9" tabindex="-1"></a>contrib_196[<span class="fu">is.na</span>(contrib_196)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb91-10"><a href="tp3.html#cb91-10" tabindex="-1"></a></span>
+<span id="cb91-11"><a href="tp3.html#cb91-11" tabindex="-1"></a>contrib_196[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
 <p>À partir de cette table, nous pouvons calculer la matrice <strong>lambda</strong>, qui
 résume les relations entre bioregions.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="tp3.html#cb92-1" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">ncol</span>(contrib_sign)</span>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="tp3.html#cb92-1" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">ncol</span>(contrib_196)</span>
 <span id="cb92-2"><a href="tp3.html#cb92-2" tabindex="-1"></a></span>
 <span id="cb92-3"><a href="tp3.html#cb92-3" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, K, K)</span>
-<span id="cb92-4"><a href="tp3.html#cb92-4" tabindex="-1"></a><span class="fu">colnames</span>(lambda) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(contrib_sign)</span>
-<span id="cb92-5"><a href="tp3.html#cb92-5" tabindex="-1"></a><span class="fu">rownames</span>(lambda) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(contrib_sign)</span>
+<span id="cb92-4"><a href="tp3.html#cb92-4" tabindex="-1"></a><span class="fu">colnames</span>(lambda) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(contrib_196)</span>
+<span id="cb92-5"><a href="tp3.html#cb92-5" tabindex="-1"></a><span class="fu">rownames</span>(lambda) <span class="ot">&lt;-</span> <span class="fu">colnames</span>(contrib_196)</span>
 <span id="cb92-6"><a href="tp3.html#cb92-6" tabindex="-1"></a></span>
-<span id="cb92-7"><a href="tp3.html#cb92-7" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>k){</span>
+<span id="cb92-7"><a href="tp3.html#cb92-7" tabindex="-1"></a><span class="cf">for</span>(k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){</span>
 <span id="cb92-8"><a href="tp3.html#cb92-8" tabindex="-1"></a>  </span>
-<span id="cb92-9"><a href="tp3.html#cb92-9" tabindex="-1"></a>  contrib_sign_k <span class="ot">&lt;-</span> contrib_sign[<span class="sc">!</span><span class="fu">is.na</span>(contrib_sign[, k]),]</span>
-<span id="cb92-10"><a href="tp3.html#cb92-10" tabindex="-1"></a>  contrib_sign_k[<span class="fu">is.na</span>(contrib_sign_k )] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb92-11"><a href="tp3.html#cb92-11" tabindex="-1"></a>  lambda[k,] <span class="ot">&lt;-</span> <span class="fu">apply</span>(contrib_sign_k, <span class="dv">2</span>, mean)</span>
-<span id="cb92-12"><a href="tp3.html#cb92-12" tabindex="-1"></a>  </span>
-<span id="cb92-13"><a href="tp3.html#cb92-13" tabindex="-1"></a>}</span>
-<span id="cb92-14"><a href="tp3.html#cb92-14" tabindex="-1"></a></span>
-<span id="cb92-15"><a href="tp3.html#cb92-15" tabindex="-1"></a>lambda</span></code></pre></div>
+<span id="cb92-9"><a href="tp3.html#cb92-9" tabindex="-1"></a>  contrib_196_k <span class="ot">&lt;-</span> contrib_196[contrib_196[, k] <span class="sc">&gt;</span> <span class="dv">0</span>,]</span>
+<span id="cb92-10"><a href="tp3.html#cb92-10" tabindex="-1"></a>  lambda[k,] <span class="ot">&lt;-</span> <span class="fu">apply</span>(contrib_196_k, <span class="dv">2</span>, mean)</span>
+<span id="cb92-11"><a href="tp3.html#cb92-11" tabindex="-1"></a>  </span>
+<span id="cb92-12"><a href="tp3.html#cb92-12" tabindex="-1"></a>}</span>
+<span id="cb92-13"><a href="tp3.html#cb92-13" tabindex="-1"></a></span>
+<span id="cb92-14"><a href="tp3.html#cb92-14" tabindex="-1"></a>lambda</span></code></pre></div>
 </div>
 <div id="exercices-5" class="section level3 hasAnchor" number="3.4.4">
 <h3><span class="header-section-number">3.4.4</span> Exercices<a href="tp3.html#exercices-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -548,7 +551,7 @@ superposition.</p>
 <p>Calculer la fraction de surface de chaque polygone de <strong>mtp_l</strong> correspondant à
 chaque bioregion définie dans <strong>bioreg</strong>.</p>
 <ol style="list-style-type: decimal">
-<li>Réaliser l’intersection spatiale entre mtp_l et bioreg.</li>
+<li>Réaliser l’intersection spatiale entre <strong>mtp_l</strong> et <strong>bioreg</strong>.</li>
 <li>Calculer l’aire de chaque intersection.</li>
 <li>Calculer la fraction de surface de chaque polygone correspondant à
 chaque bioregion (aire intersection / aire totale du polygone).</li>
@@ -582,23 +585,19 @@ Solution (cliquer pour afficher)
 <span id="cb95-18"><a href="tp3.html#cb95-18" tabindex="-1"></a>inter<span class="sc">$</span>Frac <span class="ot">&lt;-</span> inter<span class="sc">$</span>area_inter <span class="sc">/</span> (inter<span class="sc">$</span>Area <span class="sc">*</span> <span class="fl">1e6</span>)</span>
 <span id="cb95-19"><a href="tp3.html#cb95-19" tabindex="-1"></a></span>
 <span id="cb95-20"><a href="tp3.html#cb95-20" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-21"><a href="tp3.html#cb95-21" tabindex="-1"></a><span class="co"># 4. Sélection des colonnes utiles</span></span>
+<span id="cb95-21"><a href="tp3.html#cb95-21" tabindex="-1"></a><span class="co"># 4. Agrégation</span></span>
 <span id="cb95-22"><a href="tp3.html#cb95-22" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-23"><a href="tp3.html#cb95-23" tabindex="-1"></a><span class="co"># On ne conserve que l&#39;identifiant du polygone, la bioregion et la fraction</span></span>
-<span id="cb95-24"><a href="tp3.html#cb95-24" tabindex="-1"></a>inter <span class="ot">&lt;-</span> inter[, <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;K_5&quot;</span>, <span class="st">&quot;Frac&quot;</span>), drop <span class="ot">=</span> <span class="cn">TRUE</span>]</span>
-<span id="cb95-25"><a href="tp3.html#cb95-25" tabindex="-1"></a></span>
-<span id="cb95-26"><a href="tp3.html#cb95-26" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-27"><a href="tp3.html#cb95-27" tabindex="-1"></a><span class="co"># 5. Agrégation</span></span>
-<span id="cb95-28"><a href="tp3.html#cb95-28" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-29"><a href="tp3.html#cb95-29" tabindex="-1"></a><span class="co"># Si plusieurs intersections existent pour le même polygone et bioregion,</span></span>
-<span id="cb95-30"><a href="tp3.html#cb95-30" tabindex="-1"></a><span class="co"># on somme les fractions pour obtenir la fraction totale par ID et K_5</span></span>
-<span id="cb95-31"><a href="tp3.html#cb95-31" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(inter<span class="sc">$</span>Frac, <span class="fu">list</span>(inter<span class="sc">$</span>ID, inter<span class="sc">$</span>K_5), sum)</span>
-<span id="cb95-32"><a href="tp3.html#cb95-32" tabindex="-1"></a><span class="fu">colnames</span>(inter) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;K_5&quot;</span>, <span class="st">&quot;Frac&quot;</span>)</span>
-<span id="cb95-33"><a href="tp3.html#cb95-33" tabindex="-1"></a></span>
-<span id="cb95-34"><a href="tp3.html#cb95-34" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-35"><a href="tp3.html#cb95-35" tabindex="-1"></a><span class="co"># 6. Conversion en matrice</span></span>
-<span id="cb95-36"><a href="tp3.html#cb95-36" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-37"><a href="tp3.html#cb95-37" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">net_to_mat</span>(inter, <span class="at">weight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<span id="cb95-23"><a href="tp3.html#cb95-23" tabindex="-1"></a><span class="co"># Si plusieurs intersections existent pour le même polygone et bioregion,</span></span>
+<span id="cb95-24"><a href="tp3.html#cb95-24" tabindex="-1"></a><span class="co"># on somme les fractions pour obtenir la fraction totale par ID et K_5</span></span>
+<span id="cb95-25"><a href="tp3.html#cb95-25" tabindex="-1"></a><span class="co"># On ne conserve que l&#39;identifiant du polygone, la bioregion et la fraction</span></span>
+<span id="cb95-26"><a href="tp3.html#cb95-26" tabindex="-1"></a>inter <span class="ot">&lt;-</span> inter[, <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;K_5&quot;</span>, <span class="st">&quot;Frac&quot;</span>), drop <span class="ot">=</span> <span class="cn">TRUE</span>]</span>
+<span id="cb95-27"><a href="tp3.html#cb95-27" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(inter<span class="sc">$</span>Frac, <span class="fu">list</span>(inter<span class="sc">$</span>ID, inter<span class="sc">$</span>K_5), sum)</span>
+<span id="cb95-28"><a href="tp3.html#cb95-28" tabindex="-1"></a><span class="fu">colnames</span>(inter) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;K_5&quot;</span>, <span class="st">&quot;Frac&quot;</span>)</span>
+<span id="cb95-29"><a href="tp3.html#cb95-29" tabindex="-1"></a></span>
+<span id="cb95-30"><a href="tp3.html#cb95-30" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb95-31"><a href="tp3.html#cb95-31" tabindex="-1"></a><span class="co"># 5. Conversion en matrice</span></span>
+<span id="cb95-32"><a href="tp3.html#cb95-32" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb95-33"><a href="tp3.html#cb95-33" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">net_to_mat</span>(inter, <span class="at">weight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </details>
 <hr />
 </div>
@@ -606,13 +605,13 @@ Solution (cliquer pour afficher)
 <div id="application-r-shiny-1" class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> Application R Shiny<a href="tp3.html#application-r-shiny-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Pour finir, je vais vous montrer un nouvel exemple d’application Shiny sur le
-même format que celle du TP2.</p>
+même format que celle du <strong>TP2</strong>.</p>
 <p>Les fichiers sources de cette application sont disponibles
 <a href="./data/tp3/Shiny_TP3.zip">ici</a>. Vous pouvez dézipper le dossier dans votre
 répertoire de travail.</p>
 <p>Nous retrouvons la même structure d’application, composée de quatre fichiers
 principaux.</p>
-<p>Comme dans le TP2, prenez le temps de parcourir ces fichiers et d’expérimenter
+<p>Comme dans le <strong>TP2</strong>, prenez le temps de parcourir ces fichiers et d’expérimenter
 en changeant le <strong>titre</strong> de l’application, en renommant l’<strong>onglet</strong> du tableau
 de bord, en modifiant la <strong>palette de couleurs</strong> de la cartes ou encore personnaliser
 les couleurs dans <strong>style.css</strong>.</p>

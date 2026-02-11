@@ -622,13 +622,13 @@ ggplot() +
 ## Application R Shiny
 
 Pour finir, je vais vous montrer un exemple d'application plus élaborée que 
-celle du TP1 que nous pouvons développer à partir de l'objet spatial **mtp**. 
+celle du **TP1** que nous pouvons développer à partir de l'objet spatial **mtp**. 
 
 Les fichiers sources de cette application sont disponibles 
 [ici](./data/tp2/Shiny_TP2.zip). Vous pouvez dézipper le dossier dans votre 
 répertoire de travail.
 
-Dans le TP1, nous avions construit une application dans un seul fichier 
+Dans le **TP1**, nous avions construit une application dans un seul fichier 
 **app.R** contenant à la fois l'interface utilisateur (**ui**) et la logique du 
 serveur (**server**). Dans ce TP, l'application est découpée en plusieurs 
 fichiers, ce qui rend le code plus **structuré** et plus **facile à maintenir** 

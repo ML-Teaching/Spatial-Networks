@@ -237,8 +237,7 @@ clu <- netclu_louvain(sim, cut_weight = 0.7, seed = 1)
 table(clu$clusters[,2])
 
 # Visualisation cartographique
-map_bioregions(clu, 
-               vegesf)
+map_bioregions(clu, vegesf)
 ```
 
 </details>
@@ -280,6 +279,7 @@ contrib <- site_species_metrics(clu,
 
 contrib <- net_to_mat(contrib$species_bioregions, weight = TRUE)
 
+contrib[1:10,]
 ```
 
 Les valeurs de **contrib** sont positives lorsqu'une espèce contribue
@@ -340,30 +340,32 @@ comparables entre espèces.
 
 ```{r, eval=FALSE}
 # Copier la table des contributions
-contrib_sign <- contrib
+contrib_196 <- contrib
 
 # Filtrer uniquement les contributions significatives (> 1.96)
-contrib_sign[contrib_sign < 1.96] <- NA
+contrib_196[contrib_196 < 1.96] <- 0
 
 # Normaliser les contributions par ligne (chaque espèce)
-contrib_sign <- contrib_sign / apply(contrib_sign, 1, sum, na.rm = TRUE)
+contrib_196 <- contrib_196 / apply(contrib_196, 1, sum)
+contrib_196[is.na(contrib_196)] <- 0
+
+contrib_196[1:10,]
 ```
 
 À partir de cette table, nous pouvons calculer la matrice **lambda**, qui
-résume les relations entre bioregions. 
+résume les relations entre bioregions.
 
 ```{r, eval=FALSE}
-K <- ncol(contrib_sign)
+K <- ncol(contrib_196)
 
 lambda <- matrix(0, K, K)
-colnames(lambda) <- colnames(contrib_sign)
-rownames(lambda) <- colnames(contrib_sign)
+colnames(lambda) <- colnames(contrib_196)
+rownames(lambda) <- colnames(contrib_196)
 
-for(k in 1:k){
+for(k in 1:K){
   
-  contrib_sign_k <- contrib_sign[!is.na(contrib_sign[, k]),]
-  contrib_sign_k[is.na(contrib_sign_k )] <- 0
-  lambda[k,] <- apply(contrib_sign_k, 2, mean)
+  contrib_196_k <- contrib_196[contrib_196[, k] > 0,]
+  lambda[k,] <- apply(contrib_196_k, 2, mean)
   
 }
 
@@ -404,7 +406,7 @@ plot(st_geometry(mtp_l), border = "steelblue3", add = TRUE)
 Calculer la fraction de surface de chaque polygone de **mtp_l** correspondant à 
 chaque bioregion définie dans **bioreg**.
 
-1. Réaliser l’intersection spatiale entre mtp_l et bioreg.
+1. Réaliser l’intersection spatiale entre **mtp_l** et **bioreg**.
 2. Calculer l’aire de chaque intersection.
 3. Calculer la fraction de surface de chaque polygone correspondant à
 chaque bioregion (aire intersection / aire totale du polygone).
@@ -439,21 +441,17 @@ inter$area_inter <- st_area(inter)
 inter$Frac <- inter$area_inter / (inter$Area * 1e6)
 
 # -----------------------------------------------
-# 4. Sélection des colonnes utiles
-# -----------------------------------------------
-# On ne conserve que l'identifiant du polygone, la bioregion et la fraction
-inter <- inter[, c("ID", "K_5", "Frac"), drop = TRUE]
-
-# -----------------------------------------------
-# 5. Agrégation
+# 4. Agrégation
 # -----------------------------------------------
 # Si plusieurs intersections existent pour le même polygone et bioregion,
 # on somme les fractions pour obtenir la fraction totale par ID et K_5
+# On ne conserve que l'identifiant du polygone, la bioregion et la fraction
+inter <- inter[, c("ID", "K_5", "Frac"), drop = TRUE]
 inter <- aggregate(inter$Frac, list(inter$ID, inter$K_5), sum)
 colnames(inter) <- c("ID", "K_5", "Frac")
 
 # -----------------------------------------------
-# 6. Conversion en matrice
+# 5. Conversion en matrice
 # -----------------------------------------------
 inter <- net_to_mat(inter, weight = TRUE)
 ```
@@ -465,7 +463,7 @@ inter <- net_to_mat(inter, weight = TRUE)
 ## Application R Shiny
 
 Pour finir, je vais vous montrer un nouvel exemple d'application Shiny sur le 
-même format que celle du TP2.
+même format que celle du **TP2**.
 
 Les fichiers sources de cette application sont disponibles 
 [ici](./data/tp3/Shiny_TP3.zip). Vous pouvez dézipper le dossier dans votre 
@@ -474,7 +472,7 @@ répertoire de travail.
 Nous retrouvons la même structure d'application, composée de quatre fichiers 
 principaux. 
 
-Comme dans le TP2, prenez le temps de parcourir ces fichiers et d’expérimenter 
+Comme dans le **TP2**, prenez le temps de parcourir ces fichiers et d’expérimenter 
 en changeant le **titre** de l’application, en renommant l'**onglet** du tableau 
 de bord, en modifiant la **palette de couleurs** de la cartes ou encore personnaliser 
 les couleurs dans **style.css**.  
@@ -483,10 +481,6 @@ les couleurs dans **style.css**.
 
 Si vous êtes en avance essayez d’ajouter la métrique de similarité **Sorensen** 
 dans l’appli.
-
-
-
-
 
 
 
