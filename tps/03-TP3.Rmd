@@ -249,19 +249,22 @@ map_bioregions(clu, vegesf)
 ### Contributions des espèces aux biorégions
 
 Nous allons conserver la bioregionalisation au seuil 0.7 qui contient 5 
-bioregions. L'objet sf **bioreg** ci-dessous contient une variable **K_5** dans 
-sa table attributaire qui permet d'identifier la bioregion assignée à chacun des 
-sites.
+bioregions en fixant des couleurs pour chaque biorégion. L'objet sf **bioreg** 
+ci-dessous contient une variable **K_5** dans sa table attributaire qui permet 
+d'identifier la bioregion assignée à chacun des sites.
 
 ```{r, eval=FALSE}
 # Détection des communautés biogéographiques avec le seuil 0.7
 clu <- netclu_louvain(sim, cut_weight = 0.7, seed = 1)
 
+# Ajouter des couleurs
+clu <- bioregion_colors(clu, palette = "Pastel")
+
 # Bioregions
 bioreg <- map_bioregions(clu, 
                          vegesf, 
                          write_clusters = TRUE,
-                         plot = FALSE)
+                         plot = TRUE)
 ```
 
 Nous allons maintenant essayer de comprendre quelles sont les espèces qui
@@ -372,12 +375,92 @@ for(k in 1:K){
 lambda
 ```
 
+Nous allons maintenant visualiser le réseau biogéographique **lambda** avec le 
+package [**visNetwork**](https://datastorm-open.github.io/visNetwork/) 
+[[@Almende2025]](#refs).
+
+Nous allons commencer par charger le package, mettre **lambda** au format 
+réseau et conserver uniquement les liens supérieurs 0.01.
+
+```{r, eval=FALSE}
+library(visNetwork)
+
+lambda_net <- mat_to_net(lambda, weight = TRUE)
+lambda_net <- lambda_net[lambda_net$Weight > 0.01,]
+```
+
+Nous pouvons maintenant visualiser le réseau dirigé pondéré. La taille des noeuds 
+correspond au degré de spécialisation des biorégions (i.e. la diagonale de 
+**lambda**), tandis que la direction et l’épaisseur des liens représentent 
+respectivement le sens et l’intensité des contributions entre biorégions.
+
+Le code est relativement long, mais reste simple à comprendre. N’hésitez pas à 
+le modifier afin d’ajuster la taille des nœuds, l’épaisseur des liens ou le 
+comportement dynamique du réseau (physique, espacement des nœuds, stabilisation).
+
+```{r, eval=FALSE}
+# Noeuds pondérés
+nodes <- lambda_net[lambda_net$Node1 == lambda_net$Node2, -2]
+
+# Taille des noeuds
+node_size <- nodes$Weight
+
+# Identifiant des noeuds
+node_id <- nodes$Node1
+
+# Nodes dans visNetwork
+nodes <- data.frame(
+  id = node_id,
+  label = paste("BR", node_id),
+  value = node_size * 50       
+)
+
+# Couleur des noeuds
+cols <- clu$colors$K_5$color[match(node_id,clu$colors$K_5$cluster)]
+
+nodes$color.background <- cols
+nodes$color.border <- cols
+
+# Liens dirigées et pondérés
+edges_data <- lambda_net[lambda_net$Node1 != lambda_net$Node2, ]
+
+# Edges dans visNetwork
+edges <- data.frame(
+  from = edges_data$Node1,
+  to = edges_data$Node2,
+  width = edges_data$Weight * 20,
+  arrows = "to",
+  smooth = ifelse(edges_data$Node1 < edges_data$Node2, "curvedCW", "curvedCCW"),
+  length = 100   # Distance idéale entre nœuds
+)
+
+# Couleur des liens
+edges$color <- cols[match(edges$from, nodes$id)]
+
+# Visualisation du réseau
+visNetwork(nodes, edges) %>%
+  visEdges(smooth = TRUE) %>%
+  visNodes(shadow = TRUE) %>%
+  visPhysics(
+    solver = "forceAtlas2Based",
+    forceAtlas2Based = list(
+      gravitationalConstant = -50,
+      centralGravity = 0.01,
+      springLength = 100,
+      springConstant = 0.01,
+      damping = 0.4,
+      avoidOverlap = 1
+    ),
+    stabilization = list(iterations = 200)
+  )
+```
+
 ### Exercices
 
 **1.** Quelle est la biorégion la plus spécialisée (i.e. qui possède des 
 espèces qui contribuent peu aux autres biorégions) ?
 
-**2.** Quelle est la biorégion la plus en relation avec les autres biorégions ?
+**2.** Quelle est la biorégion qui contribue le plus aux autres biorégions ?
 
 ## Echelle communale
 
@@ -477,12 +560,13 @@ en changeant le **titre** de l’application, en renommant l'**onglet** du table
 de bord, en modifiant la **palette de couleurs** de la cartes ou encore personnaliser 
 les couleurs dans **style.css**.  
 
-### Exercice 
+### Exercices 
 
-Si vous êtes en avance essayez d’ajouter la métrique de similarité **Sorensen** 
-dans l’appli.
+**1.** Si vous êtes en avance essayez d’ajouter la métrique de similarité 
+**Sorensen** dans l’appli.
 
-
+**2.** Si vous êtes très en avance ajouter un onglet permettant de visualiser 
+le réseau **lambda_net**.
 
 
 

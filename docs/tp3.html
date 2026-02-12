@@ -430,17 +430,20 @@ Solution (cliquer pour afficher)
 <div id="contributions-des-espèces-aux-biorégions" class="section level3 hasAnchor" number="3.4.1">
 <h3><span class="header-section-number">3.4.1</span> Contributions des espèces aux biorégions<a href="tp3.html#contributions-des-esp%C3%A8ces-aux-bior%C3%A9gions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Nous allons conserver la bioregionalisation au seuil 0.7 qui contient 5
-bioregions. L’objet sf <strong>bioreg</strong> ci-dessous contient une variable <strong>K_5</strong> dans
-sa table attributaire qui permet d’identifier la bioregion assignée à chacun des
-sites.</p>
+bioregions en fixant des couleurs pour chaque biorégion. L’objet sf <strong>bioreg</strong>
+ci-dessous contient une variable <strong>K_5</strong> dans sa table attributaire qui permet
+d’identifier la bioregion assignée à chacun des sites.</p>
 <div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="tp3.html#cb87-1" tabindex="-1"></a><span class="co"># Détection des communautés biogéographiques avec le seuil 0.7</span></span>
 <span id="cb87-2"><a href="tp3.html#cb87-2" tabindex="-1"></a>clu <span class="ot">&lt;-</span> <span class="fu">netclu_louvain</span>(sim, <span class="at">cut_weight =</span> <span class="fl">0.7</span>, <span class="at">seed =</span> <span class="dv">1</span>)</span>
 <span id="cb87-3"><a href="tp3.html#cb87-3" tabindex="-1"></a></span>
-<span id="cb87-4"><a href="tp3.html#cb87-4" tabindex="-1"></a><span class="co"># Bioregions</span></span>
-<span id="cb87-5"><a href="tp3.html#cb87-5" tabindex="-1"></a>bioreg <span class="ot">&lt;-</span> <span class="fu">map_bioregions</span>(clu, </span>
-<span id="cb87-6"><a href="tp3.html#cb87-6" tabindex="-1"></a>                         vegesf, </span>
-<span id="cb87-7"><a href="tp3.html#cb87-7" tabindex="-1"></a>                         <span class="at">write_clusters =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb87-8"><a href="tp3.html#cb87-8" tabindex="-1"></a>                         <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<span id="cb87-4"><a href="tp3.html#cb87-4" tabindex="-1"></a><span class="co"># Ajouter des couleurs</span></span>
+<span id="cb87-5"><a href="tp3.html#cb87-5" tabindex="-1"></a>clu <span class="ot">&lt;-</span> <span class="fu">bioregion_colors</span>(clu, <span class="at">palette =</span> <span class="st">&quot;Pastel&quot;</span>)</span>
+<span id="cb87-6"><a href="tp3.html#cb87-6" tabindex="-1"></a></span>
+<span id="cb87-7"><a href="tp3.html#cb87-7" tabindex="-1"></a><span class="co"># Bioregions</span></span>
+<span id="cb87-8"><a href="tp3.html#cb87-8" tabindex="-1"></a>bioreg <span class="ot">&lt;-</span> <span class="fu">map_bioregions</span>(clu, </span>
+<span id="cb87-9"><a href="tp3.html#cb87-9" tabindex="-1"></a>                         vegesf, </span>
+<span id="cb87-10"><a href="tp3.html#cb87-10" tabindex="-1"></a>                         <span class="at">write_clusters =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb87-11"><a href="tp3.html#cb87-11" tabindex="-1"></a>                         <span class="at">plot =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Nous allons maintenant essayer de comprendre quelles sont les espèces qui
 contribuent le plus aux bioregions. Pour cela, nous allons utiliser la
 fonction <code>site_species_metrics()</code> qui va nous permettre, avec le code
@@ -525,12 +528,82 @@ résume les relations entre bioregions.</p>
 <span id="cb92-12"><a href="tp3.html#cb92-12" tabindex="-1"></a>}</span>
 <span id="cb92-13"><a href="tp3.html#cb92-13" tabindex="-1"></a></span>
 <span id="cb92-14"><a href="tp3.html#cb92-14" tabindex="-1"></a>lambda</span></code></pre></div>
+<p>Nous allons maintenant visualiser le réseau biogéographique <strong>lambda</strong> avec le
+package <a href="https://datastorm-open.github.io/visNetwork/"><strong>visNetwork</strong></a>
+<a href="refs.html#refs"><span class="citation">(Almende &amp; Thieurmel, 2025)</span></a>.</p>
+<p>Nous allons commencer par charger le package, mettre <strong>lambda</strong> au format
+réseau et conserver uniquement les liens supérieurs 0.01.</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="tp3.html#cb93-1" tabindex="-1"></a><span class="fu">library</span>(visNetwork)</span>
+<span id="cb93-2"><a href="tp3.html#cb93-2" tabindex="-1"></a></span>
+<span id="cb93-3"><a href="tp3.html#cb93-3" tabindex="-1"></a>lambda_net <span class="ot">&lt;-</span> <span class="fu">mat_to_net</span>(lambda, <span class="at">weight =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb93-4"><a href="tp3.html#cb93-4" tabindex="-1"></a>lambda_net <span class="ot">&lt;-</span> lambda_net[lambda_net<span class="sc">$</span>Weight <span class="sc">&gt;</span> <span class="fl">0.01</span>,]</span></code></pre></div>
+<p>Nous pouvons maintenant visualiser le réseau dirigé pondéré. La taille des noeuds
+correspond au degré de spécialisation des biorégions (i.e. la diagonale de
+<strong>lambda</strong>), tandis que la direction et l’épaisseur des liens représentent
+respectivement le sens et l’intensité des contributions entre biorégions.</p>
+<p>Le code est relativement long, mais reste simple à comprendre. N’hésitez pas à
+le modifier afin d’ajuster la taille des nœuds, l’épaisseur des liens ou le
+comportement dynamique du réseau (physique, espacement des nœuds, stabilisation).</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="tp3.html#cb94-1" tabindex="-1"></a><span class="co"># Noeuds pondérés</span></span>
+<span id="cb94-2"><a href="tp3.html#cb94-2" tabindex="-1"></a>nodes <span class="ot">&lt;-</span> lambda_net[lambda_net<span class="sc">$</span>Node1 <span class="sc">==</span> lambda_net<span class="sc">$</span>Node2, <span class="sc">-</span><span class="dv">2</span>]</span>
+<span id="cb94-3"><a href="tp3.html#cb94-3" tabindex="-1"></a></span>
+<span id="cb94-4"><a href="tp3.html#cb94-4" tabindex="-1"></a><span class="co"># Taille des noeuds</span></span>
+<span id="cb94-5"><a href="tp3.html#cb94-5" tabindex="-1"></a>node_size <span class="ot">&lt;-</span> nodes<span class="sc">$</span>Weight</span>
+<span id="cb94-6"><a href="tp3.html#cb94-6" tabindex="-1"></a></span>
+<span id="cb94-7"><a href="tp3.html#cb94-7" tabindex="-1"></a><span class="co"># Identifiant des noeuds</span></span>
+<span id="cb94-8"><a href="tp3.html#cb94-8" tabindex="-1"></a>node_id <span class="ot">&lt;-</span> nodes<span class="sc">$</span>Node1</span>
+<span id="cb94-9"><a href="tp3.html#cb94-9" tabindex="-1"></a></span>
+<span id="cb94-10"><a href="tp3.html#cb94-10" tabindex="-1"></a><span class="co"># Nodes dans visNetwork</span></span>
+<span id="cb94-11"><a href="tp3.html#cb94-11" tabindex="-1"></a>nodes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb94-12"><a href="tp3.html#cb94-12" tabindex="-1"></a>  <span class="at">id =</span> node_id,</span>
+<span id="cb94-13"><a href="tp3.html#cb94-13" tabindex="-1"></a>  <span class="at">label =</span> <span class="fu">paste</span>(<span class="st">&quot;BR&quot;</span>, node_id),</span>
+<span id="cb94-14"><a href="tp3.html#cb94-14" tabindex="-1"></a>  <span class="at">value =</span> node_size <span class="sc">*</span> <span class="dv">50</span>       </span>
+<span id="cb94-15"><a href="tp3.html#cb94-15" tabindex="-1"></a>)</span>
+<span id="cb94-16"><a href="tp3.html#cb94-16" tabindex="-1"></a></span>
+<span id="cb94-17"><a href="tp3.html#cb94-17" tabindex="-1"></a><span class="co"># Couleur des noeuds</span></span>
+<span id="cb94-18"><a href="tp3.html#cb94-18" tabindex="-1"></a>cols <span class="ot">&lt;-</span> clu<span class="sc">$</span>colors<span class="sc">$</span>K_5<span class="sc">$</span>color[<span class="fu">match</span>(node_id,clu<span class="sc">$</span>colors<span class="sc">$</span>K_5<span class="sc">$</span>cluster)]</span>
+<span id="cb94-19"><a href="tp3.html#cb94-19" tabindex="-1"></a></span>
+<span id="cb94-20"><a href="tp3.html#cb94-20" tabindex="-1"></a>nodes<span class="sc">$</span>color.background <span class="ot">&lt;-</span> cols</span>
+<span id="cb94-21"><a href="tp3.html#cb94-21" tabindex="-1"></a>nodes<span class="sc">$</span>color.border <span class="ot">&lt;-</span> cols</span>
+<span id="cb94-22"><a href="tp3.html#cb94-22" tabindex="-1"></a></span>
+<span id="cb94-23"><a href="tp3.html#cb94-23" tabindex="-1"></a><span class="co"># Liens dirigées et pondérés</span></span>
+<span id="cb94-24"><a href="tp3.html#cb94-24" tabindex="-1"></a>edges_data <span class="ot">&lt;-</span> lambda_net[lambda_net<span class="sc">$</span>Node1 <span class="sc">!=</span> lambda_net<span class="sc">$</span>Node2, ]</span>
+<span id="cb94-25"><a href="tp3.html#cb94-25" tabindex="-1"></a></span>
+<span id="cb94-26"><a href="tp3.html#cb94-26" tabindex="-1"></a><span class="co"># Edges dans visNetwork</span></span>
+<span id="cb94-27"><a href="tp3.html#cb94-27" tabindex="-1"></a>edges <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb94-28"><a href="tp3.html#cb94-28" tabindex="-1"></a>  <span class="at">from =</span> edges_data<span class="sc">$</span>Node1,</span>
+<span id="cb94-29"><a href="tp3.html#cb94-29" tabindex="-1"></a>  <span class="at">to =</span> edges_data<span class="sc">$</span>Node2,</span>
+<span id="cb94-30"><a href="tp3.html#cb94-30" tabindex="-1"></a>  <span class="at">width =</span> edges_data<span class="sc">$</span>Weight <span class="sc">*</span> <span class="dv">20</span>,</span>
+<span id="cb94-31"><a href="tp3.html#cb94-31" tabindex="-1"></a>  <span class="at">arrows =</span> <span class="st">&quot;to&quot;</span>,</span>
+<span id="cb94-32"><a href="tp3.html#cb94-32" tabindex="-1"></a>  <span class="at">smooth =</span> <span class="fu">ifelse</span>(edges_data<span class="sc">$</span>Node1 <span class="sc">&lt;</span> edges_data<span class="sc">$</span>Node2, <span class="st">&quot;curvedCW&quot;</span>, <span class="st">&quot;curvedCCW&quot;</span>),</span>
+<span id="cb94-33"><a href="tp3.html#cb94-33" tabindex="-1"></a>  <span class="at">length =</span> <span class="dv">100</span>   <span class="co"># Distance idéale entre nœuds</span></span>
+<span id="cb94-34"><a href="tp3.html#cb94-34" tabindex="-1"></a>)</span>
+<span id="cb94-35"><a href="tp3.html#cb94-35" tabindex="-1"></a></span>
+<span id="cb94-36"><a href="tp3.html#cb94-36" tabindex="-1"></a><span class="co"># Couleur des liens</span></span>
+<span id="cb94-37"><a href="tp3.html#cb94-37" tabindex="-1"></a>edges<span class="sc">$</span>color <span class="ot">&lt;-</span> cols[<span class="fu">match</span>(edges<span class="sc">$</span>from, nodes<span class="sc">$</span>id)]</span>
+<span id="cb94-38"><a href="tp3.html#cb94-38" tabindex="-1"></a></span>
+<span id="cb94-39"><a href="tp3.html#cb94-39" tabindex="-1"></a><span class="co"># Visualisation du réseau</span></span>
+<span id="cb94-40"><a href="tp3.html#cb94-40" tabindex="-1"></a><span class="fu">visNetwork</span>(nodes, edges) <span class="sc">%&gt;%</span></span>
+<span id="cb94-41"><a href="tp3.html#cb94-41" tabindex="-1"></a>  <span class="fu">visEdges</span>(<span class="at">smooth =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb94-42"><a href="tp3.html#cb94-42" tabindex="-1"></a>  <span class="fu">visNodes</span>(<span class="at">shadow =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb94-43"><a href="tp3.html#cb94-43" tabindex="-1"></a>  <span class="fu">visPhysics</span>(</span>
+<span id="cb94-44"><a href="tp3.html#cb94-44" tabindex="-1"></a>    <span class="at">solver =</span> <span class="st">&quot;forceAtlas2Based&quot;</span>,</span>
+<span id="cb94-45"><a href="tp3.html#cb94-45" tabindex="-1"></a>    <span class="at">forceAtlas2Based =</span> <span class="fu">list</span>(</span>
+<span id="cb94-46"><a href="tp3.html#cb94-46" tabindex="-1"></a>      <span class="at">gravitationalConstant =</span> <span class="sc">-</span><span class="dv">50</span>,</span>
+<span id="cb94-47"><a href="tp3.html#cb94-47" tabindex="-1"></a>      <span class="at">centralGravity =</span> <span class="fl">0.01</span>,</span>
+<span id="cb94-48"><a href="tp3.html#cb94-48" tabindex="-1"></a>      <span class="at">springLength =</span> <span class="dv">100</span>,</span>
+<span id="cb94-49"><a href="tp3.html#cb94-49" tabindex="-1"></a>      <span class="at">springConstant =</span> <span class="fl">0.01</span>,</span>
+<span id="cb94-50"><a href="tp3.html#cb94-50" tabindex="-1"></a>      <span class="at">damping =</span> <span class="fl">0.4</span>,</span>
+<span id="cb94-51"><a href="tp3.html#cb94-51" tabindex="-1"></a>      <span class="at">avoidOverlap =</span> <span class="dv">1</span></span>
+<span id="cb94-52"><a href="tp3.html#cb94-52" tabindex="-1"></a>    ),</span>
+<span id="cb94-53"><a href="tp3.html#cb94-53" tabindex="-1"></a>    <span class="at">stabilization =</span> <span class="fu">list</span>(<span class="at">iterations =</span> <span class="dv">200</span>)</span>
+<span id="cb94-54"><a href="tp3.html#cb94-54" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
 <div id="exercices-5" class="section level3 hasAnchor" number="3.4.4">
 <h3><span class="header-section-number">3.4.4</span> Exercices<a href="tp3.html#exercices-5" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>1.</strong> Quelle est la biorégion la plus spécialisée (i.e. qui possède des
 espèces qui contribuent peu aux autres biorégions) ?</p>
-<p><strong>2.</strong> Quelle est la biorégion la plus en relation avec les autres biorégions ?</p>
+<p><strong>2.</strong> Quelle est la biorégion qui contribue le plus aux autres biorégions ?</p>
 </div>
 </div>
 <div id="echelle-communale" class="section level2 hasAnchor" number="3.5">
@@ -540,12 +613,12 @@ la répartition des bioregions au sein des communes. Nous disposons de nos deux
 jeux de données : <strong>mtp</strong> et <strong>bioreg</strong>.</p>
 <p>Nous allons commencer par charger <strong>mtp</strong> et modifier sa projection pour qu’elle
 corresponde à celle de <strong>bioreg</strong>.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="tp3.html#cb93-1" tabindex="-1"></a><span class="fu">data</span>(mtp)</span>
-<span id="cb93-2"><a href="tp3.html#cb93-2" tabindex="-1"></a>mtp_l <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mtp, <span class="at">crs =</span> <span class="fu">st_crs</span>(bioreg))</span></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="tp3.html#cb95-1" tabindex="-1"></a><span class="fu">data</span>(mtp)</span>
+<span id="cb95-2"><a href="tp3.html#cb95-2" tabindex="-1"></a>mtp_l <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(mtp, <span class="at">crs =</span> <span class="fu">st_crs</span>(bioreg))</span></code></pre></div>
 <p>Assurons nous que tout est ok en visualisant les deux couches pour vérifier leur
 superposition.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="tp3.html#cb94-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bioreg), <span class="at">border =</span> <span class="st">&quot;#CC6666&quot;</span>)</span>
-<span id="cb94-2"><a href="tp3.html#cb94-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(mtp_l), <span class="at">border =</span> <span class="st">&quot;steelblue3&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="tp3.html#cb96-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(bioreg), <span class="at">border =</span> <span class="st">&quot;#CC6666&quot;</span>)</span>
+<span id="cb96-2"><a href="tp3.html#cb96-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(mtp_l), <span class="at">border =</span> <span class="st">&quot;steelblue3&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <div id="exercice-6" class="section level3 hasAnchor" number="3.5.1">
 <h3><span class="header-section-number">3.5.1</span> Exercice<a href="tp3.html#exercice-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Calculer la fraction de surface de chaque polygone de <strong>mtp_l</strong> correspondant à
@@ -565,39 +638,39 @@ surface avec en ligne les communes et en colonnes les bioregions.</li>
 <summary>
 Solution (cliquer pour afficher)
 </summary>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="tp3.html#cb95-1" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-2"><a href="tp3.html#cb95-2" tabindex="-1"></a><span class="co"># 1. Intersection spatiale</span></span>
-<span id="cb95-3"><a href="tp3.html#cb95-3" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-4"><a href="tp3.html#cb95-4" tabindex="-1"></a><span class="co"># On calcule la partie de chaque polygone mtp_l qui tombe dans chaque bioregion</span></span>
-<span id="cb95-5"><a href="tp3.html#cb95-5" tabindex="-1"></a><span class="co"># st_intersection conserve les attributs de mtp_l et de bioreg$K_5</span></span>
-<span id="cb95-6"><a href="tp3.html#cb95-6" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(mtp_l, bioreg[, <span class="st">&quot;K_5&quot;</span>])</span>
-<span id="cb95-7"><a href="tp3.html#cb95-7" tabindex="-1"></a></span>
-<span id="cb95-8"><a href="tp3.html#cb95-8" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-9"><a href="tp3.html#cb95-9" tabindex="-1"></a><span class="co"># 2. Calcul de l&#39;aire des intersections</span></span>
-<span id="cb95-10"><a href="tp3.html#cb95-10" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-11"><a href="tp3.html#cb95-11" tabindex="-1"></a><span class="co"># st_area retourne la surface (en unités du CRS) de chaque polygone d&#39;intersection</span></span>
-<span id="cb95-12"><a href="tp3.html#cb95-12" tabindex="-1"></a>inter<span class="sc">$</span>area_inter <span class="ot">&lt;-</span> <span class="fu">st_area</span>(inter)</span>
-<span id="cb95-13"><a href="tp3.html#cb95-13" tabindex="-1"></a></span>
-<span id="cb95-14"><a href="tp3.html#cb95-14" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-15"><a href="tp3.html#cb95-15" tabindex="-1"></a><span class="co"># 3. Calcul des fractions</span></span>
-<span id="cb95-16"><a href="tp3.html#cb95-16" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-17"><a href="tp3.html#cb95-17" tabindex="-1"></a><span class="co"># On divise l&#39;aire de l&#39;intersection par l&#39;aire totale du polygone mtp_l</span></span>
-<span id="cb95-18"><a href="tp3.html#cb95-18" tabindex="-1"></a>inter<span class="sc">$</span>Frac <span class="ot">&lt;-</span> inter<span class="sc">$</span>area_inter <span class="sc">/</span> (inter<span class="sc">$</span>Area <span class="sc">*</span> <span class="fl">1e6</span>)</span>
-<span id="cb95-19"><a href="tp3.html#cb95-19" tabindex="-1"></a></span>
-<span id="cb95-20"><a href="tp3.html#cb95-20" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-21"><a href="tp3.html#cb95-21" tabindex="-1"></a><span class="co"># 4. Agrégation</span></span>
-<span id="cb95-22"><a href="tp3.html#cb95-22" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-23"><a href="tp3.html#cb95-23" tabindex="-1"></a><span class="co"># Si plusieurs intersections existent pour le même polygone et bioregion,</span></span>
-<span id="cb95-24"><a href="tp3.html#cb95-24" tabindex="-1"></a><span class="co"># on somme les fractions pour obtenir la fraction totale par ID et K_5</span></span>
-<span id="cb95-25"><a href="tp3.html#cb95-25" tabindex="-1"></a><span class="co"># On ne conserve que l&#39;identifiant du polygone, la bioregion et la fraction</span></span>
-<span id="cb95-26"><a href="tp3.html#cb95-26" tabindex="-1"></a>inter <span class="ot">&lt;-</span> inter[, <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;K_5&quot;</span>, <span class="st">&quot;Frac&quot;</span>), drop <span class="ot">=</span> <span class="cn">TRUE</span>]</span>
-<span id="cb95-27"><a href="tp3.html#cb95-27" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(inter<span class="sc">$</span>Frac, <span class="fu">list</span>(inter<span class="sc">$</span>ID, inter<span class="sc">$</span>K_5), sum)</span>
-<span id="cb95-28"><a href="tp3.html#cb95-28" tabindex="-1"></a><span class="fu">colnames</span>(inter) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;K_5&quot;</span>, <span class="st">&quot;Frac&quot;</span>)</span>
-<span id="cb95-29"><a href="tp3.html#cb95-29" tabindex="-1"></a></span>
-<span id="cb95-30"><a href="tp3.html#cb95-30" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-31"><a href="tp3.html#cb95-31" tabindex="-1"></a><span class="co"># 5. Conversion en matrice</span></span>
-<span id="cb95-32"><a href="tp3.html#cb95-32" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb95-33"><a href="tp3.html#cb95-33" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">net_to_mat</span>(inter, <span class="at">weight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="tp3.html#cb97-1" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-2"><a href="tp3.html#cb97-2" tabindex="-1"></a><span class="co"># 1. Intersection spatiale</span></span>
+<span id="cb97-3"><a href="tp3.html#cb97-3" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-4"><a href="tp3.html#cb97-4" tabindex="-1"></a><span class="co"># On calcule la partie de chaque polygone mtp_l qui tombe dans chaque bioregion</span></span>
+<span id="cb97-5"><a href="tp3.html#cb97-5" tabindex="-1"></a><span class="co"># st_intersection conserve les attributs de mtp_l et de bioreg$K_5</span></span>
+<span id="cb97-6"><a href="tp3.html#cb97-6" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">st_intersection</span>(mtp_l, bioreg[, <span class="st">&quot;K_5&quot;</span>])</span>
+<span id="cb97-7"><a href="tp3.html#cb97-7" tabindex="-1"></a></span>
+<span id="cb97-8"><a href="tp3.html#cb97-8" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-9"><a href="tp3.html#cb97-9" tabindex="-1"></a><span class="co"># 2. Calcul de l&#39;aire des intersections</span></span>
+<span id="cb97-10"><a href="tp3.html#cb97-10" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-11"><a href="tp3.html#cb97-11" tabindex="-1"></a><span class="co"># st_area retourne la surface (en unités du CRS) de chaque polygone d&#39;intersection</span></span>
+<span id="cb97-12"><a href="tp3.html#cb97-12" tabindex="-1"></a>inter<span class="sc">$</span>area_inter <span class="ot">&lt;-</span> <span class="fu">st_area</span>(inter)</span>
+<span id="cb97-13"><a href="tp3.html#cb97-13" tabindex="-1"></a></span>
+<span id="cb97-14"><a href="tp3.html#cb97-14" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-15"><a href="tp3.html#cb97-15" tabindex="-1"></a><span class="co"># 3. Calcul des fractions</span></span>
+<span id="cb97-16"><a href="tp3.html#cb97-16" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-17"><a href="tp3.html#cb97-17" tabindex="-1"></a><span class="co"># On divise l&#39;aire de l&#39;intersection par l&#39;aire totale du polygone mtp_l</span></span>
+<span id="cb97-18"><a href="tp3.html#cb97-18" tabindex="-1"></a>inter<span class="sc">$</span>Frac <span class="ot">&lt;-</span> inter<span class="sc">$</span>area_inter <span class="sc">/</span> (inter<span class="sc">$</span>Area <span class="sc">*</span> <span class="fl">1e6</span>)</span>
+<span id="cb97-19"><a href="tp3.html#cb97-19" tabindex="-1"></a></span>
+<span id="cb97-20"><a href="tp3.html#cb97-20" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-21"><a href="tp3.html#cb97-21" tabindex="-1"></a><span class="co"># 4. Agrégation</span></span>
+<span id="cb97-22"><a href="tp3.html#cb97-22" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-23"><a href="tp3.html#cb97-23" tabindex="-1"></a><span class="co"># Si plusieurs intersections existent pour le même polygone et bioregion,</span></span>
+<span id="cb97-24"><a href="tp3.html#cb97-24" tabindex="-1"></a><span class="co"># on somme les fractions pour obtenir la fraction totale par ID et K_5</span></span>
+<span id="cb97-25"><a href="tp3.html#cb97-25" tabindex="-1"></a><span class="co"># On ne conserve que l&#39;identifiant du polygone, la bioregion et la fraction</span></span>
+<span id="cb97-26"><a href="tp3.html#cb97-26" tabindex="-1"></a>inter <span class="ot">&lt;-</span> inter[, <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;K_5&quot;</span>, <span class="st">&quot;Frac&quot;</span>), drop <span class="ot">=</span> <span class="cn">TRUE</span>]</span>
+<span id="cb97-27"><a href="tp3.html#cb97-27" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(inter<span class="sc">$</span>Frac, <span class="fu">list</span>(inter<span class="sc">$</span>ID, inter<span class="sc">$</span>K_5), sum)</span>
+<span id="cb97-28"><a href="tp3.html#cb97-28" tabindex="-1"></a><span class="fu">colnames</span>(inter) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ID&quot;</span>, <span class="st">&quot;K_5&quot;</span>, <span class="st">&quot;Frac&quot;</span>)</span>
+<span id="cb97-29"><a href="tp3.html#cb97-29" tabindex="-1"></a></span>
+<span id="cb97-30"><a href="tp3.html#cb97-30" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-31"><a href="tp3.html#cb97-31" tabindex="-1"></a><span class="co"># 5. Conversion en matrice</span></span>
+<span id="cb97-32"><a href="tp3.html#cb97-32" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb97-33"><a href="tp3.html#cb97-33" tabindex="-1"></a>inter <span class="ot">&lt;-</span> <span class="fu">net_to_mat</span>(inter, <span class="at">weight =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 </details>
 <hr />
 </div>
@@ -615,10 +688,12 @@ principaux.</p>
 en changeant le <strong>titre</strong> de l’application, en renommant l’<strong>onglet</strong> du tableau
 de bord, en modifiant la <strong>palette de couleurs</strong> de la cartes ou encore personnaliser
 les couleurs dans <strong>style.css</strong>.</p>
-<div id="exercice-7" class="section level3 hasAnchor" number="3.6.1">
-<h3><span class="header-section-number">3.6.1</span> Exercice<a href="tp3.html#exercice-7" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Si vous êtes en avance essayez d’ajouter la métrique de similarité <strong>Sorensen</strong>
-dans l’appli.</p>
+<div id="exercices-6" class="section level3 hasAnchor" number="3.6.1">
+<h3><span class="header-section-number">3.6.1</span> Exercices<a href="tp3.html#exercices-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>1.</strong> Si vous êtes en avance essayez d’ajouter la métrique de similarité
+<strong>Sorensen</strong> dans l’appli.</p>
+<p><strong>2.</strong> Si vous êtes très en avance ajouter un onglet permettant de visualiser
+le réseau <strong>lambda_net</strong>.</p>
 
 </div>
 </div>

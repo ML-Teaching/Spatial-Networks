@@ -663,7 +663,7 @@ plus avancée.
 ### Exercice 
 
 Si vous êtes en avance essayez d'ajouter la variable 
-[**Ratio**](https://ml-teaching.github.io/Spatial-Networks/tp2.html#exercices)
+[**Ratio**](https://ml-teaching.github.io/Spatial-Networks/tp2.html#exercices-1)
 dans la table attributaire et dans le menu déroulant et afficher les valeurs 
 associées sur la carte.  
 

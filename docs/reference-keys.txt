@@ -55,4 +55,4 @@ exercices-5
 echelle-communale
 exercice-6
 application-r-shiny-1
-exercice-7
+exercices-6
