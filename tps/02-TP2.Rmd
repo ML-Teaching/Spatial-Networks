@@ -526,7 +526,7 @@ Si cela vous intéresse, voici le bout de code que j'ai utilisé pour obtenir
 ---
 
 <details>
-<summary>Code utilisé pour obtenir **road** (pas besoin de l'utiliser TP)</summary>
+<summary>Code utilisé pour obtenir **road**</summary>
 
 ```{r, eval=FALSE}
 # Charger les packages
