@@ -49,15 +49,35 @@ data(mtp)
 ### Taille et aperçu des objets 
 
 ```{r, eval=FALSE}
-dim(od_mtp)             # Dimensions et aperçu de la matrice OD
-od_mtp[1:10,1:10]
+# Matrice OD
+Tij <- od_mtp                    # Renomée Tij (notation du cours)
+dim(Tij)             
+Tij[1:10,1:10]
 
-dim(distance_mtp)       # Dimensions et aperçu de la matrice de distance
-distance_mtp[1:10,1:10]
+# Matrice de distance
+dij <- distance_mtp              # Renomée dij (notation du cours)          
+dim(dij)       
+dij[1:10,1:10]
 
-mass_mtp[1:10,]         # Aperçu des masses
+# Population
+mi <- mass_mtp$Population        # Renomée mi (notation du cours)  
+names(mi) <- rownames(mass_mtp)
+mi[1:10]
 
-mtp                     # Aperçu des entités spatiales 
+mj <- mi                         # Renomée mj (notation du cours)
+mj[1:10]
+
+# Marges
+Oi <- mass_mtp$Out_Commuters     # Renomée Oi (notation du cours)
+names(Oi) <- rownames(mass_mtp)
+Oi[1:10]
+
+Dj <- mass_mtp$In_Commuters      # Renomée Dj (notation du cours)
+names(Dj) <- rownames(mass_mtp)
+Dj[1:10]
+
+# Aperçu des entités spatiales 
+mtp                     
 class(mtp)              # Objet sf
 plot(mtp)               # Représentation spatiale de mtp
 plot(mtp[,2])           # Représentation spatiale de l'attribut Longitude
@@ -72,7 +92,7 @@ dirigé et pondéré comme celui que nous étudions ici.
 
 - **Le format matriciel** : une matrice Origine-Destination carrée où chaque 
   case représente la valeur du flux entre une origine (ligne) et une destination
-  (colonne). C'est le format que nous utilisons avec **od_mtp**.  
+  (colonne). C'est le format que nous utilisons avec **Tij**.  
 - **Le format en trois colonnes** : un tableau (data frame) comportant une 
   colonne pour l’origine, une pour la destination, et une pour le poids (flux). 
 
@@ -92,56 +112,51 @@ Nous pouvons facilement convertir notre matrice **od_mtp** en un format
 
 ```{r, eval=FALSE}
 # Conversion matrice -> "réseau"
-net_mtp <- mat_to_net(od_mtp, weight = TRUE)
-net_mtp[1:10,]
+net <- mat_to_net(Tij, weight = TRUE)
+net[1:10,]
 
 # Nombre de paires "non nulles"
-dim(net_mtp)
+dim(net)
 ```
 
 Et inversement avec la fonction `net_to_mat()`.
 
 ```{r, eval=FALSE}
 # Conversion "réseau" -> matrice  
-mat_mtp <- net_to_mat(net_mtp, weight = TRUE, square = TRUE)
-
-mat_mtp[1:10,1:10]
-od_mtp[1:10,1:10]
-
-# Nombre total de paires 
-length(mat_mtp)
+mat <- net_to_mat(net, weight = TRUE, square = TRUE)
+mat[1:10,1:10]
 
 # Nombre de paires "non nulles"
-length(mat_mtp) - sum(mat_mtp==0)
+length(mat) - sum(mat==0)
 ```
 
 ### Statistiques de base
 
 ```{r, eval=FALSE}
 # Population moyenne
-mean(mass_mtp$Population)
+mean(mi)
 
 # Entité avec le plus d'habitants
-mass_mtp[which.max(mass_mtp$Population), ]
+mi[which.max(mi)]
 
 # Flux totaux sortants et entrants
-sum(mass_mtp$Out_Commuters)
-sum(mass_mtp$In_Commuters)
+sum(Oi)
+sum(Dj)
 
 # Comparaison
-plot(mass_mtp$Population, mass_mtp$Out_Commuters,
+plot(mi, Oi,
      xlab="Population", ylab="Flux sortants",
      main="Population vs Flux sortants")
 
 # Comparaison log-log
-plot(mass_mtp$Population, mass_mtp$Out_Commuters,
+plot(mi, Oi,
      log="xy",
      xlab="Population", ylab="Flux sortants",
      main="Population vs Flux sortants")
 
 # Vérifier que les flux sont cohérents
-sum(mass_mtp$Out_Commuters == apply(od_mtp, 1, sum))
-sum(mass_mtp$In_Commuters == apply(od_mtp, 2, sum))
+sum(Oi == apply(Tij, 1, sum))
+sum(Dj == apply(Tij, 2, sum))
 ```
 
 ### Exercices
@@ -159,11 +174,11 @@ et à les charger ensuite avec `source()`, comme vu lors du premier TP.
 
 ```{r, eval=FALSE}
 # Moyenne pondérée distance x flux
-d_mean <- sum(od_mtp * distance_mtp) / sum(od_mtp)
+d_mean <- sum(Tij * dij) / sum(Tij)
 d_mean
 
 # Moyenne pondérée distance x flux par commune
-d_com <- apply(od_mtp * distance_mtp, 1, sum) / apply(od_mtp, 1, sum)
+d_com <- apply(Tij * dij, 1, sum) / apply(Tij, 1, sum)
 d_com
 ```
 </details>
@@ -181,7 +196,7 @@ affichez-les avec la fonction `plot()`.
 
 ```{r, eval=FALSE}
 # Ajouter les flux sortants à l'objet spatial
-mtp$Oi <- mass_mtp$Out_Commuters
+mtp$Oi <- Oi
 
 # Visualiser avec une carte simple
 plot(mtp["Oi"], main="Flux sortants par commune")
@@ -217,7 +232,7 @@ carte.
 
 ```{r, eval=FALSE}
 # Ajouter le ratio
-mtp$ratio <- mass_mtp$In_Commuters/mass_mtp$Out_Commuters
+mtp$ratio <- Dj / Oi
 
 # Visualiser avec une carte simple
 plot(mtp["ratio"], main="Ratio")
@@ -230,23 +245,6 @@ plot(mtp["ratio"], main="Ratio")
 ## Estimation des flux avec TDLM
 
 ### Préparation de données
-
-Nous allons commencer par préparer les données en formatant les masses 
-($m_i$ et $m_j$) et les marges ($D_i$ et $D_j$).
-
-```{r, eval=FALSE}
-mi <- mass_mtp$Population
-names(mi) <- rownames(mass_mtp)
-
-mj <- mass_mtp$Population
-names(mj) <- rownames(mass_mtp)
-
-Oi <- mass_mtp$Out_Commuters
-names(Oi) <- rownames(mass_mtp)
-
-Dj <- mass_mtp$In_Commuters
-names(Dj) <- rownames(mass_mtp)
-```
 
 **mi** et **mj** vont nous permettre d’estimer les probabilités de déplacement 
 à partir d’une loi (de **gravité** ou de **radiation**), tandis que **Oi** et 
@@ -270,7 +268,7 @@ respectant les marges (**Oi** et **Dj**).
 > marge en même temps, mais n'hésitez pas à tester d'autres modèles si vous êtes 
 > en avance.*
 
-Il est important de noter que lee processus de génération des flux est 
+Il est important de noter que le processus de génération des flux est 
 stochastique (i.e. tirage aléatoire).
 
 > *Dans ce TP, nous générerons qu'une seule matrice mais vous pouvez comparer 
@@ -287,32 +285,32 @@ exponentielle** (`law = "NGravExp"`) avec un **modèle doublement contraint**
 > différentes lois et modèles.*
 
 La fonction `run_law_model()` ci-dessous permet de générer une matrice 
-**od_grav**. 
+**Tij_grav**. 
 
 ```{r, eval=FALSE}
-od_grav <- run_law_model(law = "NGravExp", 
-                             mass_origin = mi, 
-                             mass_destination = mj, 
-                             distance = distance_mtp, 
-                             opportunity = NULL,
-                             param = 0.126,
-                        
-                             model = "DCM", 
-                             out_trips = Oi, 
-                             in_trips = Dj,
-                             nbrep = 1,
-                         
-                             check_names = TRUE)
+Tij_grav <- run_law_model(law = "NGravExp", 
+                          mass_origin = mi, 
+                          mass_destination = mj, 
+                          distance = dij, 
+                          opportunity = NULL,
+                          param = 0.126,
+                          
+                          model = "DCM", 
+                          out_trips = Oi, 
+                          in_trips = Dj,
+                          nbrep = 1,
+                          
+                          check_names = TRUE)
 
-od_grav <- od_grav$replication_1
+Tij_grav <- Tij_grav$replication_1
 ```
 
-Nous pouvons faire une comparaison rapide entre la matrice observée **od_mtp** 
-et la matrice simulée **od_grav** pour comprendre les résultats.
+Nous pouvons faire une comparaison rapide entre la matrice observée **Tij** 
+et la matrice simulée **Tij_grav** pour comprendre les résultats.
 
 ```{r, eval=FALSE}
-od_grav[1:10,1:10]
-od_mtp[1:10,1:10]
+Tij_grav[1:10,1:10]
+Tij[1:10,1:10]
 ```
 
 Pour aller plus loin, la fonction `gof()` (*goodness-of-fit*) permet de 
@@ -320,12 +318,12 @@ calculer plusieurs indicateurs pour comparer la matrice simulée à la
 matrice observée. Nous nous concentrerons ici sur le proportion de navetteurs
 en commun (`measures = "CPC"`), calculant comme son nom l'indique la proportion
 d'information en commun entre la matrice observée et la matrice simulée. Cet
-indicateur est compris entre 0 et 1. Une valeur de 0 signifie qu'il n'y a aucun
+indicateur est compris entre 0 et 1. **Une valeur de 0 signifie qu'il n'y a aucun
 navetteur en commun entre les deux matrices. Une valeur de 1 siginifie que les
-deux matrices sont identiques.
+deux matrices sont identiques.**
 
 ```{r, eval=FALSE}
-gof(od_grav, od_mtp,
+gof(Tij_grav, Tij,
     measures = "CPC")
 ```
 
@@ -333,10 +331,10 @@ Vous pouvez également comparer les distances moyennes simulées à la distance
 moyenne observée à l'aide de votre fonction ou du code ci-dessous.
 
 ```{r, eval=FALSE}
-d_mean_grav <- sum(od_grav * distance_mtp) / sum(od_grav)
+d_mean_grav <- sum(Tij_grav * dij) / sum(Tij_grav)
 d_mean_grav
 
-d_mean_obs <- sum(od_mtp * distance_mtp) / sum(od_mtp)
+d_mean_obs <- sum(Tij * dij) / sum(Tij)
 d_mean_obs
 ```
 
@@ -355,44 +353,45 @@ Nous nous baserons sur la population (i.e. $m_i$) en utilisant la fonction
 `extract_opportunities()`.
 
 ```{r, eval=FALSE}
-opportunity_mtp <- extract_opportunities(opportunity = mi,
-                                         distance = distance_mtp,
-                                         check_names = TRUE)
+sij <- extract_opportunities(opportunity = mi,
+                             distance = dij,
+                             check_names = TRUE)
 ```
 
 La fonction `run_law_model()` ci-dessous permet de générer une matrice 
 **od_rad**. 
 
 ```{r, eval=FALSE}
-od_rad <- run_law_model(law = "RadExt", 
-                        mass_origin = mi, 
-                        mass_destination = mj, 
-                        distance = NULL, 
-                        opportunity = opportunity_mtp,
-                        param = 0.127,
-                            
-                        model = "DCM", 
-                        out_trips = Oi, 
-                        in_trips = Dj,
-                        nbrep = 1,
+Tij_rad <- run_law_model(law = "RadExt", 
+                         mass_origin = mi, 
+                         mass_destination = mj, 
+                         distance = NULL, 
+                         opportunity = sij,
+                         param = 0.127,
                          
-                        check_names = TRUE)
+                         model = "DCM", 
+                         out_trips = Oi, 
+                         in_trips = Dj,
+                         nbrep = 1,
+                         
+                         check_names = TRUE)
 
-od_rad <- od_rad$replication_1
+Tij_rad <- Tij_rad$replication_1
 ```
 
 Nous pouvons faire une comparaison rapide pour comprendre les résultats.
 
 ```{r, eval=FALSE}
-od_rad[1:10,1:10]
-od_mtp[1:10,1:10]
+Tij_rad[1:10,1:10]
+Tij[1:10,1:10]
 ```
 
 Ici aussi, vous pouvez utiliser la fonction `gof()` (*goodness-of-fit*) pour 
 comparer la matrice simulée et la matrice observée.
 
 ```{r, eval=FALSE}
-gof(od_rad, od_mtp,
+gof(list(Gravitaire=Tij_grav, Radiation=Tij_rad), 
+    Tij,
     measures = "CPC")
 ```
 
@@ -400,10 +399,10 @@ Vous pouvez également comparer les distances moyennes simulées à la distance
 moyenne observée à l'aide de votre fonction ou du code ci-dessous.
 
 ```{r, eval=FALSE}
-d_mean_rad <- sum(od_rad * distance_mtp) / sum(od_rad)
+d_mean_rad <- sum(Tij_rad * dij) / sum(Tij_rad)
 d_mean_rad
 
-d_mean_obs <- sum(od_mtp * distance_mtp) / sum(od_mtp)
+d_mean_obs <- sum(Tij * dij) / sum(Tij)
 d_mean_obs
 ```
 
@@ -419,8 +418,8 @@ destination. Visualisez le nuage de points avec la fonction `plot()`
 <summary>Solution (cliquer pour afficher)</summary>
 
 ```{r, eval=FALSE}
-dist <- as.numeric(distance_mtp)
-opp <- as.numeric(opportunity_mtp)
+dist <- as.numeric(dij)
+opp <- as.numeric(sij)
 cor(dist, opp)
 
 plot(dist, opp, pch=16, col="steelblue3", cex=0.1)
@@ -439,26 +438,25 @@ plot(dist, opp, pch=16, col="steelblue3", cex=0.1)
 <summary>Solution (cliquer pour afficher)</summary>
 
 ```{r, eval=FALSE}
-od_unif <- run_law_model(law = "Unif",
-                         mass_origin = mi, 
+Tij_unif <- run_law_model(law = "Unif",
+                          mass_origin = mi, 
                             
-                         model = "DCM", 
-                         out_trips = Oi, 
-                         in_trips = Dj,
-                         nbrep = 1,
+                          model = "DCM", 
+                          out_trips = Oi, 
+                          in_trips = Dj,
+                          nbrep = 1,
                          
-                         check_names = TRUE)
+                          check_names = TRUE)
 
-od_unif <- od_unif$replication_1
+Tij_unif <- Tij_unif$replication_1
+Tij_unif[1:10,1:10]
 ```
 
 </details>
 
 ---
 
-**3.** Utiliser la fonction `gof()` avec une `list()` pour comparer le CPC 
-entre **od_grav**, **od_rad** et **od_unif** (calculer précédemment) et 
-**od_mtp**.
+**3.** Calculer le CPC pour **Tij_grav**, **Tij_rad** et **Tij_unif**.
 
 ---
 
@@ -466,7 +464,7 @@ entre **od_grav**, **od_rad** et **od_unif** (calculer précédemment) et
 <summary>Solution (cliquer pour afficher)</summary>
 
 ```{r, eval=FALSE}
-gof(list(od_grav = od_grav, od_rad = od_rad, od_unif = od_unif), 
+gof(list(Gravitaire=Tij_grav, Radiation=Tij_rad, Uniform=Tij_unif), 
     od_mtp,
     measures = "CPC")
 ```
@@ -489,8 +487,8 @@ Commençons par mettre nos matrices origine-destination observée et simulée
 de la fonction `mat_to_net()` du package **bioregion**.
 
 ```{r, eval=FALSE}
-net_obs <- mat_to_net(od_mtp, weight=TRUE)
-net_sim <- mat_to_net(od_grav, weight=TRUE)
+net_obs <- mat_to_net(Tij, weight=TRUE)
+net_sim <- mat_to_net(Tij_grav, weight=TRUE)
 ```
 
 Nous pouvons ensuite les trier par ordre décroissant de taille de flux et 
@@ -514,7 +512,8 @@ permettant d'aller d'une commune à l'autre.
 ### Calcul d'itinéraires
 
 Pour le calcul d'itinéraire, nous allons avoir besoin d'un réseau routier autour
-de Montpellier. Vous pouvez télécharger ce réseau [ici](./data/tp2/road.rda).  
+de Montpellier. 
+**Vous pouvez télécharger ce réseau [ici](./data/tp2/road.rda).**  
 
 Il s'agit d'un objet **road** stocké dans un fichier **road.rda** que vous 
 pouvez placer dans votre répertoire de travail et importer avec la commande 
@@ -523,6 +522,11 @@ pouvez placer dans votre répertoire de travail et importer avec la commande
 Si cela vous intéresse, voici le bout de code que j'ai utilisé pour obtenir 
 **road** à l'aide des packages **dodgr** [[@Padgham2019]](#refs) et 
 **osmdata** [[@Padgham2019]](#refs):
+
+---
+
+<details>
+<summary>Code utilisé pour obtenir **road** (pas besoin de l'utiliser TP)</summary>
 
 ```{r, eval=FALSE}
 # Charger les packages
@@ -539,6 +543,10 @@ road <- dodgr_contract_graph(road)
 # Exporter road
 save(road, file="road.rda")
 ```
+
+</details>
+
+---
 
 Pour calculer l'itinéraire entre les centroides des deux communes, nous allons 
 avoir besoin du package **dodgr** et du package **ggplot2** pour visualiser 

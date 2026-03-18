@@ -339,7 +339,7 @@ Les fonctions peuvent avoir **plusieurs arguments** avec des valeurs par défaut
 
 ```{r, eval=FALSE}
 addition <- function(a, b = 5) {
-  sumab <-a + b   # Calcul la somme de a et b
+  sumab <- a + b   # Calcul la somme de a et b
   return(sumab)   # Retourne le résultat
 }
 
@@ -465,7 +465,7 @@ séparé, puis les utiliser pour analyser et visualiser des données.
    - `resumer_vecteur(x)` : retourne min, max, moyenne, médiane et variance.
    - `remplacer_vecteur(x)` : remplace les valeurs supérieures à la moyenne par 100.
 3. Dans **TP1.R** :  
-   - Chargez les packages **sf**.
+   - Chargez le package **sf**.
    - Définissez votre répertoire de travail.
    - Importez vos fonctions depuis **Mes_fonctions.R** avec `source()`.
    - Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction `sample()`).
@@ -882,8 +882,8 @@ shinyApp(ui, server)
 3. L’application s’ouvre dans le Viewer de RStudio ou dans votre navigateur.  
 
 > *Pour déployer votre application en ligne, vous pouvez utiliser 
-> [shinyapps.io](https://www.shinyapps.io/) ou un serveur Shiny propre. L’exemple 
-> ci-dessus fonctionne localement sur votre machine.*
+> [shinyapps.io](https://www.shinyapps.io/) ou votre propre serveur Shiny. 
+> L’exemple ci-dessus fonctionne localement sur votre machine.*
 
 ### Exercice
 
@@ -931,7 +931,7 @@ server <- function(input, output) {
     x <- sample(1:10, input$nombre, replace = TRUE)
     
     hist(x,
-         breaks = seq(0.5, 10.5, by = 1),  # Barres centrées sur les entiers
+         breaks = seq(0.5, 10.5, by = 1),  
          main = "Histogramme",
          xlab = "Valeurs de 1 à 10")
   })

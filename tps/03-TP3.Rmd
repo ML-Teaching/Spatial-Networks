@@ -99,9 +99,8 @@ vegemat_bin[1:10,1:10]
 
 ### Exercice
 
-Tracer les histogrammes du nombre moyen d'espèces par site et du nombre moyen 
-de sites par espèce à partir de **vegemat_bin** (à l'aide de la fonction 
-`apply()`). 
+Tracer les histogrammes du nombre d'espèces par site et du nombre de sites par 
+espèce à partir de **vegemat_bin** (à l'aide de la fonction `apply()`). 
 
 ---
 
@@ -198,8 +197,8 @@ La biorégionalisation consiste à identifier des groupes de sites partageant de
 caractéristiques écologiques ou biogéographiques similaires. Nous nous baserons 
 ici sur le réseau de similarité calculé avec l’indice de Simpson ci-dessous. 
 
-Pour cela nous pouvons appliquer un algorithme de détection de communautés, ici 
-**Louvain** afin d’obtenir des régions biogéographiques cohérentes.  
+Pour cela nous pouvons appliquer un algorithme de détection de communautés (ici 
+**Louvain**) afin d’obtenir des régions biogéographiques cohérentes.  
 
 ```{r, eval=FALSE}
 # Détection des communautés biogéographiques

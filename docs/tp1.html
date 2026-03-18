@@ -496,7 +496,7 @@ calculer le carré d’un nombre.</p>
 <span id="cb19-7"><a href="tp1.html#cb19-7" tabindex="-1"></a><span class="fu">carre</span>(<span class="dv">10</span>) <span class="co"># 100</span></span></code></pre></div>
 <p>Les fonctions peuvent avoir <strong>plusieurs arguments</strong> avec des valeurs par défaut.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="tp1.html#cb20-1" tabindex="-1"></a>addition <span class="ot">&lt;-</span> <span class="cf">function</span>(a, <span class="at">b =</span> <span class="dv">5</span>) {</span>
-<span id="cb20-2"><a href="tp1.html#cb20-2" tabindex="-1"></a>  sumab <span class="ot">&lt;-</span>a <span class="sc">+</span> b   <span class="co"># Calcul la somme de a et b</span></span>
+<span id="cb20-2"><a href="tp1.html#cb20-2" tabindex="-1"></a>  sumab <span class="ot">&lt;-</span> a <span class="sc">+</span> b   <span class="co"># Calcul la somme de a et b</span></span>
 <span id="cb20-3"><a href="tp1.html#cb20-3" tabindex="-1"></a>  <span class="fu">return</span>(sumab)   <span class="co"># Retourne le résultat</span></span>
 <span id="cb20-4"><a href="tp1.html#cb20-4" tabindex="-1"></a>}</span>
 <span id="cb20-5"><a href="tp1.html#cb20-5" tabindex="-1"></a></span>
@@ -591,7 +591,7 @@ séparé, puis les utiliser pour analyser et visualiser des données.</p>
 </ul></li>
 <li>Dans <strong>TP1.R</strong> :
 <ul>
-<li>Chargez les packages <strong>sf</strong>.</li>
+<li>Chargez le package <strong>sf</strong>.</li>
 <li>Définissez votre répertoire de travail.</li>
 <li>Importez vos fonctions depuis <strong>Mes_fonctions.R</strong> avec <code>source()</code>.</li>
 <li>Créez un vecteur de 20 nombres aléatoires entre 1 et 100 (fonction <code>sample()</code>).</li>
@@ -940,8 +940,8 @@ affichés dans l’UI.</li>
 </ol>
 <blockquote>
 <p><em>Pour déployer votre application en ligne, vous pouvez utiliser
-<a href="https://www.shinyapps.io/">shinyapps.io</a> ou un serveur Shiny propre. L’exemple
-ci-dessus fonctionne localement sur votre machine.</em></p>
+<a href="https://www.shinyapps.io/">shinyapps.io</a> ou votre propre serveur Shiny.
+L’exemple ci-dessus fonctionne localement sur votre machine.</em></p>
 </blockquote>
 </div>
 <div id="exercice-1" class="section level3 hasAnchor" number="1.10.4">
@@ -988,7 +988,7 @@ Solution (cliquer pour afficher)
 <span id="cb48-32"><a href="tp1.html#cb48-32" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, input<span class="sc">$</span>nombre, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb48-33"><a href="tp1.html#cb48-33" tabindex="-1"></a>    </span>
 <span id="cb48-34"><a href="tp1.html#cb48-34" tabindex="-1"></a>    <span class="fu">hist</span>(x,</span>
-<span id="cb48-35"><a href="tp1.html#cb48-35" tabindex="-1"></a>         <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">10.5</span>, <span class="at">by =</span> <span class="dv">1</span>),  <span class="co"># Barres centrées sur les entiers</span></span>
+<span id="cb48-35"><a href="tp1.html#cb48-35" tabindex="-1"></a>         <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">10.5</span>, <span class="at">by =</span> <span class="dv">1</span>),  </span>
 <span id="cb48-36"><a href="tp1.html#cb48-36" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Histogramme&quot;</span>,</span>
 <span id="cb48-37"><a href="tp1.html#cb48-37" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;Valeurs de 1 à 10&quot;</span>)</span>
 <span id="cb48-38"><a href="tp1.html#cb48-38" tabindex="-1"></a>  })</span>
